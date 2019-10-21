@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">game</string>
+    <string name="register">Sign Up</string>
 </resources>
