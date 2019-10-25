@@ -1,5 +1,8 @@
 package com.example.game;
 
+import android.content.Context;
+import android.graphics.Canvas;
+
 /**
  * A class that represents a game of TicTacToe.
  * */
@@ -9,8 +12,11 @@ public class TicTacToe extends Game{
     // The current player whose turn it is.
     private int currentPlayer;
 
+
+
     //Creates a TicTacToe game.
-    TicTacToe(){
+    TicTacToe(Context context){
+        super(context);
         grid = new int[3][3];
         currentPlayer = 1;
     }
@@ -82,7 +88,8 @@ public class TicTacToe extends Game{
     }
 
     @Override
-    void display(){}
+    void display(Canvas canvas){
+    }
 
     @Override
     void updateDifficulty(){
