@@ -93,9 +93,7 @@ public class TicTacToe extends Game{
     }
 
     @Override
-    void receiveInput(int x, int y){
-
-    }
+    void receiveInput(int x, int y){}
 
     @Override
     int endGame(){return 0;}

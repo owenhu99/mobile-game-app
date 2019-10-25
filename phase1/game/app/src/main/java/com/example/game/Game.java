@@ -6,6 +6,14 @@ package com.example.game;
 public abstract class Game {
     //represents the difficulty of the game. 1 = Easy, 2 = Hard
     int difficulty;
+    int secondsPlayed;
+    Thread timer;
+    boolean paused;
+
+    public void Game(){
+        timer = new GameTimer(this);
+        timer.start();
+    }
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
