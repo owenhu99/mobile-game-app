@@ -3,7 +3,7 @@ package com.example.game;
 
 import java.util.Random;
 
-public class rockPaperScissors extends Game{
+public class rockPaperScissors{
     private String[] choices = {"Rock", "Paper", "Scissors"};
 
     private String currentBotChoice;
@@ -63,25 +63,4 @@ public class rockPaperScissors extends Game{
 
         return result;
     }
-
-    @Override
-    void display() {
-
-    }
-
-    @Override
-    void updateDifficulty() {
-
-    }
-
-    @Override
-    void receiveInput(int x, int y) {
-
-    }
-
-    @Override
-    int endGame() {
-        return 0;
-    }
-
 }
