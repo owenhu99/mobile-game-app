@@ -8,21 +8,16 @@ import android.view.View;
 /**
  * A class that represents a game.
  * */
-public abstract class Game extends View {
+public abstract class Game{
     //represents the difficulty of the game. 1 = Easy, 2 = Hard
     int difficulty;
-    int secondsPlayed;
-    Thread timer;
-    boolean paused;
 
-    //Canvas dimensions
-    int width;
     int height;
+    int width;
 
-    public Game(Context context){
-        super(context);
-        timer = new GameTimer(this);
-        timer.start();
+    public Game(int height, int width){
+        this.height = height;
+        this.width = width;
     }
 
     public void setDifficulty(int difficulty) {
@@ -31,33 +26,11 @@ public abstract class Game extends View {
     }
 
     //Display the game to the screen.
-    abstract void display(Canvas canvas);
+    abstract void draw(Canvas canvas);
     //update the difficulty
     abstract void updateDifficulty();
     //Get the x and y position on the screen where the user pressed.
     abstract void receiveInput(int x, int y);
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)
     abstract int endGame();
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            int x = (int) (event.getX());
-            int y = (int) (event.getY());
-            receiveInput(x, y);
-        }
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        display(canvas);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        height = View.MeasureSpec.getSize(heightMeasureSpec);
-        width = View.MeasureSpec.getSize(widthMeasureSpec);
-        setMeasuredDimension(width, height);
-    }
 }
