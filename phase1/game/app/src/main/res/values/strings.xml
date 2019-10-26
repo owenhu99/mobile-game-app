@@ -4,7 +4,7 @@
     <string name="log_in">Log In</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="email">Email Address</string>
     <string name="username">Username</string>
     <string name="submit">Submit</string>
+    <string name="savefile">users</string>
 </resources>
