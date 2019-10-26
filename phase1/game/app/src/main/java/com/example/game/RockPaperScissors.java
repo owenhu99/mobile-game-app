@@ -14,20 +14,20 @@ public class RockPaperScissors{
     }
 
     // sets the user's choice for this round
-    public void set_user_choice(String choice){
+    public void setUserChoice(String choice){
         this.currentUserChoice = choice;
     }
 
 
     // The bot chooses string in array, choices. Returns that choice.
-    private void get_bot_choice() {
+    public void setBotChoice() {
         Random rand = new Random();
         int indx = rand.nextInt(3);
         this.currentBotChoice = choices[indx];
     }
 
     // returns who wins that round and tie if there's a tie
-    private String get_results() {
+    public String findResult() {
         String result = "If you see this, there's an error in get_result in RPS";
 
         switch (this.currentUserChoice) {
