@@ -2,6 +2,9 @@ package com.example.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -10,16 +13,47 @@ public class RockPaperScissorsGame extends Game {
 
     //Game manager for running and the rock paper scissors game
 
-    RockPaperScissorsGame(Context context){
-        super(context);
+
+    //Rectangles of buttons
+    private Rect rockBtn = new Rect();
+    private Rect paperBtn = new Rect();
+    private Rect scissorsBtn = new Rect();
+
+    //color of button
+    private Paint btnColor = new Paint();
+
+
+    RockPaperScissorsGame(int height, int width) {
+        super(height, width);
+    }
+
+    public static void main(Object user) {
+
+        // while loop {}
+            //display
+
+            // get the buttons and user choice
+
+
     }
 
 
 
     @Override
-    void display(Canvas canvas){
+    void draw(Canvas canvas){
 
 
+        rockBtn.set(10, super.height/2,
+                super.width/5, super.height/10);
+        paperBtn.set((super.width/2 - super.width/5/2), super.height/2,
+                super.width/5, super.height/10);
+        scissorsBtn.set((super.width - 10 - super.width/5), super.height/2,
+                super.width/5, super.height/10);
+
+        btnColor.setColor(Color.LTGRAY);
+        canvas.drawRect(rockBtn, btnColor);
+        canvas.drawRect(paperBtn, btnColor);
+        canvas.drawRect(scissorsBtn, btnColor);
     }
 
     @Override
@@ -41,26 +75,5 @@ public class RockPaperScissorsGame extends Game {
     @Override
     int endGame(){return 0;}
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-
-        int x = (int)event.getX();
-        int y = (int)event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_UP:
-        }
-
-        receiveInput(x, y);
-
-        return true;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        display(canvas);
-    }
 
 }
