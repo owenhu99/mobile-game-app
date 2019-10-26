@@ -1,17 +1,19 @@
 package com.example.game;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.FileInputStream;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class LogInActivity extends AppCompatActivity {
@@ -24,36 +26,35 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void fillUsers() {
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.users_menu);
-        ArrayList<User> users = getUsers();
-        if (users.size() == 0) {
-            return;
+        LinearLayout linearLayout = findViewById(R.id.users_menu);
+
+        ArrayList<String> users = getUsers();
+        TextView[] userList = new TextView[users.size()];
+        if (userList.length != 0) {
+            for (int i = 0; i < userList.length; i++) {
+                userList[i] = new TextView(this);
+                userList[i].setText(users.get(i));
+                userList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                linearLayout.addView(userList[i]);
+            }
         }
-        TextView user1 = new TextView(this);
-        user1.setText(users.get(0).getUserName());
-        user1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        linearLayout.addView(user1);
     }
 
-    protected ArrayList<User> getUsers() {
-        Object user;
-        ArrayList<User> users = new ArrayList<User>();
-        String fileName = getResources().getString(R.string.savefile);
+    protected ArrayList<String> getUsers() {
+        ArrayList<String> users = new ArrayList<>();
 
-        try {
-            FileInputStream fis = openFileInput(fileName);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            try {
-                while ((user = ois.readObject()) != null) {
-                    users.add((User) user);
-                }
-            } finally {
-                ois.close();
-                fis.close();
+        try (
+                Reader reader = Files.newBufferedReader(Paths.get(getFilesDir() + "/" + getResources().getString(R.string.savefile)));
+                CSVParser cp = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
+        ) {
+            for (CSVRecord csvRecord : cp) {
+                String username = csvRecord.get("User Name");
+                users.add(username);
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
         return users;
     }
 }

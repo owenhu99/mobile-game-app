@@ -6,5 +6,5 @@
     <string name="last_name">Last Name</string>
     <string name="username">Username</string>
     <string name="submit">Submit</string>
-    <string name="savefile">users</string>
+    <string name="savefile">users.csv</string>
 </resources>
