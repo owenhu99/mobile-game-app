@@ -21,8 +21,9 @@ public class RockPaperScissorsGame extends Game {
     private Rect paperBtn = new Rect();
     private Rect scissorsBtn = new Rect();
 
-    //color of button
+    //color of button and text
     private Paint btnColor = new Paint();
+    private Paint textColor = new Paint();
 
 
     RockPaperScissorsGame(int height, int width) {
@@ -53,15 +54,20 @@ public class RockPaperScissorsGame extends Game {
                 super.width - 10, super.height / 2 + btnHeight);
 
         btnColor.setColor(Color.LTGRAY);
+        textColor.setColor(Color.BLACK);
+        textColor.setTextSize(btnHeight / 2);
     }
 
     @Override
     void draw(Canvas canvas) {
 
-
         canvas.drawRect(rockBtn, btnColor);
         canvas.drawRect(paperBtn, btnColor);
         canvas.drawRect(scissorsBtn, btnColor);
+
+        canvas.drawText("Rock", rockBtn.left, rockBtn.top, textColor);
+        canvas.drawText("Paper", paperBtn.left, paperBtn.top, textColor);
+        canvas.drawText("Scissors", scissorsBtn.left, scissorsBtn.top, textColor);
     }
 
     @Override
