@@ -15,14 +15,20 @@ public abstract class Game{
     int height;
     int width;
 
-    public Game(int height, int width){
-        this.height = height;
-        this.width = width;
+    boolean gameEnded = false;
+
+
+    public Game(){
+        this.difficulty = 1;
     }
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
         updateDifficulty();
+    }
+    public void setWidthHeight(int width, int height){
+        this.height = height;
+        this.width = width;
     }
 
     //Display the game to the screen.
@@ -33,4 +39,5 @@ public abstract class Game{
     abstract void receiveInput(int x, int y);
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)
     abstract int endGame();
+    abstract void reset();
 }

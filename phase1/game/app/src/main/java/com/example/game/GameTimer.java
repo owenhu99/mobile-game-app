@@ -17,15 +17,37 @@ public class GameTimer extends Thread{
 
     @Override
     public void run(){
+        int counter = 0;
         while(isPlaying) {
             canvas = null;
-
             try {
                 canvas = this.surfaceHolder.lockCanvas();
-                gameView.secondsPlayed ++;
-                gameView.draw(canvas);
-                sleep(1000);
+                System.out.println(canvas == null);
+                synchronized (surfaceHolder) {
+                    if(counter == 10) {
+                        this.gameView.secondsPlayed++;
+                        counter = 0;
+                    }
+                    this.gameView.draw(canvas);
+                    this.gameView.checkGameEnded();
+                    counter ++;
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (canvas != null) {
+                    try {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            try{
+                sleep(100);
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

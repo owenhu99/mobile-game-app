@@ -2,6 +2,7 @@ package com.example.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
@@ -12,32 +13,57 @@ import android.view.View;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public Game game;
+    String gameType;
     //Canvas dimensions
     int width;
     int height;
-    Canvas canvas;
 
     private GameTimer gameTimer;
     int secondsPlayed;
 
+    int numWins = 0;
+    int numLoses = 0;
+    int numTies = 0;
+
+    Paint textPaint;
+
     public GameView(Context context, String game) {
         super(context);
         getHolder().addCallback(this);
-        gameTimer = new GameTimer(getHolder(), this);
-        if(game == "TTT")
-            this.game = new TicTacToe(height, width);
-        else if(game == "RPS")
-            this.game = new RockPaperScissorsGame(height, width);
         setFocusable(true);
+        this.gameType = game;
+        if(gameType == "TTT")
+            this.game = new TicTacToe();
+        else if(gameType == "RPS")
+            this.game = new RockPaperScissorsGame();
 
+        textPaint = new Paint();
+        textPaint.setTextSize(36);
+        textPaint.setColor(Color.GREEN);
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
+
+    void checkGameEnded(){
+        if(game.gameEnded) {
+            int results = game.endGame();
+            if(results == 1)
+                numWins++;
+            else if(results == 0)
+                numTies ++;
+            else if(results == -1)
+                numLoses ++;
+            if(gameType == "TTT")
+                this.game.reset();
+            else if(gameType == "RPS")
+                this.game = new RockPaperScissorsGame();
+        }
+    }
+
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         // Figure out the size of a letter.
-        canvas = holder.lockCanvas();
-        Paint paintText = new Paint();
-        paintText.setTextSize(36);
-        paintText.setTypeface(Typeface.DEFAULT_BOLD);
+        gameTimer = new GameTimer(holder, this);
         gameTimer.setPlaying(true);
         gameTimer.start();
     }
@@ -65,19 +91,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.drawText("wins: "+ numWins,50,50, textPaint);
+        canvas.drawText("tie: "+ numTies,50,100, textPaint);
+        canvas.drawText("loses: "+ numLoses,50,150, textPaint);
+
         if (canvas != null) {
             game.draw(canvas);
+
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        System.out.println("detected touch");
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             int x = (int) (event.getX());
             int y = (int) (event.getY());
+            System.out.println(x+" "+y);
             game.receiveInput(x, y);
         }
-        draw(canvas);
         return super.onTouchEvent(event);
     }
 
@@ -86,5 +118,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         height = View.MeasureSpec.getSize(heightMeasureSpec);
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, height);
+        game.setWidthHeight(width, height);
+        if(game instanceof TicTacToe)
+            ((TicTacToe)game).setBoxDimension();
+
+
     }
 }
