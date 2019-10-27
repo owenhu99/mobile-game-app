@@ -43,31 +43,49 @@ public class RockPaperScissorsGame extends Game {
 
 
     private void createButtons() {
-        int btnHeight = super.height / 10;
-        int btnWidth = super.width / 5;
+        int btnHeight = height / 10;
+        int btnWidth = width / 5;
 
-        rockBtn.set(10, super.height / 2,
-                10 + btnWidth, super.height / 2 + btnHeight);
-        paperBtn.set((super.width / 2 - btnWidth / 2), super.height / 2,
-                super.width / 2 + btnWidth / 2, super.height / 2 + btnHeight);
-        scissorsBtn.set((super.width - 10 - btnWidth), super.height / 2,
-                super.width - 10, super.height / 2 + btnHeight);
+        rockBtn.set(10, height / 2,
+                10 + btnWidth, height / 2 + btnHeight);
+        paperBtn.set((width / 2 - btnWidth / 2), height / 2,
+                width / 2 + btnWidth / 2, height / 2 + btnHeight);
+        scissorsBtn.set((width - 10 - btnWidth), height / 2,
+                width - 10, height / 2 + btnHeight);
 
-        btnColor.setColor(Color.LTGRAY);
-        textColor.setColor(Color.BLACK);
-        textColor.setTextSize(btnHeight / 2);
+        btnColor.setColor(Color.GRAY);
+        textColor.setColor(Color.RED);
+        textColor.setTextSize(50);
+        textColor.setTextAlign(Paint.Align.CENTER);
+
     }
 
     @Override
     void draw(Canvas canvas) {
 
-        canvas.drawRect(rockBtn, btnColor);
-        canvas.drawRect(paperBtn, btnColor);
-        canvas.drawRect(scissorsBtn, btnColor);
+        System.out.println(canvas == null);
 
-        canvas.drawText("Rock", rockBtn.left, rockBtn.top, textColor);
-        canvas.drawText("Paper", paperBtn.left, paperBtn.top, textColor);
-        canvas.drawText("Scissors", scissorsBtn.left, scissorsBtn.top, textColor);
+        //canvas.drawRect(rockBtn, btnColor);
+        //canvas.drawRect(paperBtn, btnColor);
+        //canvas.drawRect(scissorsBtn, btnColor);
+        int btnHeight = height / 12;
+        int btnWidth = width / 5;
+
+        canvas.drawRect(10, height / 2,
+                10 + btnWidth, height / 2 + btnHeight, btnColor);
+        canvas.drawRect((width / 2) - (btnWidth / 2), height / 2,
+                (width / 2) + (btnWidth / 2), height / 2 + btnHeight, btnColor);
+        canvas.drawRect(width - 10 - btnWidth, height / 2,
+                width - 10, height / 2 + btnHeight, btnColor);
+
+        canvas.drawText("Rock", 10 + (btnWidth / 2), height / 2 + (btnHeight / 2)
+                + textColor.getTextSize() / 2, textColor);
+        canvas.drawText("Paper", (width / 2), height / 2 + (btnHeight / 2)
+                + textColor.getTextSize() / 2, textColor);
+        canvas.drawText("Scissors", width - 10 - (btnWidth / 2), height / 2 +
+                (btnHeight / 2) + textColor.getTextSize() / 2, textColor);
+
+
     }
 
     @Override
@@ -104,5 +122,8 @@ public class RockPaperScissorsGame extends Game {
     }
 
     @Override
-    void reset(){};
+    void reset() {
+    }
+
+    ;
 }
