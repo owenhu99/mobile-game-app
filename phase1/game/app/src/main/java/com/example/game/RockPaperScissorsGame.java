@@ -41,17 +41,6 @@ public class RockPaperScissorsGame extends Game {
         roundResult = "";
     }
 
-    public static void main(Object user) {
-
-        // while loop {}
-        //display
-
-        // get the buttons and user choice
-
-
-    }
-
-
     private void createButtons() {
         int btnHeight = height / 10;
         int btnWidth = width / 5;
