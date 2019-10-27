@@ -18,8 +18,8 @@ public abstract class Game{
     boolean gameEnded = false;
 
 
-    public Game(){
-        this.difficulty = 1;
+    public Game(int d){
+        this.difficulty = d;
     }
 
     public void setDifficulty(int difficulty) {

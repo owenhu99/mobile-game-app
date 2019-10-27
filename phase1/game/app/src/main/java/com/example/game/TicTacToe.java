@@ -28,7 +28,8 @@ public class TicTacToe extends Game{
 
 
     //Creates a TicTacToe game.
-    TicTacToe(){
+    TicTacToe(int d){
+        super(d);
         if(difficulty == 1)
             grid = new int[3][3];
         else

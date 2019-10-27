@@ -26,8 +26,8 @@ public class RockPaperScissorsGame extends Game {
     private Paint textColor = new Paint();
 
 
-    RockPaperScissorsGame() {
-
+    RockPaperScissorsGame(int d) {
+        super(d);
         createButtons();
     }
 

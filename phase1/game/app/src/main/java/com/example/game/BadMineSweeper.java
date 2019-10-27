@@ -21,9 +21,9 @@ public class BadMineSweeper extends Game {
 
     private Paint gridPaint = new Paint();
 
-    BadMineSweeper(){
+    BadMineSweeper(int d){
 
-
+        super(d);
         gridPaint.setColor(Color.WHITE);
         grid = new BombTile[4][4];
         for(int i = 0; i < grid.length; i++)
