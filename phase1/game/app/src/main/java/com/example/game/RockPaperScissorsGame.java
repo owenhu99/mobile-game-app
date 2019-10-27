@@ -131,6 +131,8 @@ public class RockPaperScissorsGame extends Game {
             botAction = currRound.getBotChoice();
             roundResult = currRound.findResult();
         }
+
+        endGame();
     }
 
     @Override
@@ -150,9 +152,6 @@ public class RockPaperScissorsGame extends Game {
     void reset() {
         gameEnded = false;
 
-        roundNum = 1;
-        userAction = "";
-        botAction = "";
     }
 
 }
