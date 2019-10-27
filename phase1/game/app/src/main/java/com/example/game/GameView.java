@@ -36,6 +36,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             this.game = new TicTacToe();
         else if(gameType == "RPS")
             this.game = new RockPaperScissorsGame();
+        else if(gameType == "BS")
+            this.game = new BadMineSweeper();
 
         textPaint = new Paint();
         textPaint.setTextSize(36);
@@ -56,6 +58,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 this.game.reset();
             else if(gameType == "RPS")
                 this.game = new RockPaperScissorsGame();
+            else if(gameType == "BS")
+                this.game = new BadMineSweeper();
         }
     }
 
@@ -121,6 +125,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         game.setWidthHeight(width, height);
         if(game instanceof TicTacToe)
             ((TicTacToe)game).setBoxDimension();
+        else if(game instanceof BadMineSweeper)
+            ((BadMineSweeper)game).setBoxDimension();
 
 
     }
