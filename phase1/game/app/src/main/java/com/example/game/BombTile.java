@@ -1,5 +1,6 @@
 package com.example.game;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 
 // use when drawing cool shit hopefully
@@ -21,6 +22,17 @@ public class BombTile {
         bombColor = new Paint();
         notBombColor = new Paint();
         hidden = new Paint();
+
+        bombColor.setColor(Color.BLUE);
+        notBombColor.setColor(Color.RED);
+        hidden.setColor(Color.GRAY);
+    }
+    @Override
+    public String toString(){
+        if(isBomb)
+            return "T";
+        else
+            return "F";
     }
 
     void setIsBomb(){ isBomb = true;}

@@ -118,15 +118,6 @@ public class BadMineSweeper extends Game {
         }
     }
 
-    private void printTextBoard(){
-        for(int x = 0; x < grid.length; x++){
-            for(int y = 0; y < grid.length; y++){
-                System.out.print(grid[y][x]);
-            }
-            System.out.println();
-        }
-    }
-
     //update the difficulty
     @Override
     void updateDifficulty(){
@@ -176,8 +167,18 @@ public class BadMineSweeper extends Game {
         int w = Integer.compare(spaces_cleared, win_num);
         return w;
     }
+    private void printTextBoard(){
+        for(int x = 0; x < grid.length; x++){
+            for (int y = 0; y < grid.length; y++){
+                System.out.print(grid[y][x]);
+            }
+            System.out.println();
+        }
+    }
+
     @Override
     void reset(){
+        System.out.println("RESET");
         gameEnded = false;
 
         grid = new BombTile[4][4];
@@ -186,8 +187,9 @@ public class BadMineSweeper extends Game {
                 BombTile w = new BombTile();
                 grid[i][j] = w;
             }
-
         setMines();
+        printTextBoard();
+        spaces_cleared = 0;
 
     }
 }
