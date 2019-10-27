@@ -101,6 +101,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawText("wins: "+ numWins,50,50, textPaint);
         canvas.drawText("tie: "+ numTies,50,100, textPaint);
         canvas.drawText("loses: "+ numLoses,50,150, textPaint);
+        canvas.drawText("Play Time: "+ secondsPlayed,800,50, textPaint);
 
         if (canvas != null) {
             game.draw(canvas);
