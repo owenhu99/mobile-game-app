@@ -44,7 +44,7 @@ public class LogInActivity extends AppCompatActivity {
         ArrayList<String> users = new ArrayList<>();
 
         try (
-                Reader reader = Files.newBufferedReader(Paths.get(getFilesDir() + "/" + getResources().getString(R.string.savefile)));
+                Reader reader = Files.newBufferedReader(Paths.get(getResources().getString(R.string.savefile)));
                 CSVParser cp = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
         ) {
             for (CSVRecord csvRecord : cp) {

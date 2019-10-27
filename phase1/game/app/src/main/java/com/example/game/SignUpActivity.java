@@ -28,7 +28,7 @@ public class SignUpActivity extends AppCompatActivity {
         EditText firstName = findViewById(R.id.editText1);
         EditText lastName = findViewById(R.id.editText2);
         EditText userName = findViewById(R.id.editText3);
-        String filePath = getFilesDir() + "/" + getResources().getString(R.string.savefile);
+        String filePath = getResources().getString(R.string.savefile);
         if (!new File(filePath).exists()) {
             try (FileWriter fw = new FileWriter(filePath);
                  CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT.withHeader("First Name", "Last Name", "User Name"))) {

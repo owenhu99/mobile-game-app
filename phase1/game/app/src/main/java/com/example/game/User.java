@@ -4,7 +4,6 @@ public class User {
   private String userName;
   private String firstName;
   private String lastName;
-  private double averageTime;
   private double totalTime;
   private int totalWins;
   private int gold;
@@ -14,7 +13,6 @@ public class User {
     this.userName = userName;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.averageTime = 0;
     this.totalTime = 0;
     this.totalWins = 0;
     this.gold = 0;
@@ -44,14 +42,6 @@ public class User {
     return lastName;
   }
 
-  public void setAverageTime(double averageTime) {
-    this.averageTime = averageTime;
-  }
-
-  public double getAverageTime() {
-    return averageTime;
-  }
-
   public void setTotalTime(double totalTime) {
     this.totalTime = totalTime;
   }
@@ -69,10 +59,12 @@ public class User {
   public int getGold(){return gold;}
 
   public void clearStats() {
-    this.averageTime = 0;
     this.totalTime = 0;
     this.totalWins = 0;
     this.gold = 0;
+  }
 
+  public void update() {
+    UserUpdateHelper.update(this);
   }
 }
