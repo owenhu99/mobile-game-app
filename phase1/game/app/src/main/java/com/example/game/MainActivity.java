@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void game(View view) {
         Intent intent = new Intent(this, GameActivity.class);
+        String currentUser = "admin";
+        intent.putExtra("USER_NAME", currentUser);
         startActivity(intent);
     }
     public void settings(View view) {
