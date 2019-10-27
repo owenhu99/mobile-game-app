@@ -26,8 +26,8 @@ public class RockPaperScissorsGame extends Game {
     private Paint textColor = new Paint();
 
 
-    RockPaperScissorsGame(int height, int width) {
-        super(height, width);
+    RockPaperScissorsGame() {
+
         createButtons();
     }
 
@@ -103,5 +103,6 @@ public class RockPaperScissorsGame extends Game {
         return 0;
     }
 
-
+    @Override
+    void reset(){};
 }
