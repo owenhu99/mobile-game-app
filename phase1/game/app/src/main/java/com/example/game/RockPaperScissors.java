@@ -3,18 +3,18 @@ package com.example.game;
 
 import java.util.Random;
 
-public class RockPaperScissors{
+public class RockPaperScissors {
     private String[] choices = {"Rock", "Paper", "Scissors"};
 
     private String currentBotChoice;
     private String currentUserChoice;
 
-    public RockPaperScissors(String userChoice){
+    public RockPaperScissors(String userChoice) {
         this.currentUserChoice = userChoice;
     }
 
     // sets the user's choice for this round
-    public void setUserChoice(String choice){
+    public void setUserChoice(String choice) {
         this.currentUserChoice = choice;
     }
 
@@ -24,6 +24,11 @@ public class RockPaperScissors{
         Random rand = new Random();
         int indx = rand.nextInt(3);
         this.currentBotChoice = choices[indx];
+    }
+
+    //returns bot choice
+    public String getBotChoice() {
+        return currentBotChoice;
     }
 
     // returns who wins that round and tie if there's a tie

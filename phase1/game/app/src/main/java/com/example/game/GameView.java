@@ -60,7 +60,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             if(gameType == "TTT")
                 this.game.reset();
             else if(gameType == "RPS")
-                this.game = new RockPaperScissorsGame(difficulty);
+                this.game.reset();
             else if(gameType == "BS")
                 this.game.reset();
         }

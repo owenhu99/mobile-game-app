@@ -29,10 +29,16 @@ public class RockPaperScissorsGame extends Game {
 
     private int roundNum;
 
+    private String userAction;
+    private String botAction;
+
     RockPaperScissorsGame(int d) {
         super(d);
         createButtons();
         roundNum = 1;
+        userAction = "";
+        botAction = "";
+        roundResult = "";
     }
 
     public static void main(Object user) {
@@ -93,7 +99,10 @@ public class RockPaperScissorsGame extends Game {
         canvas.drawText("Scissors", width - 20 - (btnWidth / 2), height / 2 +
                 (btnHeight / 2) + textColor.getTextSize() / 2, textColor);
 
-        canvas.drawText("Round: " + roundNum, 10, height / 3, uiTextColor);
+
+        canvas.drawText("Your Move: " + userAction, 20, height / 3, uiTextColor);
+        canvas.drawText("Bot's Move: " + botAction, 20, height / 3 + 100, uiTextColor);
+        canvas.drawText("Winner: " + roundResult, 20, height / 3 + 200, uiTextColor);
     }
 
     @Override
@@ -111,24 +120,26 @@ public class RockPaperScissorsGame extends Game {
 
         if ((x >= 20 && x <= 20 + btnWidth) &&
                 (y >= height / 2 && y <= height / 2 + btnHeight)) {
-            roundNum++;
-
+            userAction = "Rock";
             currRound = new RockPaperScissors("Rock");
             currRound.setBotChoice();
+            botAction = currRound.getBotChoice();
             roundResult = currRound.findResult();
         } else if ((x >= (width / 2) - (btnWidth / 2) && x <= (width / 2) + (btnWidth / 2)) &&
                 (y >= height / 2 && y <= height / 2 + btnHeight)) {
-            roundNum--;
 
+            userAction = "Paper";
             currRound = new RockPaperScissors("Paper");
             currRound.setBotChoice();
+            botAction = currRound.getBotChoice();
             roundResult = currRound.findResult();
         } else if ((x >= width - 20 - btnWidth && x <= width - 20) &&
                 (y >= height / 2 && y <= height / 2 + btnHeight)) {
-            roundNum = roundNum * 2;
 
+            userAction = "Scissors";
             currRound = new RockPaperScissors("Scissors");
             currRound.setBotChoice();
+            botAction = currRound.getBotChoice();
             roundResult = currRound.findResult();
         }
     }
@@ -137,13 +148,22 @@ public class RockPaperScissorsGame extends Game {
     int endGame() {
         gameEnded = true;
 
-
-        return 0;
+        if (roundResult.equals("bot")) {
+            return -1;
+        } else if (roundResult.equals("user")) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
     void reset() {
+        gameEnded = false;
+
+        roundNum = 1;
+        userAction = "";
+        botAction = "";
     }
 
-    ;
 }
