@@ -4,17 +4,20 @@ public class User {
   private String userName;
   private String firstName;
   private String lastName;
-  private int lives;
   private double averageTime;
   private double totalTime;
+  private int totalWins;
+  private int gold;
+
 
   public User(String userName, String firstName, String lastName) {
     this.userName = userName;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.lives = 3;
     this.averageTime = 0;
     this.totalTime = 0;
+    this.totalWins = 0;
+    this.gold = 0;
   }
 
   public void setUserName(String userName) {
@@ -49,14 +52,6 @@ public class User {
     return averageTime;
   }
 
-  public void setLives(int lives) {
-    this.lives = lives;
-  }
-
-  public int getLives() {
-    return lives;
-  }
-
   public void setTotalTime(double totalTime) {
     this.totalTime = totalTime;
   }
@@ -65,9 +60,19 @@ public class User {
     return totalTime;
   }
 
+  public void setTotalWins(int wins){this.totalWins = wins;}
+
+  public int getTotalWins(){return totalWins;}
+
+  public void setGold(int gold){this.gold = gold;}
+
+  public int getGold(){return gold;}
+
   public void clearStats() {
-    this.lives = 3;
     this.averageTime = 0;
     this.totalTime = 0;
+    this.totalWins = 0;
+    this.gold = 0;
+
   }
 }
