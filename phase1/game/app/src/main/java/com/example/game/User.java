@@ -1,6 +1,9 @@
 package com.example.game;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
   private String userName;
   private String firstName;
   private String lastName;
@@ -78,5 +81,40 @@ public class User {
 
   // decreases the user's gold when they buy something
   public void decreaseGold(int gold) {this.gold -= gold;}
+
+  // Parcelable requirements
+  public User(Parcel in) {
+    this.userName = in.readString();
+    this.firstName = in.readString();
+    this.lastName = in.readString();
+    this.totalTime = in.readDouble();
+    this.totalWins = in.readInt();
+    this.gold = in.readInt();
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeString(this.userName);
+    out.writeString(this.firstName);
+    out.writeString(this.lastName);
+    out.writeDouble(this.totalTime);
+    out.writeInt(this.totalWins);
+    out.writeInt(this.gold);
+  }
+
+  public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public User createFromParcel(Parcel in) {
+      return new User(in);
+    }
+
+    public User[] newArray(int size) {
+      return new User[size];
+    }
+  };
 
 }
