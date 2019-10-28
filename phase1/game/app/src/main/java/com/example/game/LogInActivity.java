@@ -1,6 +1,9 @@
 package com.example.game;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -28,20 +32,37 @@ public class LogInActivity extends AppCompatActivity {
     private void fillUsers() {
         LinearLayout linearLayout = findViewById(R.id.users_menu);
 
-        ArrayList<String> users = getUsers();
-        TextView[] userList = new TextView[users.size()];
+        ArrayList<User> users = getUsers();
+        final LinearLayout[] userList = new LinearLayout[users.size()];
         if (userList.length != 0) {
             for (int i = 0; i < userList.length; i++) {
-                userList[i] = new TextView(this);
-                userList[i].setText(users.get(i));
+                userList[i] = new LinearLayout(this);
+                userList[i].setOrientation(LinearLayout.HORIZONTAL);
+
+                TextView text = new TextView(userList[i].getContext());
+                text.setText(users.get(i).getUserName());
+                userList[i].addView(text);
+
+                Button button = new Button(userList[i].getContext());
+                button.setText("GO");
+                final User currentUser = users.get(i);
+                button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        Intent intent = new Intent(LogInActivity.this, GameActivity.class);
+                        intent.putExtra("USER", currentUser);
+                        startActivity(intent);
+                    }
+                });
+                userList[i].addView(button);
+
                 userList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout.addView(userList[i]);
             }
         }
     }
 
-    protected ArrayList<String> getUsers() {
-        ArrayList<String> users = new ArrayList<>();
+    protected ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<>();
 
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(getResources().getString(R.string.savefile)));
@@ -49,8 +70,12 @@ public class LogInActivity extends AppCompatActivity {
         ) {
             for (CSVRecord csvRecord : cp) {
                 String username = csvRecord.get("User Name");
+                String firstname = csvRecord.get("First Name");
+                String lastname = csvRecord.get("Last Name");
                 String stats = csvRecord.get("Stats");
-                users.add(username + "," + stats);
+                User user = new User(username, firstname, lastname);
+                user.setStatsFromCSV(stats);
+                users.add(user);
             }
         } catch (IOException e) {
             e.printStackTrace();

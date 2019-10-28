@@ -14,7 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class UserUpdateHelper {
+public class UserHelper {
     private static String FILEPATH = "/data/user/0/com.example.game/files/users.csv";
 
     public static void add(User user) {

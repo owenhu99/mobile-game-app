@@ -2,6 +2,7 @@ package com.example.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class User implements Parcelable {
     private String userName;
@@ -87,7 +88,7 @@ public class User implements Parcelable {
     }
 
     public void update() {
-        UserUpdateHelper.update(this);
+        UserHelper.update(this);
     }
 
     // increases the user's total wins and increases gold equal to 10 gold per win, increase total time played
@@ -97,6 +98,39 @@ public class User implements Parcelable {
         this.gold += wins * 10;
         this.totalTime += time;
         this.totalGames += totalGames;
+    }
+
+    public String[][] parseStats(String stats) {
+        String[] firstRound = stats.split("&");
+        String[][] ret = new String[firstRound.length][2];
+        int i = 0;
+        for (String str : firstRound) {
+            String[] secondRound = str.split("=", 2);
+            ret[i][0] = secondRound[0];
+            ret[i][1] = secondRound[1];
+            i++;
+        }
+        return ret;
+    }
+
+    public void setStatsFromCSV(String stats) {
+        String[][] values = parseStats(stats);
+        for (String[] subArr : values) {
+            switch (subArr[0]) {
+                case "tt":
+                    totalTime = Double.parseDouble(subArr[1]);
+                    break;
+                case "tw":
+                    totalWins = Integer.valueOf(subArr[1]);
+                    break;
+                case "tg":
+                    totalGames = Integer.valueOf(subArr[1]);
+                    break;
+                case "g":
+                    gold = Integer.valueOf(subArr[1]);
+                    break;
+            }
+        }
     }
 
     // decreases the user's gold when they buy something
