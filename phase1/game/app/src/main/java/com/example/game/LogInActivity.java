@@ -49,7 +49,8 @@ public class LogInActivity extends AppCompatActivity {
         ) {
             for (CSVRecord csvRecord : cp) {
                 String username = csvRecord.get("User Name");
-                users.add(username);
+                String stats = csvRecord.get("Stats");
+                users.add(username + "," + stats);
             }
         } catch (IOException e) {
             e.printStackTrace();
