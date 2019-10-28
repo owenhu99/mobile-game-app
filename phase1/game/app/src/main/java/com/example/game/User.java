@@ -9,6 +9,7 @@ public class User implements Parcelable {
   private String lastName;
   private double totalTime;
   private int totalWins;
+  private int totalGames;
   private int gold;
 
 
@@ -57,11 +58,20 @@ public class User implements Parcelable {
 
   public int getTotalWins(){return totalWins;}
 
+  public int getTotalGames() {
+    return totalGames;
+  }
+
+  public void setTotalGames(int totalGames) {
+    this.totalGames = totalGames;
+  }
+
   public void setGold(int gold){this.gold = gold;}
 
   public int getGold(){return gold;}
 
   public void clearStats() {
+    this.totalGames = 0;
     this.totalTime = 0;
     this.totalWins = 0;
     this.gold = 0;
@@ -89,6 +99,7 @@ public class User implements Parcelable {
     this.lastName = in.readString();
     this.totalTime = in.readDouble();
     this.totalWins = in.readInt();
+    this.totalGames = in.readInt();
     this.gold = in.readInt();
   }
 
@@ -104,6 +115,7 @@ public class User implements Parcelable {
     out.writeString(this.lastName);
     out.writeDouble(this.totalTime);
     out.writeInt(this.totalWins);
+    out.writeInt(this.totalGames);
     out.writeInt(this.gold);
   }
 
