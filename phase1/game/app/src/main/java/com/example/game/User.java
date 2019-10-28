@@ -19,6 +19,7 @@ public class User implements Parcelable {
         this.lastName = lastName;
         this.totalTime = 0;
         this.totalWins = 0;
+        this.totalGames = 0;
         this.gold = 0;
     }
 
@@ -103,7 +104,19 @@ public class User implements Parcelable {
         this.gold -= gold;
     }
 
-    // Parcelable requirements
+    /**
+     * Formats all the stats for storage as a csv field
+     * Each stat must be in the format '<unique abbreviation>=<value>' separated with '&'
+     *
+     * @return a string of stats formatted for csv storage
+     */
+    public String combineStats() {
+        return "tt=" + totalTime + "&tw=" + totalWins + "&tg=" + totalGames + "&g=" + gold;
+    }
+
+    /**
+     * Parcelable requirements
+     */
     public User(Parcel in) {
         this.userName = in.readString();
         this.firstName = in.readString();
