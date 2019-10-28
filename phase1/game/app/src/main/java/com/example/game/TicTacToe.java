@@ -193,9 +193,6 @@ public class TicTacToe extends Game{
             canvas.drawLine(startX, startY, endX, endY, xPaint);
         }
     }
-//    private void drawStats(Canvas canvas){
-//        canvas.drawText("wins: "+ );
-//    }
 
     @Override
     void updateDifficulty(){

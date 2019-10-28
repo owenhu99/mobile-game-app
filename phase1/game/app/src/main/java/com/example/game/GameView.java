@@ -14,6 +14,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public Game game;
     String gameType;
+    User currentUser;
     //Canvas dimensions
     int width;
     int height;
@@ -29,9 +30,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     int difficulty;
 
-    public GameView(Context context, String game, int d) {
+    public GameView(Context context, String game, int d, User currentUser) {
         super(context);
         difficulty = d;
+        this.currentUser = currentUser;
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
@@ -81,6 +83,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        currentUser.updateUserStats(numWins, secondsPlayed, numLoses+numTies+numWins);
+        currentUser.update();
         boolean retry = true;
         while (retry) {
             try {
