@@ -67,4 +67,16 @@ public class User {
   public void update() {
     UserUpdateHelper.update(this);
   }
+
+  // increases the user's total wins and increases gold equal to 10 gold per win, increase total time played
+
+  public void updateUserStats(int wins, double time) {
+    this.totalWins += wins;
+    this.gold += wins * 10;
+    this.totalTime += time;
+  }
+
+  // decreases the user's gold when they buy something
+  public void decreaseGold(int gold) {this.gold -= gold;}
+
 }
