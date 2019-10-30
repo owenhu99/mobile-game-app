@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.Games;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import com.example.game.Users.User;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 

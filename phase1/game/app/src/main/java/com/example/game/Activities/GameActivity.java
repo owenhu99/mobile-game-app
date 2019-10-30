@@ -1,15 +1,15 @@
-package com.example.game;
+package com.example.game.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.game.Games.GameView;
+import com.example.game.R;
+import com.example.game.Users.User;
 
 public class GameActivity extends AppCompatActivity implements SurfaceHolder.Callback{
     int difficulty = 1;

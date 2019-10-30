@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.game.R;
+import com.example.game.Users.User;
+import com.example.game.Users.UserHelper;
 
 public class SignUpActivity extends AppCompatActivity {
 

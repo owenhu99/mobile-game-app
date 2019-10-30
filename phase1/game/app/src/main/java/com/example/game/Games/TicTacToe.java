@@ -1,10 +1,8 @@
-package com.example.game;
+package com.example.game.Games;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 
 /**
  * A class that represents a game of TicTacToe.

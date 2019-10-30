@@ -1,6 +1,4 @@
-package com.example.game;
-
-import android.util.Log;
+package com.example.game.Users;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.game.R;
+import com.example.game.Users.User;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.Reader;

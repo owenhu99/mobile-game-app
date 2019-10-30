@@ -1,8 +1,7 @@
-package com.example.game;
+package com.example.game.Users;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class User implements Parcelable {
     private String userName;

@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.example.game.R;
 
 import java.util.Locale;
 import java.util.Objects;
