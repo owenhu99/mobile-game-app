@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.game.Games.GameView;
 import com.example.game.R;
@@ -17,6 +18,7 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        ((TextView) findViewById(R.id.textView)).setText(getUser().printStats());
     }
 
     protected User getUser() {

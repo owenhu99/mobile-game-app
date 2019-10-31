@@ -7,6 +7,21 @@
     android:layout_gravity="center"
     tools:context=".Activities.GameActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="182dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="155dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button6"
+        app:layout_constraintVertical_bias="0.837" />
+
     <Button
         android:id="@+id/button5"
         android:layout_width="190dp"
@@ -16,7 +31,7 @@
         android:layout_marginEnd="155dp"
         android:onClick="TicTacToeStart"
         android:text="@string/tictactoe"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,15 +84,16 @@
         android:id="@+id/button13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="49dp"
         android:layout_marginEnd="23dp"
+        android:layout_marginBottom="107dp"
         android:onClick="hardMode"
         android:text="Hard"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button12"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -85,7 +101,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="137dp"
         android:layout_marginTop="61dp"
-        android:layout_marginEnd="19dp"
         android:layout_marginBottom="124dp"
         android:text="Difficulty"
         app:layout_constraintBottom_toTopOf="@+id/button6"
