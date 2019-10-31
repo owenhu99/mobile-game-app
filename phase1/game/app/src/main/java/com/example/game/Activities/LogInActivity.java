@@ -55,7 +55,7 @@ public class LogInActivity extends AppCompatActivity {
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
-                        UserHelper.deleteUser(currentUser);
+                        UserHelper.deleteUser(currentUser, getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
                         startActivity(reload);
                     }
                 });
@@ -83,7 +83,7 @@ public class LogInActivity extends AppCompatActivity {
         ArrayList<User> users = new ArrayList<>();
 
         try (
-                Reader reader = Files.newBufferedReader(Paths.get(getResources().getString(R.string.savefile)));
+                Reader reader = Files.newBufferedReader(Paths.get(getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile)));
                 CSVParser cp = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
         ) {
             for (CSVRecord csvRecord : cp) {

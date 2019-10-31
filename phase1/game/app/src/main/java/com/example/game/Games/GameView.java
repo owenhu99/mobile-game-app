@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import com.example.game.R;
 import com.example.game.Users.User;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -32,6 +33,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     int difficulty;
 
+    private Context context;
+
     public GameView(Context context, String game, int d, User currentUser) {
         super(context);
         difficulty = d;
@@ -50,6 +53,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         textPaint.setTextSize(36);
         textPaint.setColor(Color.GREEN);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
+        this.context = context;
     }
 
     void checkGameEnded(){
@@ -86,7 +91,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         currentUser.updateStats(numWins, secondsPlayed, numLoses + numTies + numWins);
-        currentUser.update();
+        currentUser.update(context.getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
         boolean retry = true;
         while (retry) {
             try {

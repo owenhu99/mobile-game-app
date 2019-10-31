@@ -3,6 +3,8 @@ package com.example.game.Users;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.game.R;
+
 public class User implements Parcelable {
     private String userName;
     private String firstName;
@@ -23,75 +25,16 @@ public class User implements Parcelable {
         this.gold = 0;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    /**
+     * Updates class variable changes to internal storage file
+     */
+    public void update(String filePath) {
+        UserHelper.update(this, filePath);
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setTotalTime(double totalTime) {
-        this.totalTime = totalTime;
-    }
-
-    public double getTotalTime() {
-        return totalTime;
-    }
-
-    public void setTotalWins(int wins) {
-        this.totalWins = wins;
-    }
-
-    public int getTotalWins() {
-        return totalWins;
-    }
-
-    public int getTotalGames() {
-        return totalGames;
-    }
-
-    public void setTotalGames(int totalGames) {
-        this.totalGames = totalGames;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void clearStats() {
-        this.totalGames = 0;
-        this.totalTime = 0;
-        this.totalWins = 0;
-        this.gold = 0;
-    }
-
-    public void update() {
-        UserHelper.update(this);
-    }
-
-    // increases the user's total wins and increases gold equal to 10 gold per win, increase total time played
-
+    /**
+     * Updates all stats when a game finishes
+     */
     public void updateStats(int wins, double time, int totalGames) {
         this.totalWins += wins;
         this.gold += wins * 10;
@@ -99,11 +42,25 @@ public class User implements Parcelable {
         this.totalGames += totalGames;
     }
 
+    /**
+     * Print the current stats for displaying at the game menu
+     */
     public String printStats() {
         return "Current User: " + userName + "\nTotal Games: " + totalGames + "\nTotal Wins: " + totalWins + "\nTotal Time: " + totalTime + "\nGold: " + gold;
     }
 
-    public String[][] parseStats(String stats) {
+    /**
+     * Parse the stats field of the csv save file
+     *
+     * @param stats 'Stats' field of the csv file, in the format of '<unique abbreviation>=<value>'
+     *              separated with '&', for example: 'tt=0.0&tg=0&tw=0&g=0'
+     * @return a 2D array of size <number of different stats> x 2, for example:
+     * [ ["tt", "0.0"],
+     * ["tg", "0"],
+     * ["tw", "0"],
+     * ["g", "0"]]
+     */
+    private String[][] parseStats(String stats) {
         String[] firstRound = stats.split("&");
         String[][] ret = new String[firstRound.length][2];
         int i = 0;
@@ -116,6 +73,10 @@ public class User implements Parcelable {
         return ret;
     }
 
+    /**
+     * Loading the User's stats according to the csv save file
+     * @param stats concatenated string of all stats fields
+     */
     public void setStatsFromCSV(String stats) {
         String[][] values = parseStats(stats);
         for (String[] subArr : values) {
@@ -136,25 +97,28 @@ public class User implements Parcelable {
         }
     }
 
-    // decreases the user's gold when they buy something
+    /**
+     * Decrease gold by a certain amount
+     * @param gold amount of gold decreased
+     */
     public void decreaseGold(int gold) {
         this.gold -= gold;
     }
 
     /**
-     * Formats all the stats for storage as a csv field
+     * Formats stats for storage as a csv field
      * Each stat must be in the format '<unique abbreviation>=<value>' separated with '&'
      *
      * @return a string of stats formatted for csv storage
      */
-    public String combineStats() {
+    String combineStats() {
         return "tt=" + totalTime + "&tw=" + totalWins + "&tg=" + totalGames + "&g=" + gold;
     }
 
     /**
      * Parcelable requirements
      */
-    public User(Parcel in) {
+    private User(Parcel in) {
         this.userName = in.readString();
         this.firstName = in.readString();
         this.lastName = in.readString();
@@ -190,4 +154,23 @@ public class User implements Parcelable {
         }
     };
 
+
+    /**
+     * Following are getter and setter methods for the class variables
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    String getFirstName() {
+        return firstName;
+    }
+
+    String getLastName() {
+        return lastName;
+    }
+
+    public void setTotalGames(int totalGames) {
+        this.totalGames = totalGames;
+    }
 }

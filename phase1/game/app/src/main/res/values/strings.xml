@@ -6,7 +6,7 @@
     <string name="last_name">Last Name</string>
     <string name="username">Username</string>
     <string name="submit">Submit</string>
-    <string name="savefile">/data/user/0/com.example.game/files/users.csv</string>
+    <string name="savefile">/users.csv</string>
     <string name="back">back</string>
     <string name="player_2_0">player_2_0</string>
     <string name="rock_paper_scissors">Rock paper scissors</string>

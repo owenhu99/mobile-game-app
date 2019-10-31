@@ -24,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
         EditText lastName = findViewById(R.id.editText2);
         EditText userName = findViewById(R.id.editText3);
         User user = new User(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
-        UserHelper.add(user);
+        UserHelper.add(user, getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
 
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
@@ -33,10 +33,10 @@ public class SignUpActivity extends AppCompatActivity {
     public void edit(View view) {
         User user = new User("owenhu", "owen", "hu");
         user.setTotalGames(5);
-        UserHelper.update(user);
+        UserHelper.update(user, getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
     }
 
     public void delete(View view) {
-        UserHelper.deleteSaveFile();
+        UserHelper.deleteSaveFile(getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
     }
 }

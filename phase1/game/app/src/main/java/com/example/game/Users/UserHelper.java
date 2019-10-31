@@ -1,13 +1,10 @@
 package com.example.game.Users;
 
-import android.util.Log;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
@@ -17,18 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserHelper {
-    private static String FILEPATH = "/data/user/0/com.example.game/files/users.csv";
 
-    public static void add(User user) {
-        if (!new File(FILEPATH).exists()) {
-            create(user);
+    public static void add(User user, String filePath) {
+        if (!new File(filePath).exists()) {
+            create(user, filePath);
         } else {
-            append(user);
+            append(user, filePath);
         }
     }
 
-    private static void create(User user) {
-        try (FileWriter fw = new FileWriter(FILEPATH);
+    private static void create(User user, String filePath) {
+        try (FileWriter fw = new FileWriter(filePath);
              CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT.withHeader("First Name", "Last Name", "User Name", "Stats"))) {
             cp.printRecord(user.getFirstName(), user.getLastName(), user.getUserName(), user.combineStats());
             cp.flush();
@@ -37,8 +33,8 @@ public class UserHelper {
         }
     }
 
-    private static void append(User user) {
-        try (FileWriter fw = new FileWriter(FILEPATH, true);
+    private static void append(User user, String filePath) {
+        try (FileWriter fw = new FileWriter(filePath, true);
              BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write(getLine(user));
             bw.flush();
@@ -47,8 +43,8 @@ public class UserHelper {
         }
     }
 
-    public static void update(User user) {
-        try (CSVParser csvParser = new CSVParser(new FileReader(FILEPATH), CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+    public static void update(User user, String filePath) {
+        try (CSVParser csvParser = new CSVParser(new FileReader(filePath), CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
             List<CSVRecord> list = csvParser.getRecords();
             String[] editedList = new String[list.size()];
             int i = 0;
@@ -61,9 +57,9 @@ public class UserHelper {
                 i++;
             }
 
-            deleteSaveFile();
+            deleteSaveFile(filePath);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILEPATH, true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath, true));
             bufferedWriter.write("First Name,Last Name,User Name,Stats\n");
             for (String line : editedList) {
                 bufferedWriter.write(line + "\n");
@@ -74,8 +70,8 @@ public class UserHelper {
         }
     }
 
-    public static void deleteUser(User user) {
-        try (CSVParser csvParser = new CSVParser(new FileReader(FILEPATH), CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+    public static void deleteUser(User user, String filePath) {
+        try (CSVParser csvParser = new CSVParser(new FileReader(filePath), CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
             List<CSVRecord> list = csvParser.getRecords();
             ArrayList<CSVRecord> editedList = new ArrayList<>();
             for (CSVRecord record : list) {
@@ -84,9 +80,9 @@ public class UserHelper {
                 }
             }
 
-            deleteSaveFile();
+            deleteSaveFile(filePath);
 
-            FileWriter fw = new FileWriter(FILEPATH);
+            FileWriter fw = new FileWriter(filePath);
             CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT.withHeader("First Name", "Last Name", "User Name", "Stats"));
             for (CSVRecord record : editedList) {
                 cp.printRecord(record);
@@ -103,7 +99,7 @@ public class UserHelper {
         return user.getFirstName() + "," + user.getLastName() + "," + user.getUserName() + "," + user.combineStats() + "\n";
     }
 
-    public static void deleteSaveFile() {
-        new File(FILEPATH).delete();
+    public static void deleteSaveFile(String filePath) {
+        new File(filePath).delete();
     }
 }
