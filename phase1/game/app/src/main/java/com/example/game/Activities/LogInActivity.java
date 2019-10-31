@@ -2,6 +2,7 @@ package com.example.game.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.game.R;
 import com.example.game.Users.User;
+import com.example.game.Users.UserHelper;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -40,22 +42,36 @@ public class LogInActivity extends AppCompatActivity {
             for (int i = 0; i < userList.length; i++) {
                 userList[i] = new LinearLayout(this);
                 userList[i].setOrientation(LinearLayout.HORIZONTAL);
-
-                TextView text = new TextView(userList[i].getContext());
-                text.setText(users.get(i).getUserName());
-                userList[i].addView(text);
-
-                Button button = new Button(userList[i].getContext());
-                button.setText("GO");
                 final User currentUser = users.get(i);
-                button.setOnClickListener(new View.OnClickListener() {
+
+                // TextView of user name
+                TextView textUsername = new TextView(userList[i].getContext());
+                textUsername.setText(users.get(i).getUserName());
+                userList[i].addView(textUsername);
+
+                // Button to delete the corresponding user
+                Button buttonDelete = new Button(userList[i].getContext());
+                buttonDelete.setText("DELETE");
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
+                        UserHelper.deleteUser(currentUser);
+                        startActivity(reload);
+                    }
+                });
+                userList[i].addView(buttonDelete);
+
+                // Button to start as the corresponding user
+                Button buttonStart = new Button(userList[i].getContext());
+                buttonStart.setText("START");
+                buttonStart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent intent = new Intent(LogInActivity.this, GameActivity.class);
                         intent.putExtra("USER", currentUser);
                         startActivity(intent);
                     }
                 });
-                userList[i].addView(button);
+                userList[i].addView(buttonStart);
 
                 userList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout.addView(userList[i]);

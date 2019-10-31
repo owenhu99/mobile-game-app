@@ -1,15 +1,19 @@
 package com.example.game.Users;
 
+import android.util.Log;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserHelper {
@@ -68,7 +72,31 @@ public class UserHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void deleteUser(User user) {
+        try (CSVParser csvParser = new CSVParser(new FileReader(FILEPATH), CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+            List<CSVRecord> list = csvParser.getRecords();
+            ArrayList<CSVRecord> editedList = new ArrayList<>();
+            for (CSVRecord record : list) {
+                if (!record.get("User Name").equals(user.getUserName())) {
+                    editedList.add(record);
+                }
+            }
+
+            deleteSaveFile();
+
+            FileWriter fw = new FileWriter(FILEPATH);
+            CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT.withHeader("First Name", "Last Name", "User Name", "Stats"));
+            for (CSVRecord record : editedList) {
+                cp.printRecord(record);
+            }
+            cp.flush();
+            cp.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static String getLine(User user) {
