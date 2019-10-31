@@ -85,7 +85,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        currentUser.updateUserStats(numWins, secondsPlayed, numLoses+numTies+numWins);
+        currentUser.updateStats(numWins, secondsPlayed, numLoses + numTies + numWins);
         currentUser.update();
         boolean retry = true;
         while (retry) {

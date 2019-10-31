@@ -92,11 +92,15 @@ public class User implements Parcelable {
 
     // increases the user's total wins and increases gold equal to 10 gold per win, increase total time played
 
-    public void updateUserStats(int wins, double time, int totalGames) {
+    public void updateStats(int wins, double time, int totalGames) {
         this.totalWins += wins;
         this.gold += wins * 10;
         this.totalTime += time;
         this.totalGames += totalGames;
+    }
+
+    public String printStats() {
+        return "Current User: " + userName + "\nTotal Games: " + totalGames + "\nTotal Wins: " + totalWins + "\nTotal Time: " + totalTime + "\nGold: " + gold;
     }
 
     public String[][] parseStats(String stats) {
