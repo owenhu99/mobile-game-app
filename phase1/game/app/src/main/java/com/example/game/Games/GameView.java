@@ -42,11 +42,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
-        if(gameType == "TTT")
+        if(gameType.equals("TTT"))
             this.game = new TicTacToe(d);
-        else if(gameType == "RPS")
+        else if(gameType.equals("RPS"))
             this.game = new RockPaperScissorsGame(d);
-        else if(gameType == "BS")
+        else if(gameType.equals("BS"))
             this.game = new BadMineSweeper(d);
 
         textPaint = new Paint();
@@ -66,11 +66,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 numTies ++;
             else if(results == -1)
                 numLoses ++;
-            if(gameType == "TTT")
+            if(gameType.equals("TTT"))
                 this.game.reset();
-            else if(gameType == "RPS")
+            else if(gameType.equals("RPS"))
                 this.game.reset();
-            else if(gameType == "BS")
+            else if(gameType.equals("BS"))
                 this.game.reset();
         }
     }
@@ -114,10 +114,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawText("loses: "+ numLoses,50,150, textPaint);
         canvas.drawText("Play Time: "+ secondsPlayed,800,50, textPaint);
 
-        if (canvas != null) {
-            game.draw(canvas);
+        game.draw(canvas);
 
-        }
     }
 
     @Override
@@ -131,6 +129,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
         return super.onTouchEvent(event);
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

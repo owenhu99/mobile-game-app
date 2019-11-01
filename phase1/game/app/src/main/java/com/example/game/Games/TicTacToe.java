@@ -7,7 +7,7 @@ import android.graphics.Paint;
 /**
  * A class that represents a game of TicTacToe.
  * */
-public class TicTacToe extends Game{
+class TicTacToe extends Game{
     // The grid of X's and O's. 0 = nothing, 1 = X, 2 = 0
     private int[][] grid;
     // The current player whose turn it is.
@@ -19,10 +19,9 @@ public class TicTacToe extends Game{
     private int boxWidth;
     private int boxHeight;
 
-    Paint gridPaint;
-    Paint oPaint;
-    Paint xPaint;
-    Paint paintText;
+    private Paint gridPaint;
+    private Paint oPaint;
+    private Paint xPaint;
 
 
     //Creates a TicTacToe game.

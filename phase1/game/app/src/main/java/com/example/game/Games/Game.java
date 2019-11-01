@@ -1,14 +1,10 @@
 package com.example.game.Games;
 
-import android.content.Context;
 import android.graphics.Canvas;
-import android.view.MotionEvent;
-import android.view.View;
-
 /**
  * A class that represents a game.
  * */
-public abstract class Game{
+abstract class Game{
     //represents the difficulty of the game. 1 = Easy, 2 = Hard
     int difficulty;
 
@@ -18,15 +14,11 @@ public abstract class Game{
     boolean gameEnded = false;
 
 
-    public Game(int d){
+    Game(int d){
         this.difficulty = d;
     }
 
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-        updateDifficulty();
-    }
-    public void setWidthHeight(int width, int height){
+    void setWidthHeight(int width, int height){
         this.height = height;
         this.width = width;
     }

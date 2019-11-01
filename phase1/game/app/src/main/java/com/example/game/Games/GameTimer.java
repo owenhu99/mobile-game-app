@@ -7,16 +7,16 @@ import android.view.SurfaceHolder;
 public class GameTimer extends Thread{
     private GameView gameView;
     private boolean isPlaying;
-    private SurfaceHolder surfaceHolder;
-    Canvas canvas;
+    private final SurfaceHolder surfaceHolder;
 
-    public GameTimer(SurfaceHolder holder, GameView view){
+    GameTimer(SurfaceHolder holder, GameView view){
         this.gameView = view;
         this.surfaceHolder = holder;
     }
 
     @Override
     public void run(){
+        Canvas canvas;
         int counter = 0;
         while(isPlaying) {
             canvas = null;
@@ -51,7 +51,7 @@ public class GameTimer extends Thread{
             }
         }
     }
-    public void setPlaying(boolean isPlaying) {
+    void setPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
 }
