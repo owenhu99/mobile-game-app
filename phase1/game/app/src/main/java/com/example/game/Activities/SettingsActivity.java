@@ -34,6 +34,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_settings);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
+
+    /**
+     * Shows the language options as an AlertDialog builder.
+     */
     private void showLanguages(){
         String[] langs = {"English", "Français"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -55,6 +59,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         fMapTypeDialog.show();
     }
 
+    /**
+     * Sets the in-app language.
+     * @param lang String that represents the language to be set
+     */
     @SuppressWarnings("deprecation")
     private void setLocale(String lang){
         Resources res = this.getResources();
@@ -71,6 +79,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Loads the in-app language. By default the language will be loaded as English.
+     */
     private void loadLocale(){
         SharedPreferences editor = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
         String language = editor.getString("My_Lang", "en");
@@ -84,15 +95,16 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Method that is called when the back button at the top left of the screen is pressed.
+     * @param item Takes in a MenuItem item
+     * @return returns true if back button is pressed. Otherwise false
+     */
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 }
