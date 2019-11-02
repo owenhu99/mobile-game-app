@@ -12,16 +12,12 @@ public class RockPaperScissorsGame extends Game {
     //Stores result of current round
     private String roundResult;
 
-    //Rectangles of buttons
-    //private Rect rockBtn = new Rect();
-    //private Rect paperBtn = new Rect();
-    //private Rect scissorsBtn = new Rect();
-
-    //color of button and text
+    //color and size of text
     private Paint btnColor = new Paint();
     private Paint textColor = new Paint();
     private Paint uiTextColor = new Paint();
 
+    //Stores current action of player and bot
     private String userAction;
     private String botAction;
 
@@ -34,17 +30,9 @@ public class RockPaperScissorsGame extends Game {
     }
 
     /**
-     * Creates the buttons to be displayed when the game starts
+     * Creates the button text to be displayed when the game starts
      */
     private void createButtons() {
-
-        /*
-        rockBtn.set(10, height / 2,
-                10 + btnWidth, height / 2 + btnHeight);
-        paperBtn.set((width / 2 - btnWidth / 2), height / 2,
-                width / 2 + btnWidth / 2, height / 2 + btnHeight);
-        scissorsBtn.set((width - 10 - btnWidth), height / 2,
-                width - 10, height / 2 + btnHeight);*/
 
         btnColor.setColor(Color.GRAY);
         textColor.setColor(Color.RED);
@@ -64,9 +52,6 @@ public class RockPaperScissorsGame extends Game {
 
         System.out.println(canvas == null);
 
-        //canvas.drawRect(rockBtn, btnColor);
-        //canvas.drawRect(paperBtn, btnColor);
-        //canvas.drawRect(scissorsBtn, btnColor);
         int btnHeight = height / 12;
         int btnWidth = width / 5;
 
@@ -91,10 +76,7 @@ public class RockPaperScissorsGame extends Game {
     }
 
     @Override
-    void updateDifficulty() {
-
-
-    }
+    void updateDifficulty() { }
 
     /**
      * Getting the user's choice by recording where the screen was tapped and running the game, end
