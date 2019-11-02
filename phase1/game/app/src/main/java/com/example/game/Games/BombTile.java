@@ -6,6 +6,9 @@ import android.graphics.Paint;
 // use when drawing cool shit hopefully
 //import android.graphics.drawable.AdaptiveIconDrawable;
 
+/**
+ * A tile in a game of BadMineSweeper.
+ */
 public class BombTile {
     private boolean displayed = false;
     private boolean isBomb = false;
@@ -23,8 +26,8 @@ public class BombTile {
         notBombColor = new Paint();
         hidden = new Paint();
 
-        bombColor.setColor(Color.BLUE);
-        notBombColor.setColor(Color.RED);
+        bombColor.setColor(Color.RED);
+        notBombColor.setColor(Color.GREEN);
         hidden.setColor(Color.GRAY);
     }
     @Override
@@ -35,10 +38,27 @@ public class BombTile {
             return "F";
     }
 
+    /**
+     * set this tile as a bomb
+     */
     void setIsBomb(){ isBomb = true;}
+
+    /**
+     * set this tile as revealed: displayed
+     */
     void setDisplayed(){ displayed = true;}
+
+    /**
+     * check if this is a bomb
+     * @return isBomb
+     */
     boolean checkBomb(){ return isBomb; }
 
+
+    /**
+     * Return the color of this bombtile.
+     * @return color of bomb.
+     */
     Paint getColor(){
         if(displayed){
             if (isBomb){
