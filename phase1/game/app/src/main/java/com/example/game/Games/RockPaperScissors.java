@@ -27,8 +27,6 @@ public class RockPaperScissors {
     /**
      * Randomly generates the bot's choice for this round
      *
-     *
-     * @return A String representing the choice of the bot
      */
     public void setBotChoice() {
         Random rand = new Random();

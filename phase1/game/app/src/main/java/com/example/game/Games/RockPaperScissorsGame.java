@@ -22,16 +22,12 @@ public class RockPaperScissorsGame extends Game {
     private Paint textColor = new Paint();
     private Paint uiTextColor = new Paint();
 
-
-    private int roundNum;
-
     private String userAction;
     private String botAction;
 
     RockPaperScissorsGame(int d) {
         super(d);
         createButtons();
-        roundNum = 1;
         userAction = "";
         botAction = "";
         roundResult = "";
@@ -41,8 +37,6 @@ public class RockPaperScissorsGame extends Game {
      * Creates the buttons to be displayed when the game starts
      */
     private void createButtons() {
-        int btnHeight = height / 10;
-        int btnWidth = width / 5;
 
         /*
         rockBtn.set(10, height / 2,
@@ -62,10 +56,10 @@ public class RockPaperScissorsGame extends Game {
 
     }
 
-    @Override
     /**
      * Displays the rectangles and text representing the choices, and results of the game
      */
+    @Override
     void draw(Canvas canvas) {
 
         System.out.println(canvas == null);
@@ -102,11 +96,11 @@ public class RockPaperScissorsGame extends Game {
 
     }
 
-    @Override
     /**
      * Getting the user's choice by recording where the screen was tapped and running the game, end
      * the game after.
      */
+    @Override
     void receiveInput(int x, int y) {
         int btnHeight = height / 12;
         int btnWidth = width / 5;
@@ -141,12 +135,12 @@ public class RockPaperScissorsGame extends Game {
         endGame();
     }
 
-    @Override
     /**
      * Ends the game and returns required to update User's statistics
      *
      * @return A int representing the results of this game
      */
+    @Override
     int endGame() {
         gameEnded = true;
 
