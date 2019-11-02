@@ -4,6 +4,11 @@ package com.example.game.Games;
 import java.util.Random;
 
 public class RockPaperScissors {
+    /**
+     *  A class representing a single round of Rock Paper Scissors
+     *
+     */
+
     private String[] choices = {"Rock", "Paper", "Scissors"};
 
     private String currentBotChoice;
@@ -19,7 +24,12 @@ public class RockPaperScissors {
     }
 
 
-    // The bot chooses string in array, choices. Returns that choice.
+    /**
+     * Randomly generates the bot's choice for this round
+     *
+     *
+     * @return A String representing the choice of the bot
+     */
     public void setBotChoice() {
         Random rand = new Random();
         int indx = rand.nextInt(3);
@@ -31,10 +41,16 @@ public class RockPaperScissors {
         return currentBotChoice;
     }
 
-    // returns who wins that round and tie if there's a tie
-    public String findResult() {
-        String result = "If you see this, there's an error in get_result in RPS";
 
+    /**
+     * returns the winner of this round and tie if there's a tie, as a string
+     *
+     *
+     * @return A String representing the results of this round
+     */
+
+    public String findResult() {
+        String result = "";
         switch (this.currentUserChoice) {
             case "Rock":
                 if (this.currentBotChoice.equals("Paper")) {

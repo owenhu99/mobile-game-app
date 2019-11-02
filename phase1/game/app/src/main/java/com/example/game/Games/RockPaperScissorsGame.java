@@ -37,6 +37,9 @@ public class RockPaperScissorsGame extends Game {
         roundResult = "";
     }
 
+    /**
+     * Creates the buttons to be displayed when the game starts
+     */
     private void createButtons() {
         int btnHeight = height / 10;
         int btnWidth = width / 5;
@@ -60,6 +63,9 @@ public class RockPaperScissorsGame extends Game {
     }
 
     @Override
+    /**
+     * Displays the rectangles and text representing the choices, and results of the game
+     */
     void draw(Canvas canvas) {
 
         System.out.println(canvas == null);
@@ -97,6 +103,10 @@ public class RockPaperScissorsGame extends Game {
     }
 
     @Override
+    /**
+     * Getting the user's choice by recording where the screen was tapped and running the game, end
+     * the game after.
+     */
     void receiveInput(int x, int y) {
         int btnHeight = height / 12;
         int btnWidth = width / 5;
@@ -132,6 +142,11 @@ public class RockPaperScissorsGame extends Game {
     }
 
     @Override
+    /**
+     * Ends the game and returns required to update User's statistics
+     *
+     * @return A int representing the results of this game
+     */
     int endGame() {
         gameEnded = true;
 
