@@ -2,6 +2,7 @@ package com.example.game.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -38,6 +39,11 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
     public void BombStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(new GameView(this,"BS", difficulty, getUser()));
+    }
+
+    public void shop(View view){
+        Intent intent = new Intent(this, ShopActivity.class);
+        startActivity(intent);
     }
 
     public void easyMode(View view) {
