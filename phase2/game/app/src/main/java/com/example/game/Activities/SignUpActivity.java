@@ -1,42 +1,59 @@
 package com.example.game.Activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.game.DatabaseHelper;
 import com.example.game.R;
-import com.example.game.Users.User;
-import com.example.game.Users.UserHelper;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_page);
+        dbHelper = new DatabaseHelper(this);
     }
 
     public void submit(View view) {
-        EditText firstName = findViewById(R.id.editText1);
-        EditText lastName = findViewById(R.id.editText2);
-        EditText userName = findViewById(R.id.editText3);
-        User user = new User(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
-        UserHelper.add(user, getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
-
         Intent intent = new Intent(this, LogInActivity.class);
-        startActivity(intent);
-    }
 
-    public void edit(View view) {
-        User user = new User("owenhu", "owen", "hu");
-        user.setTotalGames(5);
-        UserHelper.update(user, getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
+        EditText userName = findViewById(R.id.editText);
+        String user = userName.getText().toString();
+        Cursor data = dbHelper.getData();
+        boolean userNameTaken = false;
+        while (data.moveToNext()) {
+            if (data.getString(1).equals(user)) {
+                userNameTaken = true;
+                break;
+            }
+        }
+        if (userNameTaken) {
+            toastMessage("User name is taken.");
+        } else {
+            boolean userAdded = dbHelper.addUser(user);
+            if (userAdded) {
+                toastMessage("Sign up completed.");
+                startActivity(intent);
+            } else {
+                toastMessage("Sign up failed.");
+            }
+        }
     }
 
     public void delete(View view) {
-        UserHelper.deleteSaveFile(getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
+        dbHelper.dropTable();
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

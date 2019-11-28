@@ -26,13 +26,6 @@ public class User implements Parcelable {
     }
 
     /**
-     * Updates class variable changes to internal storage file
-     */
-    public void update(String filePath) {
-        UserHelper.update(this, filePath);
-    }
-
-    /**
      * Updates all stats when a game finishes
      */
     public void updateStats(int wins, double time, int totalGames) {

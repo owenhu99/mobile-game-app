@@ -1,104 +1,85 @@
 package com.example.game.Activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.game.DatabaseHelper;
 import com.example.game.R;
-import com.example.game.Users.User;
-import com.example.game.Users.UserHelper;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class LogInActivity extends AppCompatActivity {
+
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        dbHelper = new DatabaseHelper(this);
         fillUsers();
     }
 
     private void fillUsers() {
         LinearLayout linearLayout = findViewById(R.id.users_menu);
 
-        ArrayList<User> users = getUsers();
-        final LinearLayout[] userList = new LinearLayout[users.size()];
-        if (userList.length != 0) {
-            for (int i = 0; i < userList.length; i++) {
-                userList[i] = new LinearLayout(this);
-                userList[i].setOrientation(LinearLayout.HORIZONTAL);
-                final User currentUser = users.get(i);
+        ArrayList<String> users = new ArrayList<>();
+        Cursor data = dbHelper.getData();
+        while (data.moveToNext()) {
+            users.add(data.getString(1));
+        }
+        final LinearLayout[] userDisplayList = new LinearLayout[users.size()];
+        if (userDisplayList.length == 0) {
+            toastMessage("No users found.");
+        } else {
+            for (int i = 0; i < userDisplayList.length; i++) {
+                userDisplayList[i] = new LinearLayout(this);
+                userDisplayList[i].setOrientation(LinearLayout.HORIZONTAL);
+                final String currentUser = users.get(i);
 
                 // TextView of user name
-                TextView textUsername = new TextView(userList[i].getContext());
-                textUsername.setText(users.get(i).getUserName());
-                userList[i].addView(textUsername);
+                TextView textUsername = new TextView(userDisplayList[i].getContext());
+                textUsername.setText(currentUser);
+                userDisplayList[i].addView(textUsername);
 
                 // Button to delete the corresponding user
-                Button buttonDelete = new Button(userList[i].getContext());
+                Button buttonDelete = new Button(userDisplayList[i].getContext());
                 buttonDelete.setText("DELETE");
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
-                        UserHelper.deleteUser(currentUser, getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile));
+                        dbHelper.deleteUser(currentUser);
                         startActivity(reload);
                     }
                 });
-                userList[i].addView(buttonDelete);
+                userDisplayList[i].addView(buttonDelete);
 
                 // Button to start as the corresponding user
-                Button buttonStart = new Button(userList[i].getContext());
+                Button buttonStart = new Button(userDisplayList[i].getContext());
                 buttonStart.setText("START");
                 buttonStart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent intent = new Intent(LogInActivity.this, GameActivity.class);
-                        intent.putExtra("USER", currentUser);
-                        startActivity(intent);
+                        // to be implemented
                     }
                 });
-                userList[i].addView(buttonStart);
+                userDisplayList[i].addView(buttonStart);
 
-                userList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                linearLayout.addView(userList[i]);
+                userDisplayList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                linearLayout.addView(userDisplayList[i]);
             }
         }
     }
 
-    protected ArrayList<User> getUsers() {
-        ArrayList<User> users = new ArrayList<>();
-
-        try (
-                Reader reader = Files.newBufferedReader(Paths.get(getApplicationContext().getFilesDir().getPath() + getResources().getString(R.string.savefile)));
-                CSVParser cp = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
-        ) {
-            for (CSVRecord csvRecord : cp) {
-                String username = csvRecord.get("User Name");
-                String firstname = csvRecord.get("First Name");
-                String lastname = csvRecord.get("Last Name");
-                String stats = csvRecord.get("Stats");
-                User user = new User(username, firstname, lastname);
-                user.setStatsFromCSV(stats);
-                users.add(user);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return users;
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
