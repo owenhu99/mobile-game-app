@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.game.DatabaseHelper;
+import com.example.game.Users.DatabaseHelper;
 import com.example.game.R;
 
 public class SignUpActivity extends AppCompatActivity {

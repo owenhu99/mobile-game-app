@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " " +
                 "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                USER_NAME + " TEXT NOT NULL, " +
+                USER_NAME + " TEXT NOT NULL UNIQUE, " +
                 CURRENCY + " INTEGER, " +
                 PLAY_TIME + " DOUBLE, " +
                 POINTS + " INTEGER, " +
@@ -76,6 +76,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
     public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return data;
+    }
+
+    public Cursor getUserData(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE username = ?", new String[]{username});
         return data;
     }
 
