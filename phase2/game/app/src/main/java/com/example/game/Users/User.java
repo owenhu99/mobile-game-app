@@ -1,6 +1,8 @@
 package com.example.game.Users;
 
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -11,19 +13,17 @@ public class User implements Observable {
     private int points;
     private String skin;
     private ArrayList<String> inventory = new ArrayList<>();
-    private ArrayList<Observer> observers;
+    private ArrayList<Observer> observers = new ArrayList<>();
     private DatabaseHelper dbHelper;
-    private Context context;
 
-    public User(String userName, Context context) {
+    public User(String userName, DatabaseHelper dbHelper) {
         this.userName = userName;
         this.playTime = 0;
         this.currency = 0;
         this.points = 0;
         this.currency = 0;
         this.skin = "default";
-        this.context = context;
-        this.dbHelper = new DatabaseHelper(context);
+        this.dbHelper = dbHelper;
         observers.add(dbHelper);
     }
 

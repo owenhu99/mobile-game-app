@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.game.Games.GameView;
 import com.example.game.R;
@@ -20,46 +22,52 @@ import java.util.ArrayList;
 public class GameActivity extends AppCompatActivity implements SurfaceHolder.Callback{
     int difficulty = 1;
     DatabaseHelper dbHelper;
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         dbHelper = new DatabaseHelper(this);
-        ((TextView) findViewById(R.id.textView)).setText(getUser().printStats());
+        currentUser = getUser();
+        ((TextView) findViewById(R.id.textView)).setText(currentUser.printStats());
     }
 
     protected User getUser() {
         String username = getIntent().getExtras().getString("username");
-        User currentUser = new User(username, this);
+        User currentUser = new User(username, dbHelper);
         Cursor data = dbHelper.getUserData(username);
-        data.moveToFirst();
-        int currency = data.getInt(data.getColumnIndex("currency"));
-        double playtime = data.getDouble(data.getColumnIndex("playtime"));
-        int points = data.getInt(data.getColumnIndex("points"));
-        String skin = data.getString(data.getColumnIndex("skin"));
-        String[] inventoryList = data.getString(data.getColumnIndex("inventory")).split(",");
-        ArrayList<String> inventory = new ArrayList<>();
-        for (String str : inventoryList) {
-            inventory.add(str);
+        if (data.getCount() > 0) {
+            data.moveToFirst();
+            int currency = data.getInt(data.getColumnIndex("currency"));
+            double playtime = data.getDouble(data.getColumnIndex("playtime"));
+            int points = data.getInt(data.getColumnIndex("points"));
+            String skin = data.getString(data.getColumnIndex("skin"));
+            String[] inventoryList = data.getString(data.getColumnIndex("inventory")).split(",");
+            ArrayList<String> inventory = new ArrayList<>();
+            if (inventoryList.length > 0) {
+                for (String str : inventoryList) {
+                    inventory.add(str);
+                }
+            }
+            currentUser.loadStats(playtime, currency, points, skin, inventory);
         }
-        currentUser.loadStats(playtime, currency, points, skin, inventory);
         return currentUser;
     }
 
     public void TicTacToeStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this, "Room", getUser()));
+        setContentView(new GameView(this, "Room", currentUser));
     }
 
     public void RockPaperScissorStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this,"Room", getUser()));
+        setContentView(new GameView(this, "Room", currentUser));
     }
 
     public void BombStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this,"Runner", getUser()));
+        setContentView(new GameView(this, "Runner", currentUser));
     }
 
     public void shop(View view){
@@ -84,4 +92,7 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {}
 
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

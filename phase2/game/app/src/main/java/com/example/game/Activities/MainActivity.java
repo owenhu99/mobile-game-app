@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.game.R;
@@ -29,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void game(View view) {
         Intent intent = new Intent(this, GameActivity.class);
-        User currentUser = new User("admin", "owen", "hu");
-        intent.putExtra("USER", currentUser);
+        String currentUser = "admin";
+        intent.putExtra("username", currentUser);
         startActivity(intent);
     }
     public void settings(View view) {
