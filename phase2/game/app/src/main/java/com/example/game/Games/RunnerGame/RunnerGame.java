@@ -39,6 +39,10 @@ public class RunnerGame extends Game {
     private ArrayList<RunnerGameEntity> gameBoard;
 
 
+    private int entitiesUntilCoin = 10;
+    private int entittiesSpawned = 0;
+
+
     // variables that deal with spawning
     private Random spawner = new Random();
     //entities is the total amount of entities programmed. whenever a new entity is added, this must
@@ -60,17 +64,21 @@ public class RunnerGame extends Game {
 
     public RunnerGame(int width, int height){
         super(width, height);
+
         RunnerGameEntity.setBoard_y(height);
         RunnerGameEntity.setBoard_x(width);
+
         Player player = new Player();
         this.gameBoard = new ArrayList<>();
+        gameBoard.add(player);
     }
 
     @Override
     protected void draw(Canvas canvas) {
         for (RunnerGameEntity entity: gameBoard) {
-            entity.move();
+            entity.draw(canvas);
         }
+
     }
 
 
@@ -100,7 +108,22 @@ public class RunnerGame extends Game {
 
     }
 
-    private void spawn(){ }
+    // in charge of spawning entities in
+    @Override
+    protected void updateGame(int secondsPlayed) {
+        spawn();
+
+        for (RunnerGameEntity entity: gameBoard
+             ) {
+            entity.move();
+        }
+    }
+
+    private void spawn(){
+        while(gameBoard.size() < entities){
+            spawnHelper();
+        }
+    }
     private void spawnHelper(){
         this.gameBoard.add(new Coin());
     }
@@ -109,8 +132,6 @@ public class RunnerGame extends Game {
 
     }
 
-    @Override
-    protected void updateGame(int secondsPlayed) {
 
-    }
+
 }

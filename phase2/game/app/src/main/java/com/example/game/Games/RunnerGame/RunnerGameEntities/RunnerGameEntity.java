@@ -42,7 +42,10 @@ public abstract class RunnerGameEntity {
 
 
 
-    RunnerGameEntity(){}
+    RunnerGameEntity(int difficulty){
+        // change speed based on difficulty of game.
+        this.speed = difficulty;
+    }
 
     public abstract void draw(Canvas canvas);
 
