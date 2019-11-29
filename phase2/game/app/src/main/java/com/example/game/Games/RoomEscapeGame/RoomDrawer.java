@@ -3,7 +3,6 @@ package com.example.game.Games.RoomEscapeGame;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 
 import com.example.game.Games.RoomEscapeGame.Entities.Entity;
 import com.example.game.Games.RoomEscapeGame.Entities.Player;
@@ -83,7 +82,7 @@ public class RoomDrawer {
     }
 
     void drawInfo(Canvas canvas){
-        canvas.drawText(room.countDownTimer.getCurrentTime() + " time left.",0,10, 200, drawHeight + 200, textPaint);
+        canvas.drawText(room.countDownTimer.getCurrentTime() + " time left.",0,12, 100, drawHeight + 200, textPaint);
 
         canvas.drawText(room.getManager().getPoints() + " points accumulated",0,20,drawWidth/2 + 200, drawHeight + 100, textPaint);
         canvas.drawText(room.getManager().getRoomsEscaped() + " rooms escaped.",0,15,drawWidth/2 + 200, drawHeight + 200, textPaint);
