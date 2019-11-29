@@ -3,7 +3,6 @@ package com.example.game.Activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.game.DatabaseHelper;
+import com.example.game.Users.DatabaseHelper;
 import com.example.game.R;
 import java.util.ArrayList;
 
@@ -68,7 +67,8 @@ public class LogInActivity extends AppCompatActivity {
                 buttonStart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent intent = new Intent(LogInActivity.this, GameActivity.class);
-                        // to be implemented
+                        intent.putExtra("username", currentUser);
+                        startActivity(intent);
                     }
                 });
                 userDisplayList[i].addView(buttonStart);
