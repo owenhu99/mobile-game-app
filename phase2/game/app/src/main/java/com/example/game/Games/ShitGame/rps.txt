@@ -1,11 +1,14 @@
-package com.example.game.Games;
+package com.example.game.Games.ShitGame;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.example.game.Games.Game;
+import com.example.game.Games.RockPaperScissors;
 
-public class RockPaperScissorsGame extends Game {
+
+public class RockPaperScissorsGame{
 
     //Game manager for running and the rock paper scissors game
 
@@ -141,4 +144,8 @@ public class RockPaperScissorsGame extends Game {
 
     }
 
+    @Override
+    void updateGame() {
+
+    }
 }
