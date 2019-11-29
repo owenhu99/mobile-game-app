@@ -1,13 +1,15 @@
-package com.example.game.Games;
+package com.example.game.Games.ShitGame;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.example.game.Games.Game;
+
 /**
  * A class that represents a game of TicTacToe.
  * */
-class TicTacToe extends Game{
+class TicTacToe extends{
     // The grid of X's and O's. 0 = nothing, 1 = X, 2 = 0
     private int[][] grid;
     // The current player whose turn it is.
@@ -22,11 +24,12 @@ class TicTacToe extends Game{
     private Paint gridPaint;
     private Paint oPaint;
     private Paint xPaint;
+    int difficulty;
 
 
     //Creates a TicTacToe game.
     TicTacToe(int d){
-        super(d);
+        //super(d);
         if(difficulty == 1)
             grid = new int[3][3];
         else
@@ -254,6 +257,11 @@ class TicTacToe extends Game{
             boxHeight = (height-statsDisplayGap - lineThickness) / 4;
             boxWidth = (width - lineThickness) / 4;
         }
+
+    }
+
+    @Override
+    void updateGame() {
 
     }
 }

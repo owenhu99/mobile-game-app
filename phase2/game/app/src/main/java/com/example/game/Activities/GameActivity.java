@@ -33,12 +33,12 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     public void RockPaperScissorStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this,"RPS", getUser()));
+        setContentView(new GameView(this,"Room", getUser()));
     }
 
     public void BombStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this,"BS", getUser()));
+        setContentView(new GameView(this,"Runner", getUser()));
     }
 
     public void shop(View view){

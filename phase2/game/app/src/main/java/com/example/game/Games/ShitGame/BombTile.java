@@ -1,4 +1,4 @@
-package com.example.game.Games;
+package com.example.game.Games.ShitGame;
 
 import android.graphics.Color;
 import android.graphics.Paint;
