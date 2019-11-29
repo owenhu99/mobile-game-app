@@ -28,17 +28,17 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     public void TicTacToeStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this, "TTT", difficulty, getUser()));
+        setContentView(new GameView(this, "Room", getUser()));
     }
 
     public void RockPaperScissorStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this,"RPS", difficulty, getUser()));
+        setContentView(new GameView(this,"RPS", getUser()));
     }
 
     public void BombStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this,"BS", difficulty, getUser()));
+        setContentView(new GameView(this,"BS", getUser()));
     }
 
     public void shop(View view){
