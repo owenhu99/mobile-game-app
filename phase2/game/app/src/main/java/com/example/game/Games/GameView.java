@@ -22,6 +22,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     int width;
     int height;
 
+    //Threads
     private GameTimer gameTimer;
     int secondsPlayed;
 
@@ -53,6 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         textPaint.setTextSize(36);
         textPaint.setColor(Color.GREEN);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
 
         this.context = context;
     }
@@ -145,5 +147,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 //            ((BadMineSweeper)game).setBoxDimension();
 
 
+    }
+
+    void updateGame(){
+        this.game.updateGame(secondsPlayed);
     }
 }

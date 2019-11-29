@@ -20,4 +20,6 @@ public abstract class Game{
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)
     protected abstract int endGame();
     protected abstract void reset();
+
+    protected abstract void updateGame(int secondsPlayed);
 }

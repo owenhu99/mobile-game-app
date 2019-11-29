@@ -181,7 +181,7 @@ class BadMineSweeper extends Game {
             spaces_cleared++;
         }
 
-
+        System.out.println("received input");
     }
 
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)

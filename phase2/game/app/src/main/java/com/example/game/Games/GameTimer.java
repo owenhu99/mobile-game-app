@@ -14,6 +14,7 @@ public class GameTimer extends Thread{
         this.surfaceHolder = holder;
     }
 
+
     @Override
     public void run(){
         Canvas canvas;
@@ -28,6 +29,9 @@ public class GameTimer extends Thread{
                         this.gameView.secondsPlayed++;
                         counter = 0;
                     }
+
+                    this.gameView.updateGame();
+
                     this.gameView.draw(canvas);
 //                    this.gameView.checkGameEnded();
                     counter ++;
