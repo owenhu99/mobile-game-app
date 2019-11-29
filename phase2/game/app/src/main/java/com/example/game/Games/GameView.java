@@ -31,23 +31,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     Paint textPaint;
 
-    int difficulty;
+    GameFactory gameFactory;
 
     private Context context;
 
-    public GameView(Context context, String game, int d, User currentUser) {
+    public GameView(Context context, String game, User currentUser) {
         super(context);
-        difficulty = d;
         this.currentUser = currentUser;
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
-        if(gameType.equals("TTT"))
-            this.game = new TicTacToe(d);
-        else if(gameType.equals("RPS"))
-            this.game = new RockPaperScissorsGame(d);
-        else if(gameType.equals("BS"))
-            this.game = new BadMineSweeper(d);
+        gameFactory = new GameFactory();
+//        if(gameType.equals("TTT"))
+//            this.game = new TicTacToe(d);
+//        else if(gameType.equals("RPS"))
+//            this.game = new RockPaperScissorsGame(d);
+//        else if(gameType.equals("BS"))
+//            this.game = new BadMineSweeper(d);
 
         textPaint = new Paint();
         textPaint.setTextSize(36);
@@ -58,21 +58,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     void checkGameEnded(){
-        if(game.gameEnded) {
-            int results = game.endGame();
-            if(results == 1)
-                numWins++;
-            else if(results == 0)
-                numTies ++;
-            else if(results == -1)
-                numLoses ++;
-            if(gameType.equals("TTT"))
-                this.game.reset();
-            else if(gameType.equals("RPS"))
-                this.game.reset();
-            else if(gameType.equals("BS"))
-                this.game.reset();
-        }
+//        if(game.gameEnded) {
+//            int results = game.endGame();
+//            if(results == 1)
+//                numWins++;
+//            else if(results == 0)
+//                numTies ++;
+//            else if(results == -1)
+//                numLoses ++;
+//            if(gameType.equals("TTT"))
+//                this.game.reset();
+//            else if(gameType.equals("RPS"))
+//                this.game.reset();
+//            else if(gameType.equals("BS"))
+//                this.game.reset();
+//        }
     }
 
 
@@ -136,11 +136,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         height = View.MeasureSpec.getSize(heightMeasureSpec);
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, height);
-        game.setWidthHeight(width, height);
-        if(game instanceof TicTacToe)
-            ((TicTacToe)game).setBoxDimension();
-        else if(game instanceof BadMineSweeper)
-            ((BadMineSweeper)game).setBoxDimension();
+        this.game = gameFactory.createGame(gameType, width, height);
+
+//        game.setWidthHeight(gameType, width, height);
+//        if(game instanceof TicTacToe)
+//            ((TicTacToe)game).setBoxDimension();
+//        else if(game instanceof BadMineSweeper)
+//            ((BadMineSweeper)game).setBoxDimension();
 
 
     }
