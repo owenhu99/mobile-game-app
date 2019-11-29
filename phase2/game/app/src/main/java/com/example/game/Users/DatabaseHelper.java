@@ -1,4 +1,4 @@
-package com.example.game;
+package com.example.game.Users;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 
 import static android.content.ContentValues.TAG;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
 
     private static final String TABLE_NAME = "players";
     private static final String USER_NAME = "username";
@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 USER_NAME + " TEXT NOT NULL, " +
                 CURRENCY + " INTEGER, " +
-                PLAY_TIME + " INTEGER, " +
+                PLAY_TIME + " DOUBLE, " +
                 POINTS + " INTEGER, " +
                 SKIN + " TEXT, " +
                 INVENTORY + " TEXT" + ")");
@@ -57,7 +57,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Integer deleteUser(String username) {
+    public void update(String username, int currency, double playtime, int points, String skin, String inventory) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CURRENCY, currency);
+        contentValues.put(PLAY_TIME, playtime);
+        contentValues.put(POINTS, points);
+        contentValues.put(SKIN, skin);
+        contentValues.put(INVENTORY, inventory);
+        db.update(TABLE_NAME, contentValues, "username = ?", new String[]{username});
+    }
+
+    public int deleteUser(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "username = ?", new String[]{username});
     }
