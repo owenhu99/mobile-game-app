@@ -1,93 +1,89 @@
 package com.example.game.Users;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.content.Context;
 
-import com.example.game.R;
+import java.util.ArrayList;
 
-public class User implements Parcelable {
+public class User implements Observable {
     private String userName;
-    private String firstName;
-    private String lastName;
-    private double totalTime;
-    private int totalWins;
-    private int totalGames;
-    private int gold;
+    private double playTime;
+    private int currency;
+    private int points;
+    private String skin;
+    private ArrayList<String> inventory = new ArrayList<>();
+    private ArrayList<Observer> observers;
+    private DatabaseHelper dbHelper;
+    private Context context;
 
-
-    public User(String userName, String firstName, String lastName) {
+    public User(String userName, Context context) {
         this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.totalTime = 0;
-        this.totalWins = 0;
-        this.totalGames = 0;
-        this.gold = 0;
+        this.playTime = 0;
+        this.currency = 0;
+        this.points = 0;
+        this.currency = 0;
+        this.skin = "default";
+        this.context = context;
+        this.dbHelper = new DatabaseHelper(context);
+        observers.add(dbHelper);
+    }
+
+    public void register(Observer o) {
+        observers.add(o);
+    }
+
+    public void unregister(Observer o) {
+        observers.remove(o);
+    }
+
+    public void notifyObserver() {
+        for (Observer o : observers) {
+            o.update(userName, currency, playTime, points, skin, String.join(",", inventory));
+        }
     }
 
     /**
      * Updates all stats when a game finishes
      */
-    public void updateStats(int wins, double time, int totalGames) {
-        this.totalWins += wins;
-        this.gold += wins * 10;
-        this.totalTime += time;
-        this.totalGames += totalGames;
+    public void updateStats(int wins, double time) {
+        this.points += wins;
+        this.currency += wins * 10;
+        this.playTime += time;
+        notifyObserver();
+    }
+
+    public void loadStats(double playTime, int currency, int points, String skin, ArrayList<String> inventory) {
+        this.playTime = playTime;
+        this.currency = currency;
+        this.points = points;
+        this.skin = skin;
+        this.inventory = inventory;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void addToInventory(String skin) {
+        this.inventory.add(skin);
+    }
+
+    public void removeFromInventory(String skin) {
+        this.inventory.remove(skin);
+    }
+
+    public ArrayList<String> getInventory() {
+        return inventory;
     }
 
     /**
      * Print the current stats for displaying at the game menu
      */
     public String printStats() {
-        return "Current User: " + userName + "\nTotal Games: " + totalGames + "\nTotal Wins: " + totalWins + "\nTotal Time: " + totalTime + "\nGold: " + gold;
-    }
-
-    /**
-     * Parse the stats field of the csv save file
-     *
-     * @param stats 'Stats' field of the csv file, in the format of '<unique abbreviation>=<value>'
-     *              separated with '&', for example: 'tt=0.0&tg=0&tw=0&g=0'
-     * @return a 2D array of size <number of different stats> x 2, for example:
-     * [ ["tt", "0.0"],
-     * ["tg", "0"],
-     * ["tw", "0"],
-     * ["g", "0"]]
-     */
-    private String[][] parseStats(String stats) {
-        String[] firstRound = stats.split("&");
-        String[][] ret = new String[firstRound.length][2];
-        int i = 0;
-        for (String str : firstRound) {
-            String[] secondRound = str.split("=", 2);
-            ret[i][0] = secondRound[0];
-            ret[i][1] = secondRound[1];
-            i++;
-        }
-        return ret;
-    }
-
-    /**
-     * Loading the User's stats according to the csv save file
-     * @param stats concatenated string of all stats fields
-     */
-    public void setStatsFromCSV(String stats) {
-        String[][] values = parseStats(stats);
-        for (String[] subArr : values) {
-            switch (subArr[0]) {
-                case "tt":
-                    totalTime = Double.parseDouble(subArr[1]);
-                    break;
-                case "tw":
-                    totalWins = Integer.valueOf(subArr[1]);
-                    break;
-                case "tg":
-                    totalGames = Integer.valueOf(subArr[1]);
-                    break;
-                case "g":
-                    gold = Integer.valueOf(subArr[1]);
-                    break;
-            }
-        }
+        return "Current User: " + userName + "\nPlaytime: " + playTime + "\nPoints: " + points + "\nCurrency: " + currency + "\nSkin: " + skin;
     }
 
     /**
@@ -95,75 +91,7 @@ public class User implements Parcelable {
      * @param gold amount of gold decreased
      */
     public void decreaseGold(int gold) {
-        this.gold -= gold;
-    }
-
-    /**
-     * Formats stats for storage as a csv field
-     * Each stat must be in the format '<unique abbreviation>=<value>' separated with '&'
-     *
-     * @return a string of stats formatted for csv storage
-     */
-    String combineStats() {
-        return "tt=" + totalTime + "&tw=" + totalWins + "&tg=" + totalGames + "&g=" + gold;
-    }
-
-    /**
-     * Parcelable requirements
-     */
-    private User(Parcel in) {
-        this.userName = in.readString();
-        this.firstName = in.readString();
-        this.lastName = in.readString();
-        this.totalTime = in.readDouble();
-        this.totalWins = in.readInt();
-        this.totalGames = in.readInt();
-        this.gold = in.readInt();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(this.userName);
-        out.writeString(this.firstName);
-        out.writeString(this.lastName);
-        out.writeDouble(this.totalTime);
-        out.writeInt(this.totalWins);
-        out.writeInt(this.totalGames);
-        out.writeInt(this.gold);
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-
-    /**
-     * Following are getter and setter methods for the class variables
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    String getFirstName() {
-        return firstName;
-    }
-
-    String getLastName() {
-        return lastName;
-    }
-
-    public void setTotalGames(int totalGames) {
-        this.totalGames = totalGames;
+        this.currency -= gold;
+        notifyObserver();
     }
 }
