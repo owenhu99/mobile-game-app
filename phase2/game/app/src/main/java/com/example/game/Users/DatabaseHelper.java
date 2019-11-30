@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
         return db.update(TABLE_NAME, contentValues, "username = ?", new String[]{oldUsername});
     }
 
-    public void update(String username, int currency, double playtime, int points, int wins, String skin, String inventory) {
+    public int update(String username, int currency, double playtime, int points, int wins, String skin, String inventory) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(CURRENCY, currency);
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
         contentValues.put(WINS, wins);
         contentValues.put(SKIN, skin);
         contentValues.put(INVENTORY, inventory);
-        db.update(TABLE_NAME, contentValues, "username = ?", new String[]{username});
+        return db.update(TABLE_NAME, contentValues, "username = ?", new String[]{username});
     }
 
     public int deleteUser(String username) {
