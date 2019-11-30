@@ -61,6 +61,7 @@ public class User implements Observable {
 
     public void setSkin(String skin) {
         this.skin = skin;
+        notifyObserver();
     }
 
     public String getSkin() {
@@ -79,19 +80,25 @@ public class User implements Observable {
         return inventory;
     }
 
+    public void setCurrency(int currency) {
+        this.currency += currency;
+        notifyObserver();
+    }
+
+    public void setPlayTime(double time) {
+        this.playTime += time;
+        notifyObserver();
+    }
+
+    public void setPoints(int points) {
+        this.points += points;
+        notifyObserver();
+    }
+
     /**
      * Print the current stats for displaying at the game menu
      */
     public String printStats() {
         return "Current User: " + userName + "\nPlaytime: " + playTime + "\nPoints: " + points + "\nCurrency: " + currency + "\nSkin: " + skin;
-    }
-
-    /**
-     * Decrease gold by a certain amount
-     * @param gold amount of gold decreased
-     */
-    public void decreaseGold(int gold) {
-        this.currency -= gold;
-        notifyObserver();
     }
 }
