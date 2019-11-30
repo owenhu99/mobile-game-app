@@ -19,7 +19,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public Game game;
     String gameType;
-    User currentUser;
     //Canvas dimensions
     int width;
     int height;
@@ -28,55 +27,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private GameTimer gameTimer;
     int secondsPlayed;
 
-    int numWins = 0;
-    int numLoses = 0;
-    int numTies = 0;
+    User playerOne;
+    User playerTwo;
+    boolean firstTurn;
 
-    Paint textPaint;
 
     GameFactory gameFactory;
 
     private Context context;
 
-    public GameView(Context context, String game, User currentUser) {
+    public GameView(Context context, String game, User playerOne, User playerTwo) {
         super(context);
-        this.currentUser = currentUser;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        this.firstTurn = true;
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
         gameFactory = new GameFactory();
-//        if(gameType.equals("TTT"))
-//            this.game = new TicTacToe(d);
-//        else if(gameType.equals("RPS"))
-//            this.game = new RockPaperScissorsGame(d);
-//        else if(gameType.equals("BS"))
-//            this.game = new BadMineSweeper(d);
-
-        textPaint = new Paint();
-        textPaint.setTextSize(36);
-        textPaint.setColor(Color.GREEN);
-        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
-
 
         this.context = context;
     }
 
     void checkGameEnded(){
-//        if(game.gameEnded) {
-//            int results = game.endGame();
-//            if(results == 1)
-//                numWins++;
-//            else if(results == 0)
-//                numTies ++;
-//            else if(results == -1)
-//                numLoses ++;
-//            if(gameType.equals("TTT"))
-//                this.game.reset();
-//            else if(gameType.equals("RPS"))
-//                this.game.reset();
-//            else if(gameType.equals("BS"))
-//                this.game.reset();
-//        }
+        if(game.gameEnded) {
+            if(firstTurn) {
+                playerOne.setPoints(game.getPoints());
+                this.game = gameFactory.createGame(gameType, width, height);
+                firstTurn = false;
+            }
+            else{
+                playerTwo.setPoints(game.getPoints());
+            }
+        }
     }
 
 
@@ -94,7 +77,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        currentUser.updateStats(numWins, secondsPlayed);
         boolean retry = true;
         while (retry) {
             try {
@@ -112,18 +94,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.drawText("wins: "+ numWins,50,50, textPaint);
-        canvas.drawText("tie: "+ numTies,50,100, textPaint);
-        canvas.drawText("loses: "+ numLoses,50,150, textPaint);
-        canvas.drawText("Play Time: "+ secondsPlayed,800,50, textPaint);
-
         game.draw(canvas);
 
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        System.out.println("detected touch");
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             int x = (int) (event.getX());
             int y = (int) (event.getY());
@@ -140,18 +116,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, height);
         this.game = gameFactory.createGame(gameType, width, height);
-
-//        game.setWidthHeight(gameType, width, height);
-//        if(game instanceof TicTacToe)
-//            ((TicTacToe)game).setBoxDimension();
-//        else if(game instanceof BadMineSweeper)
-//            ((BadMineSweeper)game).setBoxDimension();
-
-
-    }
-
-    void updateGame(){
-        this.game.updateGame(secondsPlayed);
     }
 
 }

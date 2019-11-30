@@ -13,7 +13,8 @@ import com.example.game.R;
 public abstract class Game{
     protected int height;
     protected int width;
-
+    boolean gameEnded;
+    int points;
 
     protected Context context;
 
@@ -31,10 +32,13 @@ public abstract class Game{
     //Get the x and y position on the screen where the user pressed.
     protected abstract void receiveInput(int x, int y);
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)
-    protected abstract int endGame();
-    protected abstract void reset();
-    protected abstract void updateGame(int secondsPlayed);
-
+    protected void endGame(int points){
+        gameEnded = true;
+        this.points = points;
+    }
+    int getPoints(){
+        return points;
+    }
 
     public void setContext(Context context) {
         this.context = context;
