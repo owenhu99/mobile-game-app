@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void game(View view) {
         Intent intent = new Intent(this, GameActivity.class);
-        User currentUser = new User("admin", this);
-        intent.putExtra("USER", (Parcelable) currentUser);
+        intent.putExtra("username1", "admin");
+        intent.putExtra("username2", "admin");
         startActivity(intent);
     }
     public void settings(View view) {
