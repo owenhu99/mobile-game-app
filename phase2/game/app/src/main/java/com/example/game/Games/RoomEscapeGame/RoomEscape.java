@@ -96,9 +96,7 @@ public class RoomEscape extends Game {
         remove.add(entity);
     }
 
-    @Override
-    protected void updateGame(int secondsPlayed) {
-    }
+
 }
 
 
