@@ -16,6 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
     private static final String CURRENCY = "currency";
     private static final String PLAY_TIME = "playtime";
     private static final String POINTS = "points";
+    private static final String WINS = "wins";
     private static final String SKIN = "skin";
     private static final String INVENTORY = "inventory";
 
@@ -31,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
                 CURRENCY + " INTEGER, " +
                 PLAY_TIME + " DOUBLE, " +
                 POINTS + " INTEGER, " +
+                WINS + " INTEGER, " +
                 SKIN + " TEXT, " +
                 INVENTORY + " TEXT" + ")");
     }
@@ -57,12 +59,13 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
         }
     }
 
-    public void update(String username, int currency, double playtime, int points, String skin, String inventory) {
+    public void update(String username, int currency, double playtime, int points, int wins, String skin, String inventory) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(CURRENCY, currency);
         contentValues.put(PLAY_TIME, playtime);
         contentValues.put(POINTS, points);
+        contentValues.put(WINS, wins);
         contentValues.put(SKIN, skin);
         contentValues.put(INVENTORY, inventory);
         db.update(TABLE_NAME, contentValues, "username = ?", new String[]{username});
