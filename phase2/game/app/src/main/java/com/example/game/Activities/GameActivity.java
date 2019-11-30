@@ -30,13 +30,13 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         dbHelper = new DatabaseHelper(this);
-        user1 = getUser('1');
-        user2 = getUser('2');
+        ArrayList<String> userNameList = getIntent().getExtras().getStringArrayList("userList");
+        user1 = getUser(userNameList.get(0));
+        user2 = getUser(userNameList.get(1));
         ((TextView) findViewById(R.id.textView)).setText(user1.printStats());
     }
 
-    protected User getUser(char n) {
-        String username = getIntent().getExtras().getString("username" + n);
+    protected User getUser(String username) {
         User currentUser = new User(username, dbHelper);
         Cursor data = dbHelper.getUserData(username);
         if (data.getCount() > 0) {

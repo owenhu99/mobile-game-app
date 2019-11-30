@@ -23,6 +23,10 @@ public class SignUpActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
     }
 
+    public void logIn(View view) {
+        startActivity(new Intent(this, LogInActivity.class));
+    }
+
     public void submit(View view) {
         Intent intent = new Intent(this, LogInActivity.class);
 

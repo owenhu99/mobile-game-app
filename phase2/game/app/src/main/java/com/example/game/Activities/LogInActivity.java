@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,12 +46,18 @@ public class LogInActivity extends AppCompatActivity {
                 final String currentUser = users.get(i);
 
                 // TextView of user name
-                TextView textUsername = new TextView(userDisplayList[i].getContext());
+                TextView textUsername = new TextView(this);
                 textUsername.setText(currentUser);
                 userDisplayList[i].addView(textUsername);
 
+                // Checkbox to select user to log in
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setTag(currentUser);
+                checkBox.setId(i);
+                userDisplayList[i].addView(checkBox);
+
                 // Button to delete the corresponding user
-                Button buttonDelete = new Button(userDisplayList[i].getContext());
+                Button buttonDelete = new Button(this);
                 buttonDelete.setText("DELETE");
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
@@ -62,7 +69,7 @@ public class LogInActivity extends AppCompatActivity {
                 userDisplayList[i].addView(buttonDelete);
 
                 // Button to start as the corresponding user
-                Button buttonStart = new Button(userDisplayList[i].getContext());
+                Button buttonStart = new Button(this);
                 buttonStart.setText("START");
                 buttonStart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
@@ -76,6 +83,30 @@ public class LogInActivity extends AppCompatActivity {
                 userDisplayList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout.addView(userDisplayList[i]);
             }
+            Button submit = new Button(this);
+            submit.setText("SUBMIT");
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<String> checkedUsers = new ArrayList<>();
+                    for (int i = 0; i < userDisplayList.length; i++) {
+                        CheckBox currentCheckBox = findViewById(i);
+                        if (currentCheckBox.isChecked()) {
+                            checkedUsers.add((String) currentCheckBox.getTag());
+                        }
+                    }
+                    if (checkedUsers.size() != 2) {
+                        toastMessage("You must log in as two players");
+                        finish();
+                        startActivity(getIntent());
+                    } else {
+                        Intent intent = new Intent(LogInActivity.this, GameActivity.class);
+                        intent.putExtra("userList", checkedUsers);
+                        startActivity(intent);
+                    }
+                }
+            });
+            linearLayout.addView(submit);
         }
     }
 
