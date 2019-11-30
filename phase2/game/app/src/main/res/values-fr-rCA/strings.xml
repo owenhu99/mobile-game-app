@@ -15,4 +15,10 @@
     <string name="player_2_0">joueur 2</string>
     <string name="settings">paramètres</string>
     <string name="tictactoe">" Morpion"</string>
+    <string name="description">Description.</string>
+    <string name="game_title">Titre de Jeux</string>
+    <string name="how_to_play">Comment Jouer</string>
+    <string name="leaderboard">classement</string>
+    <string name="practice">Pratiquer</string>
+    <string name="versus">contre</string>
 </resources>
