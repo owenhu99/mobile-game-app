@@ -46,7 +46,7 @@
         android:layout_height="45dp"
         android:background="@drawable/roundedbutton"
         android:backgroundTint="#5C1349"
-        android:onClick="choosePlayers"
+        android:onClick="logIn"
         android:text="@string/versus"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/button18"
