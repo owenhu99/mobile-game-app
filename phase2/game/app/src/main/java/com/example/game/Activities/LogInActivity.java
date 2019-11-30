@@ -80,17 +80,17 @@ public class LogInActivity extends AppCompatActivity {
                 });
                 userDisplayList[i].addView(buttonStart);
 
-                // Button to start as the corresponding user
+                // Button to shop as the corresponding user
                 Button buttonShop = new Button(this);
-                buttonStart.setText("SHOP");
-                buttonStart.setOnClickListener(new View.OnClickListener() {
+                buttonShop.setText("SHOP");
+                buttonShop.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent intent = new Intent(LogInActivity.this, ShopActivity.class);
                         intent.putExtra("username", currentUser);
                         startActivity(intent);
                     }
                 });
-                userDisplayList[i].addView(buttonStart);
+                userDisplayList[i].addView(buttonShop);
 
                 userDisplayList[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout.addView(userDisplayList[i]);
