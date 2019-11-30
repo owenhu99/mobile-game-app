@@ -26,7 +26,8 @@ public class GameTimer extends Thread{
                 System.out.println(canvas == null);
                 synchronized (surfaceHolder) {
                     if(counter == 10) {
-                        this.gameView.secondsPlayed++;
+                        this.gameView.updateSecondsPlayed();
+
                         counter = 0;
                     }
                     this.gameView.draw(canvas);

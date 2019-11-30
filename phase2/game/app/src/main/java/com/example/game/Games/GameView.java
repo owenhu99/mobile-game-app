@@ -115,7 +115,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         height = View.MeasureSpec.getSize(heightMeasureSpec);
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, height);
+
+
         this.game = gameFactory.createGame(gameType, width, height);
+        this.game.setContext(context);
+    }
+
+    void updateSecondsPlayed(){
+        this.secondsPlayed++;
+        this.game.secondsPlayed++;
     }
 
 }

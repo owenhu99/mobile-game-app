@@ -3,6 +3,8 @@ package com.example.game.Games.RunnerGame.RunnerGameEntities;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import java.util.Random;
+
 /**
  * RunnerGameEntity is an entity of the RunnerGame. This includes the object the player controls, the
  * enemies that the player must avoid, as well as the coins that the player can collect.
@@ -21,43 +23,51 @@ public abstract class RunnerGameEntity {
     // integers x and y are the centers of each RunnerGameEntity.
     int x;
     int y;
-    // integers x_dim and y_dim are half of the total dimension of the RunnerGameEntity.
+    // integers xDim and yDim are half of the total dimension of the RunnerGameEntity.
     // should and can be calculated as a percentage of the total gameboard.
-    int x_dim;
-    int y_dim;
+    int xDim;
+    int yDim;
 
     // the width and height of the board (screen that the game is being displayed on). These are
     // initialized in methods setBoardX() setBoardY()
-    static int x_board;
-    static int y_board;
+    static int xBoard;
+    static int yBoard;
 
     // boolean below_bottom is used to determine if the top of the entity is below the bottom of the
     // screen. if it is, the object should be removed from the gameboard.
-    protected boolean below_bottom = false;
 
     int speed;
-    private String on_contact;
+    protected String onContact;
 
-    protected Paint entity_color = new Paint();
+    protected Paint entityColor = new Paint();
+
+    Random d = new Random();
 
 
 
     RunnerGameEntity(int difficulty){
         // change speed based on difficulty of game.
         this.speed = difficulty;
+        this.x = d.nextInt(xBoard);
+        this.y = 0;
+        //creates entity size
     }
 
     public abstract void draw(Canvas canvas);
-
     public abstract void move();
 
-    public String getOn_contact(){ return on_contact; }
 
-    public static void setBoard_x(int width){ RunnerGameEntity.x_board = width;
-        System.out.println("RGAMEENT_XBOARD" + RunnerGameEntity.x_board);}
-    public static void setBoard_y(int height){ RunnerGameEntity.y_board = height;
-        System.out.println("RGAMEENT_XBOARD" + RunnerGameEntity.y_board);}
+    public String getOnContact(){ return onContact; }
+    public boolean isBelowBottom(){ return (this.y-yDim <= yBoard); }
 
+    public static void setBoard_x(int width){ RunnerGameEntity.xBoard = width;
+        System.out.println("RGAMEENT_XBOARD" + RunnerGameEntity.xBoard);}
+    public static void setBoard_y(int height){ RunnerGameEntity.yBoard = height;
+        System.out.println("RGAMEENT_XBOARD" + RunnerGameEntity.yBoard);}
 
+    public int[] getBounds(){
+        int[] r = {x-xDim, x+xDim, y-yDim, y+yDim};
+        return r;
+    }
 
 }

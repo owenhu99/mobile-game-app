@@ -15,6 +15,7 @@ public abstract class Game{
     protected int width;
     boolean gameEnded;
     int points;
+    int secondsPlayed;
 
     protected Context context;
 
@@ -29,8 +30,10 @@ public abstract class Game{
 
     //Display the game to the screen.
     protected abstract void draw(Canvas canvas);
+
     //Get the x and y position on the screen where the user pressed.
     protected abstract void receiveInput(int x, int y);
+
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)
     protected void endGame(int points){
         gameEnded = true;

@@ -1,13 +1,17 @@
 package com.example.game.Games.RunnerGame;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 
 import com.example.game.Games.Game;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.Coin;
+import com.example.game.Games.RunnerGame.RunnerGameEntities.Enemies;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.Player;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.RunnerGameEntity;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.RunnerGameEntityFactory;
+import com.example.game.R;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -77,15 +81,25 @@ public class RunnerGame extends Game {
         this.runnerGameEntityFactory = new RunnerGameEntityFactory();
         this.player = player;
         this.gameBoard = new ArrayList<>();
+
+        Bitmap coinBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.goldenpepe);
+        Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.feelsbadman);
+        Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.feelsgoodman);
+        Player.setPlayerBMP(friendlyBMP);
+        Coin.setCoinBMP(coinBMP);
+        Enemies.setBmp(enemyBMP);
     }
 
     @Override
     protected void draw(Canvas canvas) {
+        updateGame(this.secondsPlayed);
+
         for (RunnerGameEntity entity: gameBoard) {
             entity.draw(canvas);
         }
         player.draw(canvas);
-
+        detectCollision();
+        removeEntities();
     }
 
 
@@ -115,34 +129,18 @@ public class RunnerGame extends Game {
         }
     }
 
-    @Override
-    protected int endGame() {
-        return 0;
-    }
-
-    @Override
-    protected void reset() {
-        this.gameBoard = new ArrayList<>();
-
-    }
 
     // in charge of spawning entities in
-    @Override
-    protected void updateGame(int secondsPlayed) {
+    private void updateGame(int secondsPlayed) {
         if (secondsPlayed % 10 == 0){
             this.difficulty += 10;
         }
 
         //spawn entities according to rules.
         spawn();
-
-
         for (RunnerGameEntity entity: gameBoard) {
             entity.move();
         }
-
-        removeEntities();
-
     }
 
     private void spawn(){
@@ -153,7 +151,28 @@ public class RunnerGame extends Game {
 
 
     private void detectCollision(){
+        int[] playerBounds = player.getBounds();
+        int[] entityBounds;
+        boolean[] inBounds = {false, false};
+        for (RunnerGameEntity entity: gameBoard
+             ) {
+            entityBounds = entity.getBounds();
+            inBounds[0] = ((playerBounds[0] < entityBounds[0] && entityBounds[0] < playerBounds[1])||(playerBounds[0] < entityBounds[1] && entityBounds[1] < playerBounds[1]));
+            inBounds[1] = ((playerBounds[2] < entityBounds[2] && entityBounds[2] < playerBounds[3])||(playerBounds[2] < entityBounds[3] && entityBounds[3] < playerBounds[3]));
+            if(inBounds[0] && inBounds[1]){
+                switch (entity.getOnContact()){
+                    case "Coin":
+                        coins_collected++;
+                    case "Enemy":
+                        endGame(this.secondsPlayed);
+                        break;
+                }
 
+            }
+            inBounds[0] = false;
+            inBounds[1] = false;
+
+        }
     }
 
     private void removeEntities(){
