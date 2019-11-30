@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
     }
 
     public void signUp(View view) {
@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
     }
     public void practice(View view) {
         Intent intent = new Intent(this, PracticeActivity.class);
+        startActivity(intent);
+    }
+    public void leaderboard(View view) {
+        Intent intent = new Intent(this, LeaderboardActivity.class);
+        startActivity(intent);
+    }
+    public void howToPlay (View view) {
+        Intent intent = new Intent(this, HowToPlayActivity.class);
         startActivity(intent);
     }
 }
