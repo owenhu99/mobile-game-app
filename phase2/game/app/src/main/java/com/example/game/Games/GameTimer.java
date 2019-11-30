@@ -29,11 +29,8 @@ public class GameTimer extends Thread{
                         this.gameView.secondsPlayed++;
                         counter = 0;
                     }
-
-                    this.gameView.updateGame();
-
                     this.gameView.draw(canvas);
-//                    this.gameView.checkGameEnded();
+                    this.gameView.checkGameEnded();
                     counter ++;
                 }
             }catch (Exception e) {
