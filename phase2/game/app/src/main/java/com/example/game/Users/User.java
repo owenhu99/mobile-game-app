@@ -11,19 +11,19 @@ public class User implements Observable {
     private double playTime;
     private int currency;
     private int points;
+    private int wins;
     private String skin;
     private ArrayList<String> inventory = new ArrayList<>();
     private ArrayList<Observer> observers = new ArrayList<>();
-    private DatabaseHelper dbHelper;
 
     public User(String userName, DatabaseHelper dbHelper) {
         this.userName = userName;
         this.playTime = 0;
         this.currency = 0;
         this.points = 0;
+        this.wins = 0;
         this.currency = 0;
         this.skin = "default";
-        this.dbHelper = dbHelper;
         observers.add(dbHelper);
     }
 
@@ -37,7 +37,7 @@ public class User implements Observable {
 
     public void notifyObserver() {
         for (Observer o : observers) {
-            o.update(userName, currency, playTime, points, skin, String.join(",", inventory));
+            o.update(userName, currency, playTime, points, wins, skin, String.join(",", inventory));
         }
     }
 
@@ -51,10 +51,11 @@ public class User implements Observable {
         notifyObserver();
     }
 
-    public void loadStats(double playTime, int currency, int points, String skin, ArrayList<String> inventory) {
+    public void loadStats(double playTime, int currency, int points, int wins, String skin, ArrayList<String> inventory) {
         this.playTime = playTime;
         this.currency = currency;
         this.points = points;
+        this.wins = wins;
         this.skin = skin;
         this.inventory = inventory;
     }

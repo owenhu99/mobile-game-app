@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
             int currency = data.getInt(data.getColumnIndex("currency"));
             double playtime = data.getDouble(data.getColumnIndex("playtime"));
             int points = data.getInt(data.getColumnIndex("points"));
+            int wins = data.getInt(data.getColumnIndex("wins"));
             String skin = data.getString(data.getColumnIndex("skin"));
             String inventory = data.getString(data.getColumnIndex("inventory"));
             ArrayList<String> inventoryList = new ArrayList<>();
@@ -50,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
                     inventoryList.add(str);
                 }
             }
-            currentUser.loadStats(playtime, currency, points, skin, inventoryList);
+            currentUser.loadStats(playtime, currency, points, wins, skin, inventoryList);
         }
         return currentUser;
     }
