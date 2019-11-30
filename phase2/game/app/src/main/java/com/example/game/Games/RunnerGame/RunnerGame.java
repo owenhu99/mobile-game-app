@@ -7,6 +7,7 @@ import com.example.game.Games.Game;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.Coin;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.Player;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.RunnerGameEntity;
+import com.example.game.Games.RunnerGame.RunnerGameEntities.RunnerGameEntityFactory;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -53,12 +54,15 @@ public class RunnerGame extends Game {
 
     private int secondsPlayed;
     private int entities = 2;
-    
-    
-    
+
+
+
     private int coins_collected = 0;
 
     private Player player;
+    private RunnerGameEntityFactory runnerGameEntityFactory;
+
+    private int difficulty = 10;
 
 
 
@@ -68,9 +72,11 @@ public class RunnerGame extends Game {
         RunnerGameEntity.setBoard_y(height);
         RunnerGameEntity.setBoard_x(width);
 
-        Player player = new Player();
+        Player player = new Player(0);
+
+        this.runnerGameEntityFactory = new RunnerGameEntityFactory();
+        this.player = player;
         this.gameBoard = new ArrayList<>();
-        gameBoard.add(player);
     }
 
     @Override
@@ -78,6 +84,7 @@ public class RunnerGame extends Game {
         for (RunnerGameEntity entity: gameBoard) {
             entity.draw(canvas);
         }
+        player.draw(canvas);
 
     }
 
@@ -87,14 +94,25 @@ public class RunnerGame extends Game {
     // change receive input of gameview
     @Override
     protected void receiveInput(int x, int y) {
-        /**
-        if(x > (0.5 * this.width)){
-            this.player.move(1);
+        if(y > .8*height){
+            //left
+            if(x < .25*width){
+                player.move(1);
+            }
+            //right
+            else if(x > .75*width){
+                player.move(2);
+            } else{
+                //up
+                if (y > .9*height){
+                    player.move(3);
+                }
+                //down
+                else{
+                    player.move(4);
+                }
+            }
         }
-        else{
-            player.move(2);
-        }
-         */
     }
 
     @Override
@@ -104,34 +122,47 @@ public class RunnerGame extends Game {
 
     @Override
     protected void reset() {
-        this.gameBoard = new ArrayList<RunnerGameEntity>();
+        this.gameBoard = new ArrayList<>();
 
     }
 
     // in charge of spawning entities in
     @Override
     protected void updateGame(int secondsPlayed) {
+        if (secondsPlayed % 10 == 0){
+            this.difficulty += 10;
+        }
+
+        //spawn entities according to rules.
         spawn();
 
-        for (RunnerGameEntity entity: gameBoard
-             ) {
+
+        for (RunnerGameEntity entity: gameBoard) {
             entity.move();
         }
+
+        removeEntities();
+
     }
 
     private void spawn(){
-        while(gameBoard.size() < entities){
-            spawnHelper();
+        while(gameBoard.size() < difficulty/3){
+            gameBoard.add(runnerGameEntityFactory.createRunnerGameEntity(difficulty));
         }
     }
-    private void spawnHelper(){
-        this.gameBoard.add(new Coin());
-    }
+
 
     private void detectCollision(){
 
     }
 
+    private void removeEntities(){
+        for (RunnerGameEntity entity: gameBoard) {
+            if(entity.isBelowBottom()){
+                gameBoard.remove(entity);
+            }
+        }
+    }
 
 
 }

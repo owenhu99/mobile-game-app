@@ -19,46 +19,64 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public Game game;
     String gameType;
+    User currentUser;
     //Canvas dimensions
     int width;
     int height;
 
-    //Thread
+    //Threads
     private GameTimer gameTimer;
     int secondsPlayed;
 
+    int numWins = 0;
+    int numLoses = 0;
+    int numTies = 0;
+
+    Paint textPaint;
+
     GameFactory gameFactory;
-
-    User playerOne;
-    User playerTwo;
-    boolean firstTurn;
-
 
     private Context context;
 
-    public GameView(Context context, String game, User playerOne, User playerTwo) {
+    public GameView(Context context, String game, User currentUser) {
         super(context);
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
-        firstTurn = true;
+        this.currentUser = currentUser;
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
         gameFactory = new GameFactory();
+//        if(gameType.equals("TTT"))
+//            this.game = new TicTacToe(d);
+//        else if(gameType.equals("RPS"))
+//            this.game = new RockPaperScissorsGame(d);
+//        else if(gameType.equals("BS"))
+//            this.game = new BadMineSweeper(d);
+
+        textPaint = new Paint();
+        textPaint.setTextSize(36);
+        textPaint.setColor(Color.GREEN);
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
 
         this.context = context;
     }
 
     void checkGameEnded(){
-        if(game.gameEnded) {
-            if(firstTurn) {
-                playerOne.setPoints(game.getPoints());
-                this.game = gameFactory.createGame(gameType, width, height);
-            }
-            else{
-                playerTwo.setPoints(game.getPoints());
-            }
-        }
+//        if(game.gameEnded) {
+//            int results = game.endGame();
+//            if(results == 1)
+//                numWins++;
+//            else if(results == 0)
+//                numTies ++;
+//            else if(results == -1)
+//                numLoses ++;
+//            if(gameType.equals("TTT"))
+//                this.game.reset();
+//            else if(gameType.equals("RPS"))
+//                this.game.reset();
+//            else if(gameType.equals("BS"))
+//                this.game.reset();
+//        }
     }
 
 
@@ -76,11 +94,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        currentUser.updateStats(numWins, secondsPlayed);
         boolean retry = true;
         while (retry) {
             try {
                 gameTimer.setPlaying(false);
                 gameTimer.join();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -92,7 +112,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.drawText("wins: "+ numWins,50,50, textPaint);
+        canvas.drawText("tie: "+ numTies,50,100, textPaint);
+        canvas.drawText("loses: "+ numLoses,50,150, textPaint);
+        canvas.drawText("Play Time: "+ secondsPlayed,800,50, textPaint);
+
         game.draw(canvas);
+
     }
 
     @Override
@@ -114,15 +140,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, height);
         this.game = gameFactory.createGame(gameType, width, height);
-        setBitmaps();
+
+//        game.setWidthHeight(gameType, width, height);
+//        if(game instanceof TicTacToe)
+//            ((TicTacToe)game).setBoxDimension();
+//        else if(game instanceof BadMineSweeper)
+//            ((BadMineSweeper)game).setBoxDimension();
+
+
     }
 
-    void setBitmaps(){
-        Bitmap coinBMP = BitmapFactory.decodeResource(getResources(), R.drawable.goldenpepe);
-        Bitmap friendlyBMP = BitmapFactory.decodeResource(getResources(), R.drawable.feelsgoodman);
-        Bitmap enemyBMP = BitmapFactory.decodeResource(getResources(), R.drawable.feelsbadman);
-        game.setCoinBMP(coinBMP);
-        game.setEnemyBMP(enemyBMP);
-        game.setFriendlyBMP(friendlyBMP);
+    void updateGame(){
+        this.game.updateGame(secondsPlayed);
     }
+
 }
