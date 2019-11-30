@@ -1,0 +1,4 @@
+use pngs
+make sure theyre all lowercase (FeelsBadMan unacceptable, feelsbadman acceptable)
+
+if you can find a way to group them less shittily, please do so, I haven't been able to find one.

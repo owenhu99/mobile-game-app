@@ -1,6 +1,8 @@
 package com.example.game.Games;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -138,6 +140,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         width = View.MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, height);
         this.game = gameFactory.createGame(gameType, width, height);
+        setBitmaps();
 
 //        game.setWidthHeight(gameType, width, height);
 //        if(game instanceof TicTacToe)
@@ -150,5 +153,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     void updateGame(){
         this.game.updateGame(secondsPlayed);
+    }
+    void setBitmaps(){
+        Bitmap coinBMP = BitmapFactory.decodeResource(getResources(), R.drawable.goldenpepe);
+        Bitmap friendlyBMP = BitmapFactory.decodeResource(getResources(), R.drawable.feelsgoodman);
+        Bitmap enemyBMP = BitmapFactory.decodeResource(getResources(), R.drawable.feelsbadman);
+        game.setCoinBMP(coinBMP);
+        game.setEnemyBMP(enemyBMP);
+        game.setFriendlyBMP(friendlyBMP);
     }
 }
