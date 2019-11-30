@@ -70,11 +70,11 @@ public class LogInActivity extends AppCompatActivity {
 
                 // Button to start as the corresponding user
                 Button buttonStart = new Button(this);
-                buttonStart.setText("START");
+                buttonStart.setText("EDIT");
                 buttonStart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
-                        Intent intent = new Intent(LogInActivity.this, GameActivity.class);
-                        intent.putExtra("username", currentUser);
+                        Intent intent = new Intent(LogInActivity.this, EditNameActivity.class);
+                        intent.putExtra("oldUsername", currentUser);
                         startActivity(intent);
                     }
                 });
