@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import static android.content.ContentValues.TAG;
 
 public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
@@ -64,6 +66,19 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_NAME, newUsername);
         return db.update(TABLE_NAME, contentValues, "username = ?", new String[]{oldUsername});
+    }
+
+    public int updateInventory(String username, String skin) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<String> oldInventory = new ArrayList<>();
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE username=?", new String[]{username});
+        data.moveToFirst();
+        String inventoryString = data.getString(data.getColumnIndex("inventory")) + "," + skin;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SKIN, skin);
+        contentValues.put(INVENTORY, inventoryString);
+        return db.update(TABLE_NAME, contentValues, "username = ?", new String[]{username});
     }
 
     public int update(String username, int currency, double playtime, int points, int wins, String skin, String inventory) {
