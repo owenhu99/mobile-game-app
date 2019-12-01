@@ -11,7 +11,7 @@ import com.example.game.Games.Game;
 
 import java.util.Random;
 
-public class MemoryGame extends Game {
+public class MemoryGame {
 
     private MemoryTile grid[][];
     private int gridDimensions = 4;
@@ -19,50 +19,56 @@ public class MemoryGame extends Game {
     private int targets;
     private int remaining;
     private int cleared;
-
     private int score;
 
-    private MemoryTimer timer;
-
-
-    //For drawing
+    private int width;
+    private int height;
     private final int lineThickness = 5;
-    private final int boxLineGap = 20;
     private final int uiOffset = 300;
     private int boxWidth;
     private int boxHeight;
-    private Paint gridPaint = new Paint();
-    private Paint textPaint = new Paint();
 
     private String state;
 
-    private Button startBtn;
-
 
     public MemoryGame(int width, int height) {
-        super(width, height);
+        this.width = width;
+        this.height = height;
         this.targets = 3;
         this.state = "memorize";
         this.cleared = 0;
         this.remaining = 0;
         this.score = 0;
+    }
 
-        createGrid();
-        startBtn = new Button("Start", height / 12, width / 5,
-                width/2 + 300, 100);
+    public String getState() {
+        return state;
+    }
 
-        timer = new MemoryTimer(this);
-        timer.start();
+    public MemoryTile[][] getGrid(){
+        return grid;
+    }
 
-        gridPaint.setColor(Color.WHITE);
-        textPaint.setColor(Color.WHITE);
-        textPaint.setTextSize(60);
+    public int getBoxHeight(){
+        return boxHeight;
+    }
+
+    public int getBoxWidth(){
+        return boxWidth;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public int getRemaining(){
+        return remaining;
     }
 
     /**
      *
      */
-    private void createGrid() {
+    protected void createGrid() {
 
         if (targets < 8) {
             targets++;
@@ -77,14 +83,11 @@ public class MemoryGame extends Game {
             }
         }
 
-
         cleared = 0;
         remaining = 0;
 
-
         setTargets();
         setTileDimension();
-
     }
 
     /**
@@ -106,7 +109,6 @@ public class MemoryGame extends Game {
             grid[x][y].setAsTarget();
             remaining++;
         }
-
     }
 
     /**
@@ -118,91 +120,10 @@ public class MemoryGame extends Game {
     }
 
     /**
-     * Displays the rectangles and text representing the choices, and results of the game
-     */
-    @Override
-    protected void draw(Canvas canvas) {
-
-        drawGrid(canvas);
-
-        drawStats(canvas);
-
-        switch (state) {
-            case "memorize":
-                drawButton(startBtn, canvas);
-
-                break;
-            case "select":
-
-
-                break;
-        }
-    }
-
-    private void drawButton(Button btn, Canvas canvas) {
-        canvas.drawRect(btn.getXLoc(), btn.getYLoc(),
-                btn.getXLoc() + btn.getWidth(), btn.getYLoc() + btn.getHeight(),
-                textPaint);
-        canvas.drawText(btn.getText(), btn.getXLoc() + (btn.getWidth() / 2), btn.getYLoc() +
-                (btn.getHeight() / 2) + btn.getTextPaint().getTextSize() / 2, btn.getTextPaint());
-    }
-
-    private void drawStats(Canvas canvas){
-        canvas.drawText("Time Left:" + timer.getCurrentTime() ,50, 50, textPaint);
-        canvas.drawText("Remaining: " + remaining,50, 150, textPaint);
-        canvas.drawText("Score: " + score,50, 250, textPaint);
-
-    }
-
-    private void drawGrid(Canvas canvas) {
-        canvas.drawLine(0, 300, width, 300, gridPaint);
-        canvas.drawLine(0, height, width, height, gridPaint);
-        canvas.drawLine(0, 300, 0, height, gridPaint);
-        canvas.drawLine(width, 300, width, height, gridPaint);
-
-        for (int i = 0; i < grid.length; i++) {
-            //vertical grid line
-            float left = boxWidth * (i + 1);
-            float right = left + lineThickness;
-            float top = uiOffset;
-            float bottom = height;
-            canvas.drawRect(left, top, right, bottom, gridPaint);
-
-            //horizontal grid line
-            float left2 = 0;
-            float right2 = width;
-            float top2 = boxHeight * (i + 1) + uiOffset;
-            float bottom2 = top2 + lineThickness;
-
-            canvas.drawRect(left2, top2, right2, bottom2, gridPaint);
-        }
-
-        drawTargets(canvas);
-    }
-
-    private void drawTargets(Canvas canvas){
-        float startX;
-        float startY;
-        float endX;
-        float endY;
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                startX = (boxWidth * i) + boxLineGap;
-                startY = uiOffset + (boxHeight * j) + boxLineGap;
-                endX = (boxWidth * (i + 1)) - boxLineGap;
-                endY = uiOffset + (boxHeight * (j + 1)) - boxLineGap;
-                canvas.drawRect(startX, startY, endX, endY, grid[i][j].getColor(state));
-            }
-        }
-    }
-
-    /**
      * Getting the user's choice by recording where the screen was tapped and running the game, end
      * the game after.
      */
-    @Override
-    protected void receiveInput(int x, int y) {
+    protected void receiveInput(int x, int y, Button startBtn) {
         switch (state) {
             case "memorize":
                 if ((x >= startBtn.getXLoc() && x <= startBtn.getXLoc() + startBtn.getWidth()) &&
@@ -267,10 +188,6 @@ public class MemoryGame extends Game {
         }
 
         reset();
-    }
-
-    public void endGame(){
-        super.endGame(score);
     }
 
     private void reset() {

@@ -5,12 +5,12 @@ public class MemoryTimer extends Thread {
     private int absoluteTime;
     private int lastTime;
 
-    private MemoryGame memoryGame;
+    private MemoryFacade memory;
 
-    public MemoryTimer(MemoryGame game){
-        this.memoryGame = game;
-        absoluteTime = 30;
-        lastTime = 30;
+    public MemoryTimer(MemoryFacade memory){
+        this.memory = memory;
+        absoluteTime = 20;
+        lastTime = 20;
     }
 
     @Override
@@ -19,7 +19,7 @@ public class MemoryTimer extends Thread {
             try {
                 absoluteTime --;
                 if(absoluteTime == 0){
-                    memoryGame.endGame();
+                    memory.endGame();
                 }
             }catch (Exception e) {
                 e.printStackTrace();
