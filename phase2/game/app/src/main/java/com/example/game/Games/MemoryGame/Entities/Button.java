@@ -1,5 +1,8 @@
 package com.example.game.Games.MemoryGame.Entities;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+
 public class Button {
 
 
@@ -9,6 +12,8 @@ public class Button {
     private int xLoc;
     private int yLoc;
 
+    private Paint btnText = new Paint();
+
 
     public Button(String text, int height, int width, int xLoc, int yLoc) {
         this.text = text;
@@ -16,6 +21,9 @@ public class Button {
         this.width = width;
         this.xLoc = xLoc;
         this.yLoc = yLoc;
+        btnText.setColor(Color.BLACK);
+        btnText.setTextAlign(Paint.Align.CENTER);
+        btnText.setTextSize(60);
     }
 
 
@@ -37,6 +45,10 @@ public class Button {
 
     public String getText() {
         return text;
+    }
+
+    public Paint getTextPaint() {
+        return btnText;
     }
 
 

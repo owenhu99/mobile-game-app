@@ -20,8 +20,7 @@ public class MemoryGame extends Game {
     private int remaining;
     private int cleared;
 
-    private int totalScore;
-    private int roundScore;
+    private int score;
 
     private MemoryTimer timer;
 
@@ -29,7 +28,7 @@ public class MemoryGame extends Game {
     //For drawing
     private final int lineThickness = 5;
     private final int boxLineGap = 20;
-    private final int uiOffset = height / 5;
+    private final int uiOffset = 300;
     private int boxWidth;
     private int boxHeight;
     private Paint gridPaint = new Paint();
@@ -46,8 +45,7 @@ public class MemoryGame extends Game {
         this.state = "memorize";
         this.cleared = 0;
         this.remaining = 0;
-        this.totalScore = 0;
-        this.roundScore = 0;
+        this.score = 0;
 
         createGrid();
         startBtn = new Button("Start", height / 12, width / 5,
@@ -58,7 +56,7 @@ public class MemoryGame extends Game {
 
         gridPaint.setColor(Color.WHITE);
         textPaint.setColor(Color.WHITE);
-        textPaint.setTextSize(40);
+        textPaint.setTextSize(60);
     }
 
     /**
@@ -122,8 +120,7 @@ public class MemoryGame extends Game {
 
         drawGrid(canvas);
 
-        canvas.drawText(timer.getCurrentTime() + " time left.",0,12, 100, 200,
-                textPaint);
+        drawStats(canvas);
 
         switch (state) {
             case "memorize":
@@ -141,6 +138,15 @@ public class MemoryGame extends Game {
         canvas.drawRect(btn.getXLoc(), btn.getYLoc(),
                 btn.getXLoc() + btn.getWidth(), btn.getYLoc() + btn.getHeight(),
                 textPaint);
+        canvas.drawText(btn.getText(), btn.getXLoc() + (btn.getWidth() / 2), btn.getYLoc() +
+                (btn.getHeight() / 2) + btn.getTextPaint().getTextSize() / 2, btn.getTextPaint());
+    }
+
+    private void drawStats(Canvas canvas){
+        canvas.drawText("Time Left:" + timer.getCurrentTime() ,50, 50, textPaint);
+        canvas.drawText("Remaining: " + remaining,50, 150, textPaint);
+        canvas.drawText("Score: " + score,50, 250, textPaint);
+
     }
 
     private void drawGrid(Canvas canvas) {
@@ -237,28 +243,27 @@ public class MemoryGame extends Game {
         cleared++;
 
         if (grid[x][y].checkTarget()) {
-            roundScore++;
+            score++;
             remaining--;
 
             if (remaining == 0) {
                 endRound();
             }
         } else {
-            roundScore--;
+            score--;
         }
     }
 
     private void endRound() {
         if (cleared == targets){
-            roundScore = roundScore * 2;
+            score = score + 3;
         }
-        totalScore = totalScore + roundScore;
 
         reset();
     }
 
     public void endGame(){
-        super.endGame(totalScore);
+        super.endGame(score);
     }
 
     private void reset() {
