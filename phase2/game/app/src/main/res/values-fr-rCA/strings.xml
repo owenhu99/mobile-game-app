@@ -29,4 +29,5 @@
     <string name="runnerstart">" départ du coureur"</string>
     <string name="shop">magasin</string>
     <string name="textview">TeztView</string>
+    <string name="buy">acheter</string>
 </resources>
