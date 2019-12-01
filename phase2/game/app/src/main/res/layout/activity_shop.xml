@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buy1"
+        android:id="@+id/shop1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buy2"
+        android:id="@+id/shop2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -41,10 +41,10 @@
         android:text="BUY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buy1" />
+        app:layout_constraintTop_toBottomOf="@+id/shop1" />
 
     <Button
-        android:id="@+id/buy3"
+        android:id="@+id/shop3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -53,16 +53,16 @@
         android:text="BUY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buy2" />
+        app:layout_constraintTop_toBottomOf="@+id/shop2" />
 
     <TextView
         android:id="@+id/textViewShop"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="87dp"
+        android:layout_width="114dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="60dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/buy1"
+        app:layout_constraintBottom_toTopOf="@+id/shop1"
         app:layout_constraintEnd_toStartOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

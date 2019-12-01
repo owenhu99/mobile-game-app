@@ -98,15 +98,14 @@ public class User implements Observable {
         return userName;
     }
 
-    public void deductCurrency(int cost){
-        this.currency -= cost;
+    public void setCurrency(int newCurrency){
+        this.currency = newCurrency;
         notifyObserver();
     }
 
     public int getCurrency(){
         return this.currency;
     }
-
     /**
      * Print the current stats for displaying at the game menu
      */

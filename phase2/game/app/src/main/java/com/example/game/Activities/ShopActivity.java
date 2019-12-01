@@ -36,8 +36,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<String> userInv = currentUser.getInventory();
 
     //testing for me
-    currentUser.setCurrency(20);
-    currentUser.addToInventory("3");
+    currentUser.setCurrency(100);
 
     updateDisplay();
 
@@ -60,11 +59,32 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     switch (v.getId()) {
       case R.id.shop1:
           Button button = findViewById(R.id.shop1);
-          buyPack_1(v, button);
-
-
+          String skin = "1";
+          if (button.getText().equals("Equip")) {
+              equipSkin(skin);
+          } else{
+              buyPack_1(v, button);
+          }
       case R.id.shop2:
+          Button button2 = findViewById(R.id.shop2);
+          String skin2 = "2";
+          if (button2.getText().equals("Equip")) {
+              equipSkin(skin2);
+        } else{
+          buyPack_2(v, button2);
+              }
       case R.id.shop3:
+          Button button3 = findViewById(R.id.shop3);
+          String skin3 = "3";
+
+        if (button3.getText().equals("Equip")) {
+
+            equipSkin(skin3);
+            }
+
+        else{
+            buyPack_3(v, button3);
+        }
     }
   }
 
@@ -90,11 +110,21 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         //change the button text to Equip now
         button.setText("Equip");
+
+        updateDisplay();
     }
     else{
         Toast.makeText(this, "You don't enough Gold!", Toast.LENGTH_SHORT).show();
     }
   }
+
+  public void equipSkin(String skin){
+      currentUser.setSkin(skin);
+      String text = "Equiped " + skin + " Skin Pack!";
+      Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+      updateDisplay();
+  }
+
 
   private void prepareButtons(ArrayList<String> userInv, Button button1, Button button2,
                               Button button3){
@@ -124,18 +154,21 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
       }
   }
 
-  private void buttonManager(Button button){
 
-
-  }
 
   private  void updateDisplay(){
       // gets and displays current users currency
       String textCurrency = "Gold: " + currentUser.getCurrency();
-      ((TextView) findViewById(R.id.textViewShop)).setText(textCurrency);
+
+
+      // gets and displays current users skin
+      String textEquiped = "\nEquiped Skin: " + currentUser.getSkin();
+
+      String message = textCurrency +  textEquiped;
+
+
+      ((TextView) findViewById(R.id.textViewShop)).setText(message);
   }
-
-
 
 
 
