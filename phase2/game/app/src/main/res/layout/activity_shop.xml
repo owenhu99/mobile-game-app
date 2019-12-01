@@ -11,41 +11,58 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="187dp"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="188dp"
         android:text="SHOP"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/buy1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="155dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="247dp"
-        android:layout_marginBottom="60dp"
-        android:onClick="buyPack_1"
         android:text="BUY"
-        app:layout_constraintBottom_toTopOf="@+id/button19"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button19"
+        android:id="@+id/buy2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="138dp"
         android:layout_marginEnd="247dp"
-        android:layout_marginBottom="420dp"
-        android:onClick="buyPack_2"
         android:text="BUY"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button14" />
+        app:layout_constraintTop_toBottomOf="@+id/buy1" />
+
+    <Button
+        android:id="@+id/buy3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="138dp"
+        android:layout_marginEnd="247dp"
+        android:text="BUY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buy2" />
+
+    <TextView
+        android:id="@+id/textViewShop"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="87dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/buy1"
+        app:layout_constraintEnd_toStartOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
