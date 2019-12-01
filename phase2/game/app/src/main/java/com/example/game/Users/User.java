@@ -99,12 +99,12 @@ public class User implements Observable {
     }
 
     public void setCurrency(int newCurrency){
-        this.currency = newCurrency;
+        currency = newCurrency;
         notifyObserver();
     }
 
     public int getCurrency(){
-        return this.currency;
+        return currency;
     }
     /**
      * Print the current stats for displaying at the game menu
