@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.game.R;
@@ -17,36 +18,126 @@ import java.util.ArrayList;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener {
 
+  DatabaseHelper dbHelper;
+  User currentUser;
+  final int SKIN_1_COST = 10;
+  final int SKIN_2_COST = 25;
+  final int SKIN_3_COST = 50;
 
-    DatabaseHelper dbHelper;
-    User currentUser;
-    final int SKIN_1_COST = 10;
-    final int SKIN_2_COST = 25;
-    final int SKIN_3_COST = 50;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_shop);
+
+    dbHelper = new DatabaseHelper(this);
+    String userName = getIntent().getExtras().getString("username");
+
+    currentUser = getUser(userName);
+    ArrayList<String> userInv = currentUser.getInventory();
+
+    //testing for me
+    currentUser.setCurrency(20);
+    currentUser.addToInventory("3");
+
+    updateDisplay();
+
+    // creates buttons and sets listeners
+    Button button1 = (Button) findViewById(R.id.shop1);
+    Button button2 = (Button) findViewById(R.id.shop2);
+    Button button3 = (Button) findViewById(R.id.shop3);
+
+    button1.setOnClickListener(this);
+    button2.setOnClickListener(this);
+    button3.setOnClickListener(this);
+
+    prepareButtons(userInv, button1, button2, button3 );
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop);
+  }
 
-        dbHelper = new DatabaseHelper(this);
-        String userName = getIntent().getExtras().getString("username");
-
-        //currentUser = getUser(userName);
-        //ArrayList<String> userInv = currentUser.getInventory();
-        ((TextView) findViewById(R.id.textViewShop)).setText(userName);
-
-        Button buy1 = (Button) findViewById(R.id.buy1);
-        Button buy2 = (Button) findViewById(R.id.buy2);
-        Button buy3 = (Button) findViewById(R.id.buy3);
-
-        buy1.setOnClickListener(this);
-        buy2.setOnClickListener(this);
-        buy3.setOnClickListener(this);
+  @Override
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.shop1:
+          Button button = findViewById(R.id.shop1);
+          buyPack_1(v, button);
 
 
+      case R.id.shop2:
+      case R.id.shop3:
     }
+  }
+
+
+  public void buyPack_1(View view, Button button) {
+    buy(SKIN_1_COST, "1", button);
+  }
+
+  public void buyPack_2(View view, Button button) {
+    buy(SKIN_2_COST, "2", button);
+  }
+
+  public void buyPack_3(View view, Button button) {
+    buy(SKIN_3_COST, "3", button);
+  }
+
+
+  public void buy(int cost, String skin, Button button) {
+    int gold = this.currentUser.getCurrency();
+    if (gold >= cost) {
+        currentUser.setCurrency(gold - cost);
+        currentUser.addToInventory(skin);
+
+        //change the button text to Equip now
+        button.setText("Equip");
+    }
+    else{
+        Toast.makeText(this, "You don't enough Gold!", Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  private void prepareButtons(ArrayList<String> userInv, Button button1, Button button2,
+                              Button button3){
+
+      if (userInv.contains("1")){
+          button1.setText("Equip");
+      }
+      else{
+          String textCost = "Buy: " + SKIN_1_COST;
+          button1.setText(textCost);
+      }
+
+      if (userInv.contains("2")){
+          button2.setText("Equip");
+      }
+      else{
+          String textCost = "Buy: " + SKIN_2_COST;
+          button2.setText(textCost);
+      }
+
+      if (userInv.contains("3")){
+          button3.setText("Equip");
+      }
+      else{
+          String textCost = "Buy: " + SKIN_3_COST;
+          button3.setText(textCost);
+      }
+  }
+
+  private void buttonManager(Button button){
+
+
+  }
+
+  private  void updateDisplay(){
+      // gets and displays current users currency
+      String textCurrency = "Gold: " + currentUser.getCurrency();
+      ((TextView) findViewById(R.id.textViewShop)).setText(textCurrency);
+  }
+
+
+
+
 
     protected User getUser(String username) {
         User currentUser = new User(username, dbHelper);
@@ -69,38 +160,5 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         }
         return currentUser;
     }
-
-
-    @Override
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.buy1:
-            case R.id.buy2:
-            case R.id.buy3:
-        }
-
-    }
-
-
-  //public void buyPack_1() {
-   // int gold = this.currentUser.getCurrency();
-   // if (gold >= 10) {
-    //  currentUser.setCurrency(gold - 10);
-     // currentUser.addToInventory("1");
-    //}
-    //    }
-
-
-    public void buyPack_2(View view){}
-
-    public void buyPack_3(View view){}
-
-    public void buy(){
-
-
-    }
-
-
-
 
 }
