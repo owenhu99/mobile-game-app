@@ -119,8 +119,8 @@ public class RoomManager {
             room.remover(entity);
     }
 
-    public void endGame(){
-        System.out.println("GAME ENDED");
+    void endGame(){
+        room.endGame(points);
     }
 
 

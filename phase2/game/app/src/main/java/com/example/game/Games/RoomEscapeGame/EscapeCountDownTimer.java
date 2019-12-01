@@ -10,7 +10,7 @@ public class EscapeCountDownTimer extends Thread {
         this.room = room;
         isPlaying = true;
         absoluteTime = 61;
-        lastTime = 61;
+        lastTime = absoluteTime;
     }
     @Override
     public void run(){

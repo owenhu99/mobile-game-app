@@ -68,19 +68,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
         return db.update(TABLE_NAME, contentValues, "username = ?", new String[]{oldUsername});
     }
 
-    public int updateInventory(String username, String skin) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ArrayList<String> oldInventory = new ArrayList<>();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE username=?", new String[]{username});
-        data.moveToFirst();
-        String inventoryString = data.getString(data.getColumnIndex("inventory")) + "," + skin;
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(SKIN, skin);
-        contentValues.put(INVENTORY, inventoryString);
-        return db.update(TABLE_NAME, contentValues, "username = ?", new String[]{username});
-    }
-
     public int update(String username, int currency, double playtime, int points, int wins, String skin, String inventory) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
