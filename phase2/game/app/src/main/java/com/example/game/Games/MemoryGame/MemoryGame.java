@@ -23,6 +23,8 @@ public class MemoryGame extends Game {
     private int totalScore;
     private int roundScore;
 
+    private MemoryTimer timer;
+
 
     //For drawing
     private final int lineThickness = 5;
@@ -31,6 +33,7 @@ public class MemoryGame extends Game {
     private int boxWidth;
     private int boxHeight;
     private Paint gridPaint = new Paint();
+    private Paint textPaint = new Paint();
 
     private String state;
 
@@ -41,12 +44,21 @@ public class MemoryGame extends Game {
         super(width, height);
         this.targets = 5;
         this.state = "memorize";
+        this.cleared = 0;
+        this.remaining = 0;
+        this.totalScore = 0;
+        this.roundScore = 0;
 
         createGrid();
         startBtn = new Button("Start", height / 12, width / 5,
-                width / 2 - (width / 5 / 2), height - height / 12);
+                width/2 + 300, 100);
+
+        timer = new MemoryTimer(this);
+        timer.start();
 
         gridPaint.setColor(Color.WHITE);
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(40);
     }
 
     /**
@@ -56,14 +68,20 @@ public class MemoryGame extends Game {
 
         grid = new MemoryTile[gridDimensions][gridDimensions];
 
-        for (int i = 0; i < grid.length; i++)
+        for (int i = 0; i < grid.length; i++){
             for (int j = 0; j < grid[i].length; j++) {
                 MemoryTile a = new MemoryTile();
                 grid[i][j] = a;
             }
-        setTargets();
+        }
+
+
         cleared = 0;
         remaining = 0;
+
+        setTargets();
+        setTileDimension();
+
     }
 
     /**
@@ -104,10 +122,12 @@ public class MemoryGame extends Game {
 
         drawGrid(canvas);
 
+        canvas.drawText(timer.getCurrentTime() + " time left.",0,12, 100, 200,
+                textPaint);
+
         switch (state) {
             case "memorize":
                 drawButton(startBtn, canvas);
-
 
                 break;
             case "select":
@@ -118,7 +138,9 @@ public class MemoryGame extends Game {
     }
 
     private void drawButton(Button btn, Canvas canvas) {
-
+        canvas.drawRect(btn.getXLoc(), btn.getYLoc(),
+                btn.getXLoc() + btn.getWidth(), btn.getYLoc() + btn.getHeight(),
+                textPaint);
     }
 
     private void drawGrid(Canvas canvas) {
@@ -144,16 +166,23 @@ public class MemoryGame extends Game {
             canvas.drawRect(left2, top2, right2, bottom2, gridPaint);
         }
 
-        switch (state) {
-            case "memorize":
+        drawTargets(canvas);
+    }
 
+    private void drawTargets(Canvas canvas){
+        float startX;
+        float startY;
+        float endX;
+        float endY;
 
-
-                break;
-            case "select":
-
-
-                break;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                startX = (boxWidth * i) + boxLineGap;
+                startY = uiOffset + (boxHeight * j) + boxLineGap;
+                endX = (boxWidth * (i + 1)) - boxLineGap;
+                endY = uiOffset + (boxHeight * (j + 1)) - boxLineGap;
+                canvas.drawRect(startX, startY, endX, endY, grid[i][j].getColor(state));
+            }
         }
     }
 
@@ -172,45 +201,30 @@ public class MemoryGame extends Game {
 
                 break;
             case "select":
-                int[] tile = tilePressed();
-                int xTile = tile[0];
-                int yTile = tile[1];
 
-                if (!grid[x][y].getDisplayed()){
-                    revealTile(xTile, yTile);
-                }
+                int xTile = -1;
+                int yTile = -1;
 
-                break;
-        }
-    }
-
-    /**
-     * @return
-     */
-    private int[] tilePressed() {
-        int x = -1;
-        int y = -1;
-        int[] temp = new int[2];
-
-        for (int i = 0; i < grid.length; i++) {
-            if (x < boxWidth * (i + 1)) {
-                x = i;
-
-                for (int j = 0; j < grid[i].length; j++) {
-                    if (uiOffset < y && y < boxHeight * (i + 1) + uiOffset) {
-                        y = i;
+                for (int i = 0; i < grid.length; i++) {
+                    if (x < boxWidth * (i + 1)) {
+                        xTile = i;
+                        for (int j = 0; j < grid[i].length; j++) {
+                            if (uiOffset < y && y < boxHeight * (j + 1) + uiOffset) {
+                                yTile = j;
+                                break;
+                            }
+                        }
                         break;
                     }
                 }
+                if (!grid[xTile][yTile].getDisplayed()){
+                    revealTile(xTile, yTile);
+                }
+
+                System.out.println("received input");
 
                 break;
-            }
         }
-
-        temp[0] = x;
-        temp[1] = y;
-
-        return temp;
     }
 
     /**
@@ -224,6 +238,7 @@ public class MemoryGame extends Game {
 
         if (grid[x][y].checkTarget()) {
             roundScore++;
+            remaining--;
 
             if (remaining == 0) {
                 endRound();
@@ -239,15 +254,15 @@ public class MemoryGame extends Game {
         }
         totalScore = totalScore + roundScore;
 
+        reset();
+    }
+
+    public void endGame(){
         super.endGame(totalScore);
     }
 
     private void reset() {
         state = "memorize";
         createGrid();
-    }
-
-    private void updateGame(int secondsPlayed) {
-
     }
 }

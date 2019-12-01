@@ -67,15 +67,23 @@ public class MemoryTile {
      *
      * @return color of tile.
      */
-    public Paint getColor() {
-        if (displayed) {
+    public Paint getColor(String state) {
+        if (state == "memorize"){
             if (isTarget) {
                 return targetColor;
             } else {
                 return notTargetColor;
             }
         } else {
-            return hidden;
+            if (displayed) {
+                if (isTarget) {
+                    return targetColor;
+                } else {
+                    return notTargetColor;
+                }
+            } else {
+                return hidden;
+            }
         }
     }
 }
