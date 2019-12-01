@@ -15,6 +15,8 @@ import com.example.game.Activities.GameResultsActivity;
 
 import com.example.game.Users.User;
 
+import java.util.ArrayList;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public Game game;
@@ -65,8 +67,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 playerTwo.updatePlayTime(game.secondsPlayed);
                 Intent intent = new Intent(context, GameResultsActivity.class);
                 origin.deleteView();
-
-                context.startActivity(intent);
+                intent.putExtra("user1", playerOne.getUserName());
+                intent.putExtra("user2", playerTwo.getUserName());
+                getContext().startActivity(intent);
 
 
 

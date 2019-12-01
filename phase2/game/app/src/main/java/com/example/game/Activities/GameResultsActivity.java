@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,8 @@ import com.example.game.R;
 import com.example.game.Users.DatabaseHelper;
 import com.example.game.Users.User;
 
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -27,26 +31,59 @@ public class GameResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         dbHelper = new DatabaseHelper(this);
-        ArrayList<String> userNameList = getIntent().getExtras().getStringArrayList("userList");
-        user1 = getUser(userNameList.get(0));
-        user2 = getUser(userNameList.get(1));
 
-        ((TextView) findViewById(R.id.PlayerOneName)).setText(userNameList.get(0));
-        ((TextView) findViewById(R.id.PlayerTwoName)).setText(userNameList.get(1));
-        userPoints1 = user1.getLastPoints();
-        userPoints2 = user2.getLastPoints();
-        ((TextView) findViewById(R.id.PlayerOneScore)).setText(userPoints1);
-        ((TextView) findViewById(R.id.PlayerTwoScore)).setText(userPoints2);
-        if(userPoints1> userPoints2){
-            ((TextView) findViewById(R.id.GameWinner)).setText("The winner is: " + userNameList.get(0));
-            user1.updateWins();
+        LinearLayout linearLayout = findViewById(R.id.results_menu);
+
+        // User1
+        LinearLayout userOneRow = new LinearLayout(this);
+        userOneRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView userName1 = new TextView(this);
+
+        TextView points1 = new TextView(this);
+
+
+        // User 2
+        LinearLayout userTwoRow = new LinearLayout(this);
+        userTwoRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView userName2 = new TextView(this);
+
+        TextView points2 = new TextView(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String userOne = bundle.getString("user1");
+            String userTwo = bundle.getString("user2");
+            if (userOne != null && userTwo != null) {
+                user1 = getUser(userOne);
+                userName1.setText(String.valueOf(user1.getUserName()));
+                points1.setText(String.valueOf(user1.getLastPoints()));
+                user2 = getUser(userTwo);
+                userName2.setText(String.valueOf(user2.getUserName()));
+                points2.setText(String.valueOf(user2.getLastPoints()));
+            }
         }
-        else if (userPoints1< userPoints2) {
-            ((TextView) findViewById(R.id.GameWinner)).setText("The winner is: " + userNameList.get(1));
-            user2.updateWins();
-        }
-        else
-            ((TextView) findViewById(R.id.GameWinner)).setText("The game ended in a tie!");
+
+        userOneRow.addView(userName1);
+        userOneRow.addView(points1);
+
+        userTwoRow.addView(userName2);
+        userTwoRow.addView(points2);
+
+        linearLayout.addView(userOneRow);
+        linearLayout.addView(userTwoRow);
+
+        Button backToMainMenu = new Button(this);
+        backToMainMenu.setText("Back to Main Menu");
+        backToMainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GameResultsActivity.this, MainActivity.class));
+            }
+        });
+
+        linearLayout.addView(backToMainMenu);
     }
 
     protected User getUser(String username) {
