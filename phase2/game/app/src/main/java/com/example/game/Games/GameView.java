@@ -15,7 +15,6 @@ import com.example.game.Activities.GameResultsActivity;
 
 import com.example.game.Users.User;
 
-import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
@@ -37,9 +36,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     GameFactory gameFactory;
 
     private Context context;
-    private GameActivity origin;
 
-    public GameView(GameActivity origin, Context context, String game, User playerOne, User playerTwo) {
+    public GameView(Context context, String game, User playerOne, User playerTwo) {
         super(context);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
@@ -47,7 +45,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
-        this.origin = origin;
         gameFactory = new GameFactory();
 
         this.context = context;
@@ -66,25 +63,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 playerTwo.updateLastPoints(game.getPoints());
                 playerTwo.updatePlayTime(game.secondsPlayed);
                 Intent intent = new Intent(context, GameResultsActivity.class);
-                origin.deleteView();
                 intent.putExtra("user1", playerOne.getUserName());
                 intent.putExtra("user2", playerTwo.getUserName());
                 getContext().startActivity(intent);
-
-
-
-//                boolean retry = true;
-//                while (retry) {
-//                    try {
-//                        gameTimer.setPlaying(false);
-//                        gameTimer.join();
-//
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    retry = false;
-//                }
-
 
             }
         }
