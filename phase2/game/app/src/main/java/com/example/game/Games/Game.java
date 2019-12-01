@@ -1,11 +1,8 @@
 package com.example.game.Games;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-import com.example.game.R;
 
 /**
  * A class that represents a game.
@@ -35,7 +32,7 @@ public abstract class Game{
     protected abstract void receiveInput(int x, int y);
 
     //End the game, return and integer representing a win(1), loss(-1) or tie(0)
-    protected void endGame(int points){
+    public void endGame(int points){
         gameEnded = true;
         this.points = points;
     }
