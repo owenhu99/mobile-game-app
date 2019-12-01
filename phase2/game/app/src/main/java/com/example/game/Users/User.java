@@ -94,6 +94,10 @@ public class User implements Observable {
         return lastPoints;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
     /**
      * Print the current stats for displaying at the game menu
      */
