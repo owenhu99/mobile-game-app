@@ -23,16 +23,22 @@ public class SliderAdapter extends PagerAdapter {
     }
 
     public int[] slide_pictures = {
-            R.drawable.pikachu,
-            R.drawable.pikachu2
+            R.drawable.room_escape,
+            R.drawable.memory_game,
+            R.drawable.pikachu
     };
     public String[] slide_headings = {
-            "TITLE",
+            "ROOM ESCAPE",
+            "MEMORY GAME",
             "TITLE"
     };
 
     public String[] slide_desc = {
-            "Description",
+            "Objective: Bring the key to the door.\nBlocks:\n      Blue: the player" +
+                    "\n      Yellow: the key\n      Green: the door\n      Purple: pushable boxes" +
+                    "\n      Red: teleports you to origin\n      Grey: walls",
+            "A number of tiles will flash blue.\nMemorize them and pick them again when all the\n" +
+                    "tiles turn red.",
             "Description"
     };
 

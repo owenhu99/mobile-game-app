@@ -20,4 +20,15 @@
     <string name="practice">Practice</string>
     <string name="game_title">Game title</string>
     <string name="description">Description.</string>
+    <string name="runnerstart">RunnerStart</string>
+    <string name="room_escape">Room Escape</string>
+    <string name="memory_game">Memory Game</string>
+    <string name="results">Results</string>
+    <string name="shop">SHOP</string>
+    <string name="buy">BUY</string>
+    <string name="buy">BUY</string>
+    <string name="buy">BUY</string>
+    <string name="reset_default">Reset Default</string>
+    <string name="textview">TextView</string>
+    <string name="delete_save_file">Delete save file</string>
 </resources>
