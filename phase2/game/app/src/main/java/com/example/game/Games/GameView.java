@@ -56,6 +56,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 playerOne.updateLastPoints(game.getPoints());
                 playerOne.updatePlayTime(game.secondsPlayed);
                 this.game = gameFactory.createGame(gameType, width, height);
+                this.game.setContext(context);
                 firstTurn = false;
             }
             else{
@@ -128,6 +129,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         this.game = gameFactory.createGame(gameType, width, height);
         this.game.setContext(context);
+
     }
 
     void updateSecondsPlayed(){

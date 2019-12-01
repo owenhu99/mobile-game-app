@@ -5,21 +5,28 @@ package com.example.game.Games.RunnerGame.RunnerGameEntities;
  */
 public class Wigglers extends Enemies {
     private int counter = 0;
+    private int ySpeed;
+    private int xSpeed;
 
 
     Wigglers(int d) {
         super(d);
+        setYDim((int)Math.round(0.025 * xBoard));
+        setXDim((int)Math.round(0.025 * xBoard));
+        ySpeed = (int)speed/2;
+        xSpeed = speed;
     }
 
 
 
     @Override
     public void move() {
-        x += speed;
-        y += (int)speed/2;
-        counter++;
+        y += ySpeed;
         if(counter % 5 == 0){
-            x = -x;
+            xSpeed = -xSpeed;
         }
+        x += xSpeed;
+        counter += 1;
+
     }
 }

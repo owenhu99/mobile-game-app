@@ -7,12 +7,13 @@ public class LongBoi extends Enemies {
         super(d);
         this.y = 0;
 
-        this.xDim = (int)(Math.round(0.01*xBoard));
-        this.yDim = (int)(Math.round(0.3*yBoard));
+
+        setXDim((int)(Math.round(0.01*xBoard)));
+        setYDim((int)(Math.round(0.15*yBoard)));
     }
 
     @Override
     public void move() {
-        y--;
+        y += speed;
     }
 }
