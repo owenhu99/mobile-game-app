@@ -58,34 +58,22 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
         return currentUser;
     }
 
-    //>??????????
-    public void deleteView(){
-        Intent intent = new Intent(this, GameResultsActivity.class);
-        startActivity(intent);
-
-    }
-
     public void RoomEscapeStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        gameView = new GameView(this,this, "Room", user1, user2);
+        gameView = new GameView(this, "Room", user1, user2);
         setContentView(gameView);
     }
 
     public void MemoryStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        gameView = new GameView(this,this, "Memory", user1, user2);
+        gameView = new GameView(this, "Memory", user1, user2);
         setContentView(gameView);
     }
 
     public void RunnerStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        gameView = new GameView(this,this, "Runner", user1, user2);
+        gameView = new GameView(this, "Runner", user1, user2);
         setContentView(gameView);
-    }
-
-    public void shop(View view){
-        Intent intent = new Intent(this, ShopActivity.class);
-        startActivity(intent);
     }
 
     public void easyMode(View view) {

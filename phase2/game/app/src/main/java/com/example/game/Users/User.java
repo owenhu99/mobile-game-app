@@ -87,7 +87,7 @@ public class User implements Observable {
 
     public void updateLastPoints(int points) {
         this.lastPoints = points;
-        this.currency += points * 10;
+        this.currency += points /1000;
         notifyObserver();
     }
     public int getLastPoints() {

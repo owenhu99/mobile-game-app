@@ -15,8 +15,6 @@ import com.example.game.Users.DatabaseHelper;
 import com.example.game.Users.User;
 
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class GameResultsActivity extends AppCompatActivity {
@@ -24,8 +22,7 @@ public class GameResultsActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
     User user1;
     User user2;
-    int userPoints1;
-    int userPoints2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,17 +48,36 @@ public class GameResultsActivity extends AppCompatActivity {
 
         TextView points2 = new TextView(this);
 
+        // Winner
+        LinearLayout resultsRow = new LinearLayout(this);
+        userTwoRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView winner = new TextView(this);
+
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String userOne = bundle.getString("user1");
             String userTwo = bundle.getString("user2");
             if (userOne != null && userTwo != null) {
                 user1 = getUser(userOne);
-                userName1.setText(String.valueOf(user1.getUserName()));
+                userName1.setText(user1.getUserName()+"'s total points: ");
                 points1.setText(String.valueOf(user1.getLastPoints()));
                 user2 = getUser(userTwo);
-                userName2.setText(String.valueOf(user2.getUserName()));
+                userName2.setText(user2.getUserName()+"'s total points: ");
                 points2.setText(String.valueOf(user2.getLastPoints()));
+                if(user1.getLastPoints() > user2.getLastPoints()) {
+                    winner.setText("The winner is " + user1.getUserName());
+                    user1.updateWins();
+                }
+                else if(user1.getLastPoints() < user2.getLastPoints()) {
+                    winner.setText("The winner is " + user2.getUserName());
+                    user2.updateWins();
+                }
+                else {
+                    winner.setText("The game ended in a tie!");
+                }
+
             }
         }
 
@@ -71,8 +87,11 @@ public class GameResultsActivity extends AppCompatActivity {
         userTwoRow.addView(userName2);
         userTwoRow.addView(points2);
 
+        resultsRow.addView(winner);
+
         linearLayout.addView(userOneRow);
         linearLayout.addView(userTwoRow);
+        linearLayout.addView(resultsRow);
 
         Button backToMainMenu = new Button(this);
         backToMainMenu.setText("Back to Main Menu");
