@@ -39,6 +39,11 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     // used for testing only
     //currentUser.setCurrency(100);
+    //currentUser.updateWins();
+    //currentUser.updateWins();
+    //currentUser.updateWins();
+    //currentUser.updateWins();
+    //currentUser.updateWins();
 
     updateDisplay();
 
