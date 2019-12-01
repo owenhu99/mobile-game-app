@@ -41,7 +41,7 @@ public class MemoryGame extends Game {
 
     public MemoryGame(int width, int height) {
         super(width, height);
-        this.targets = 5;
+        this.targets = 3;
         this.state = "memorize";
         this.cleared = 0;
         this.remaining = 0;
@@ -64,6 +64,10 @@ public class MemoryGame extends Game {
      */
     private void createGrid() {
 
+        if (targets < 8) {
+            targets++;
+        }
+
         grid = new MemoryTile[gridDimensions][gridDimensions];
 
         for (int i = 0; i < grid.length; i++){
@@ -76,6 +80,7 @@ public class MemoryGame extends Game {
 
         cleared = 0;
         remaining = 0;
+
 
         setTargets();
         setTileDimension();
@@ -243,20 +248,22 @@ public class MemoryGame extends Game {
         cleared++;
 
         if (grid[x][y].checkTarget()) {
-            score++;
+            score = score + 1000;
             remaining--;
 
             if (remaining == 0) {
                 endRound();
             }
         } else {
-            score--;
+            if (score > 0) {
+                score = score - 1000;
+            }
         }
     }
 
     private void endRound() {
         if (cleared == targets){
-            score = score + 3;
+            score = score + 3000;
         }
 
         reset();
