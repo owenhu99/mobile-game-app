@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Results"
+        android:text="@string/results"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -13,7 +13,7 @@
         android:layout_marginStart="187dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="188dp"
-        android:text="SHOP"
+        android:text="@string/shop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="150dp"
         android:layout_marginEnd="247dp"
-        android:text="BUY"
+        android:text="@string/buy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="138dp"
         android:layout_marginEnd="247dp"
-        android:text="BUY"
+        android:text="@string/buy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shop1" />
@@ -50,7 +50,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="138dp"
         android:layout_marginEnd="247dp"
-        android:text="BUY"
+        android:text="@string/buy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shop2" />
@@ -61,7 +61,7 @@
         android:layout_height="72dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="36dp"
-        android:text="TextView"
+        android:text="@string/textview"
         app:layout_constraintBottom_toTopOf="@+id/shop1"
         app:layout_constraintEnd_toStartOf="@+id/textView4" />
 
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="40dp"
-        android:text="Reset Default"
+        android:text="@string/reset_default"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent" />
 

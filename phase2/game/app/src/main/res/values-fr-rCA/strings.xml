@@ -21,4 +21,12 @@
     <string name="leaderboard">classement</string>
     <string name="practice">Pratiquer</string>
     <string name="versus">contre</string>
+    <string name="delete_save_file">supprimer le fichier</string>
+    <string name="reset_default">" réinitialiser à défaut"</string>
+    <string name="memory_game">" Jeux de mémoire"</string>
+    <string name="results">" résultats"</string>
+    <string name="room_escape">évasion</string>
+    <string name="runnerstart">" départ du coureur"</string>
+    <string name="shop">magasin</string>
+    <string name="textview">TeztView</string>
 </resources>
