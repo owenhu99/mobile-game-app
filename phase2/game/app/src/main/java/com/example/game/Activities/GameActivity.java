@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +23,7 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
     DatabaseHelper dbHelper;
     User user1;
     User user2;
+    View gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +58,29 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
         return currentUser;
     }
 
-    public void TicTacToeStart(View view) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this, "Room", user1, user2));
+    //>??????????
+    public void deleteView(){
+        Intent intent = new Intent(this, GameResultsActivity.class);
+        startActivity(intent);
+
     }
 
-    public void RockPaperScissorStart(View view) {
+    public void RoomEscapeStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this, "Room", user1, user2));
+        gameView = new GameView(this,this, "Room", user1, user2);
+        setContentView(gameView);
     }
 
-    public void BombStart(View view) {
+    public void MemoryStart(View view) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(new GameView(this, "Runner", user1, user2));
+        gameView = new GameView(this,this, "Memory", user1, user2);
+        setContentView(gameView);
+    }
+
+    public void RunnerStart(View view) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        gameView = new GameView(this,this, "Runner", user1, user2);
+        setContentView(gameView);
     }
 
     public void shop(View view){

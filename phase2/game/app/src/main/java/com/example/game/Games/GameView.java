@@ -1,18 +1,18 @@
 package com.example.game.Games;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
+
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
+
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-import com.example.game.R;
+import com.example.game.Activities.GameActivity;
+import com.example.game.Activities.GameResultsActivity;
+
 import com.example.game.Users.User;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -35,8 +35,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     GameFactory gameFactory;
 
     private Context context;
+    private GameActivity origin;
 
-    public GameView(Context context, String game, User playerOne, User playerTwo) {
+    public GameView(GameActivity origin, Context context, String game, User playerOne, User playerTwo) {
         super(context);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
@@ -44,6 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         getHolder().addCallback(this);
         setFocusable(true);
         this.gameType = game;
+        this.origin = origin;
         gameFactory = new GameFactory();
 
         this.context = context;
@@ -52,12 +54,35 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     void checkGameEnded(){
         if(game.gameEnded) {
             if(firstTurn) {
-                playerOne.setPoints(game.getPoints());
+                playerOne.updateLastPoints(game.getPoints());
+                playerOne.updatePlayTime(game.secondsPlayed);
                 this.game = gameFactory.createGame(gameType, width, height);
                 firstTurn = false;
             }
             else{
-                playerTwo.setPoints(game.getPoints());
+                gameTimer.setPlaying(false);
+                playerTwo.updateLastPoints(game.getPoints());
+                playerTwo.updatePlayTime(game.secondsPlayed);
+                Intent intent = new Intent(context, GameResultsActivity.class);
+                origin.deleteView();
+
+                context.startActivity(intent);
+
+
+
+//                boolean retry = true;
+//                while (retry) {
+//                    try {
+//                        gameTimer.setPlaying(false);
+//                        gameTimer.join();
+//
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    retry = false;
+//                }
+
+
             }
         }
     }

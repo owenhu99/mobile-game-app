@@ -10,7 +10,7 @@ public class User implements Observable {
     private String userName;
     private double playTime;
     private int currency;
-    private int points;
+    private int lastPoints;
     private int wins;
     private String skin;
     private ArrayList<String> inventory = new ArrayList<>();
@@ -20,7 +20,7 @@ public class User implements Observable {
         this.userName = userName;
         this.playTime = 0;
         this.currency = 0;
-        this.points = 0;
+        this.lastPoints = 0;
         this.wins = 0;
         this.currency = 0;
         this.skin = "default";
@@ -37,24 +37,18 @@ public class User implements Observable {
 
     public void notifyObserver() {
         for (Observer o : observers) {
-            o.update(userName, currency, playTime, points, wins, skin, String.join(",", inventory));
+            o.update(userName, currency, playTime, lastPoints, wins, skin, String.join(",", inventory));
         }
     }
 
     /**
      * Updates all stats when a game finishes
      */
-    public void updateStats(int wins, double time) {
-        this.points += wins;
-        this.currency += wins * 10;
-        this.playTime += time;
-        notifyObserver();
-    }
 
     public void loadStats(double playTime, int currency, int points, int wins, String skin, ArrayList<String> inventory) {
         this.playTime = playTime;
         this.currency = currency;
-        this.points = points;
+        this.lastPoints = points;
         this.wins = wins;
         this.skin = skin;
         this.inventory = inventory;
@@ -81,25 +75,29 @@ public class User implements Observable {
         return inventory;
     }
 
-    public void setCurrency(int currency) {
-        this.currency += currency;
+    public void updateWins() {
+        this.wins ++;
         notifyObserver();
     }
 
-    public void setPlayTime(double time) {
+    public void updatePlayTime(double time) {
         this.playTime += time;
         notifyObserver();
     }
 
-    public void setPoints(int points) {
-        this.points += points;
+    public void updateLastPoints(int points) {
+        this.lastPoints = points;
+        this.currency += points * 10;
         notifyObserver();
+    }
+    public int getLastPoints() {
+        return lastPoints;
     }
 
     /**
      * Print the current stats for displaying at the game menu
      */
     public String printStats() {
-        return "Current User: " + userName + "\nPlaytime: " + playTime + "\nPoints: " + points + "\nCurrency: " + currency + "\nSkin: " + skin;
+        return "Current User: " + userName + "\nPlaytime: " + playTime + "\nPoints: " + lastPoints + "\nCurrency: " + currency + "\nSkin: " + skin;
     }
 }
