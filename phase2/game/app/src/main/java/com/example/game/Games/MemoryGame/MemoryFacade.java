@@ -28,8 +28,8 @@ public class MemoryFacade extends Game {
 
     private Button startBtn;
 
-    public MemoryFacade(int width, int height) {
-        super(width, height);
+    public MemoryFacade(int width, int height, String currentSkin) {
+        super(width, height, currentSkin);
         game = new MemoryGame(width, height);
         timer = new MemoryTimer(this);
         startGame();
