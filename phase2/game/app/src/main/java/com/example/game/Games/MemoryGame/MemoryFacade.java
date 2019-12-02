@@ -1,9 +1,12 @@
 package com.example.game.Games.MemoryGame;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.example.game.Games.Game;
 import com.example.game.Games.MemoryGame.Entities.Button;
+import com.example.game.R;
 
 
 public class MemoryFacade extends Game {
@@ -28,6 +31,11 @@ public class MemoryFacade extends Game {
 
     private Button startBtn;
 
+    private boolean notSet;
+    private Bitmap targetBMP;
+    private Bitmap pepeBMP;
+    private Bitmap kappaBMP;
+
     public MemoryFacade(int width, int height, String currentSkin) {
         super(width, height, currentSkin);
         game = new MemoryGame(width, height);
@@ -38,6 +46,8 @@ public class MemoryFacade extends Game {
 
         startBtn = new Button("Start", height / 12, width / 5,
                 width / 2 + 300, 100);
+
+        notSet = true;
     }
 
     /**
@@ -55,8 +65,25 @@ public class MemoryFacade extends Game {
      */
     @Override
     protected void draw(Canvas canvas) {
+
+        if(notSet){
+            pepeBMP = BitmapFactory.decodeResource(getContext().getResources(),
+                    R.drawable.pepefeelsgoodman);
+            kappaBMP = BitmapFactory.decodeResource(getContext().getResources(),
+                    R.drawable.bttvgoldenkappa);
+            notSet = false;
+        }
+
+        if (getCurrentSkin().toLowerCase().equals("pepe")){
+            targetBMP = pepeBMP;
+        } else if (getCurrentSkin().toLowerCase().equals("kappa")){
+            targetBMP = kappaBMP;
+        } else {
+            targetBMP = null;
+        }
+
         drawer.draw(canvas, game.getState(), startBtn, timer, game.getRemaining(), game.getScore(),
-                game.getGrid());
+                game.getGrid(), targetBMP);
     }
 
     /**

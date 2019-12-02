@@ -1,8 +1,10 @@
 package com.example.game.Games.MemoryGame;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
 import com.example.game.Games.MemoryGame.Entities.Button;
 import com.example.game.Games.MemoryGame.Entities.MemoryTile;
@@ -45,11 +47,12 @@ public class MemoryDrawer {
      * @param remaining Remaining number of correct tiles
      * @param score     Current score of the player
      * @param grid      Array of MemoryTiles that make up the game
+     * @param targetBMP      bitmap of player skin
      */
     protected void draw(Canvas canvas, String state, Button btn, MemoryTimer timer, int remaining,
-                        int score, MemoryTile[][] grid) {
+                        int score, MemoryTile[][] grid, Bitmap targetBMP) {
         drawGrid(canvas, grid);
-        drawTiles(canvas, grid, state);
+        drawTiles(canvas, grid, state, targetBMP);
         drawStats(canvas, timer, remaining, score);
 
         if (state.equals("memorize")) {
@@ -119,8 +122,9 @@ public class MemoryDrawer {
      * @param canvas Draws on screen
      * @param grid   Array of MemoryTiles that make up the game
      * @param state  Current state of the game
+     * @param targetBMP      bitmap of player skin
      */
-    private void drawTiles(Canvas canvas, MemoryTile[][] grid, String state) {
+    private void drawTiles(Canvas canvas, MemoryTile[][] grid, String state, Bitmap targetBMP) {
         float startX;
         float startY;
         float endX;
@@ -133,6 +137,11 @@ public class MemoryDrawer {
                 endX = (boxWidth * (i + 1)) - boxLineGap;
                 endY = uiOffset + (boxHeight * (j + 1)) - boxLineGap;
                 canvas.drawRect(startX, startY, endX, endY, grid[i][j].getColor(state));
+
+                if (targetBMP != null){
+                    RectF rectF = new RectF(startX,startY,endX,endY);
+                    canvas.drawBitmap(targetBMP,null, rectF, null);
+                }
             }
         }
     }
