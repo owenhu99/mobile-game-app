@@ -35,9 +35,6 @@ public class StandingTimer extends Thread{
     boolean checkVisibility(){
         return playerView;
     }
-    int getTime(){
-        return time;
-    }
 
     void setPlayerView(boolean status){
         this.playerView = status;

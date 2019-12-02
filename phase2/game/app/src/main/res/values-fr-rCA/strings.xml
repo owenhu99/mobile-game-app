@@ -30,4 +30,5 @@
     <string name="shop">magasin</string>
     <string name="textview">TeztView</string>
     <string name="buy">acheter</string>
+    <string name="edit_name">modifier le nom</string>
 </resources>
