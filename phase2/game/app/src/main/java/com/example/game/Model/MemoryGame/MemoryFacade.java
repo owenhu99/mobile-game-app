@@ -34,8 +34,6 @@ public class MemoryFacade extends Game {
 
     private boolean notSet;
     private Bitmap targetBMP;
-    private Bitmap pepeBMP;
-    private Bitmap kappaBMP;
 
     public MemoryFacade(int width, int height, String currentSkin) {
         super(width, height, currentSkin);
@@ -45,8 +43,8 @@ public class MemoryFacade extends Game {
 
         drawer = new MemoryDrawer(width, height, game.getBoxWidth(), game.getBoxHeight());
 
-        startBtn = new MemoryButton("Start", height / 12, width / 5,
-                width / 2 + 300, 100);
+        startBtn = new MemoryButton("Start", height / 10, width / 4,
+                width / 2 + 200, 50);
 
         notSet = true;
     }
@@ -84,11 +82,8 @@ public class MemoryFacade extends Game {
             notSet = false;
         }
 
-
         drawer.draw(canvas, game.getState(), startBtn, timer, game.getRemaining(), game.getScore(),
                 game.getGrid(), targetBMP);
-        //drawer.draw(canvas, game.getState(), startBtn, timer, game.getRemaining(), game.getScore(),
-                //game.getGrid());
     }
 
     /**

@@ -26,14 +26,6 @@ public class MemoryTile {
         hidden.setColor(Color.GRAY);
     }
 
-    @Override
-    public String toString() {
-        if (isTarget)
-            return "T";
-        else
-            return "F";
-    }
-
     /**
      * set this tile as a target
      */
