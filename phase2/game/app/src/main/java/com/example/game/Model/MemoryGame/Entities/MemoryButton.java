@@ -3,7 +3,7 @@ package com.example.game.Model.MemoryGame.Entities;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Button {
+public class MemoryButton {
     /**
      * Button object that stores text, location, and dimensions
      */
@@ -16,7 +16,7 @@ public class Button {
 
     private Paint btnText = new Paint();
 
-    public Button(String text, int height, int width, int xLoc, int yLoc) {
+    public MemoryButton(String text, int height, int width, int xLoc, int yLoc) {
         this.text = text;
         this.height = height;
         this.width = width;
