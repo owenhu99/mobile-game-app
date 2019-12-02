@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.704" />
+        app:layout_constraintVertical_bias="0.831" />
 
     <Button
         android:id="@+id/button18"
@@ -71,21 +71,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.896" />
-
-    <Button
-        android:id="@+id/button16"
-        android:layout_width="180dp"
-        android:layout_height="45dp"
-        android:background="@drawable/roundedbutton"
-        android:backgroundTint="#5C1349"
-        android:onClick="practice"
-        android:text="@string/practice"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/button17"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.933" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
