@@ -14,9 +14,11 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.example.game.R;
 
 public class SliderAdapter extends PagerAdapter {
+    /**
+     * Allows users to swipe to transition through pages.
+     */
 
     private Context context;
-    private LayoutInflater layoutInflater;
 
     SliderAdapter(Context context){
         this.context = context;
@@ -54,7 +56,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @NonNull
     public Object instantiateItem(@NonNull ViewGroup container, int position){
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
         View view = layoutInflater.inflate(R.layout.activity_slide_layout, container, false);
 
