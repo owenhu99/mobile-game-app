@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.SettingsActivity" />
-        <activity android:name=".Activities.PracticeActivity" />
         <activity android:name=".Activities.HowToPlayActivity" />
     </application>
 

@@ -1,30 +1,31 @@
 package com.example.game.Games.MemoryGame;
 
 public class MemoryTimer extends Thread {
+    /**
+     * Gives each player 20 seconds and ends the game for that player once time is up
+     */
 
     private int absoluteTime;
-    private int lastTime;
 
     private MemoryFacade memory;
 
-    public MemoryTimer(MemoryFacade memory){
+    public MemoryTimer(MemoryFacade memory) {
         this.memory = memory;
         absoluteTime = 20;
-        lastTime = 20;
     }
 
     @Override
-    public void run(){
-        while(true) {
+    public void run() {
+        while (true) {
             try {
-                absoluteTime --;
-                if(absoluteTime == 0){
+                absoluteTime--;
+                if (absoluteTime == 0) {
                     memory.endGame();
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            try{
+            try {
                 sleep(1000);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -32,13 +33,7 @@ public class MemoryTimer extends Thread {
         }
     }
 
-    int getCurrentTime(){
+    int getCurrentTime() {
         return absoluteTime;
-    }
-    int getLastTime(){
-        return lastTime;
-    }
-    void updateLastTime(){
-        lastTime = absoluteTime;
     }
 }

@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Button {
-
+    /**
+     * Button object that stores text, location, and dimensions
+     */
 
     private String text;
     private int height;
@@ -13,7 +15,6 @@ public class Button {
     private int yLoc;
 
     private Paint btnText = new Paint();
-
 
     public Button(String text, int height, int width, int xLoc, int yLoc) {
         this.text = text;
