@@ -14,7 +14,7 @@ public abstract class Game{
     int points;
     protected int secondsPlayed;
 
-    public Context context;
+    private Context context;
 
     private String currentSkin;
 
@@ -43,6 +43,7 @@ public abstract class Game{
         return points;
     }
     public String getCurrentSkin(){return currentSkin;}
+    public Context getContext(){return context;}
 
     public void setContext(Context context) {
         this.context = context;
