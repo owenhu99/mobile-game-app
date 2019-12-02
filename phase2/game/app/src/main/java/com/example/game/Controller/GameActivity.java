@@ -33,6 +33,8 @@ public class GameActivity extends AppCompatActivity implements SurfaceHolder.Cal
         user1 = getUser(userNameList.get(0));
         user2 = getUser(userNameList.get(1));
         ((TextView) findViewById(R.id.textView)).setText(user1.printStats());
+        ((TextView) findViewById(R.id.textView2)).setText(user2.printStats());
+
     }
 
     protected User getUser(String username) {

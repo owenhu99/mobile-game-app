@@ -110,6 +110,11 @@ public class User implements Observable {
      * Print the current stats for displaying at the game menu
      */
     public String printStats() {
-        return "Current User: " + userName + "\nPlaytime: " + playTime + "\nPoints: " + lastPoints + "\nCurrency: " + currency + "\nSkin: " + skin;
+        String skinString = skin;
+        if (skinString == null){
+            skinString = "default";
+        }
+
+        return "Current User: " + userName + "\nPlaytime: " + playTime + "\nWins: " + wins + "\nGold: " + currency + "\nSkin: " + skinString;
     }
 }
