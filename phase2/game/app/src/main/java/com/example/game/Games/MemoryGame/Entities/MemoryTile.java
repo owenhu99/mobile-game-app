@@ -4,6 +4,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class MemoryTile {
+    /**
+     * Tile object that stores whether it is a correct tile and if it has been revealed.
+     */
 
     private boolean displayed = false;
     private boolean isTarget = false;
@@ -68,7 +71,7 @@ public class MemoryTile {
      * @return color of tile.
      */
     public Paint getColor(String state) {
-        if (state == "memorize"){
+        if (state == "memorize") {
             if (isTarget) {
                 return targetColor;
             } else {

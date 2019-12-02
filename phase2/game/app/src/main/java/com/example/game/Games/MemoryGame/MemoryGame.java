@@ -1,37 +1,35 @@
 package com.example.game.Games.MemoryGame;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-
 import com.example.game.Games.MemoryGame.Entities.Button;
 import com.example.game.Games.MemoryGame.Entities.MemoryTile;
 
-import com.example.game.Games.Game;
-
 import java.util.Random;
 
-public class MemoryGame {
 
-    private MemoryTile grid[][];
-    private int gridDimensions = 4;
+public class MemoryGame {
+    /**
+     * For a description of the game, see MemoryFacade
+     *
+     * This class creates and updates tiles and stats of the game.
+     */
+
+    private MemoryTile[][] grid;
 
     private int targets;
     private int remaining;
     private int cleared;
     private int score;
 
+    private int gridDimensions = 4;
     private int width;
     private int height;
-    private final int lineThickness = 5;
     private final int uiOffset = 300;
     private int boxWidth;
     private int boxHeight;
 
     private String state;
 
-
-    public MemoryGame(int width, int height) {
+    MemoryGame(int width, int height) {
         this.width = width;
         this.height = height;
         this.targets = 3;
@@ -41,34 +39,34 @@ public class MemoryGame {
         this.score = 0;
     }
 
-    public String getState() {
+    String getState() {
         return state;
     }
 
-    public MemoryTile[][] getGrid(){
+    MemoryTile[][] getGrid() {
         return grid;
     }
 
-    public int getBoxHeight(){
+    int getBoxHeight() {
         return boxHeight;
     }
 
-    public int getBoxWidth(){
+    int getBoxWidth() {
         return boxWidth;
     }
 
-    public int getScore(){
+    int getScore() {
         return score;
     }
 
-    public int getRemaining(){
+    int getRemaining() {
         return remaining;
     }
 
     /**
-     *
+     * Creates the grid with tiles. Increases number of correct tiles each round (to a maximum of 8)
      */
-    protected void createGrid() {
+    void createGrid() {
 
         if (targets < 8) {
             targets++;
@@ -76,7 +74,7 @@ public class MemoryGame {
 
         grid = new MemoryTile[gridDimensions][gridDimensions];
 
-        for (int i = 0; i < grid.length; i++){
+        for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 MemoryTile a = new MemoryTile();
                 grid[i][j] = a;
@@ -91,7 +89,7 @@ public class MemoryGame {
     }
 
     /**
-     *
+     * Randomly designates certain tiles as targets
      */
     private void setTargets() {
 
@@ -112,18 +110,26 @@ public class MemoryGame {
     }
 
     /**
-     *
+     * Sets dimensions of tiles
      */
     private void setTileDimension() {
+        int lineThickness = 5;
+
         boxHeight = (height - uiOffset - lineThickness) / grid.length;
         boxWidth = (width - lineThickness) / grid[0].length;
     }
 
+
     /**
-     * Getting the user's choice by recording where the screen was tapped and running the game, end
-     * the game after.
+     * Gets the user's input by recording where the screen was tapped. If game is in memorize stage
+     * checks if player selected the start button. If game is in select stage, checks if player
+     * selected a tile.
+     *
+     * @param x        x-coordinate of input
+     * @param y        y-coordinate of input
+     * @param startBtn button to end memorize stage and hide tiles
      */
-    protected void receiveInput(int x, int y, Button startBtn) {
+    void receiveInput(int x, int y, Button startBtn) {
         switch (state) {
             case "memorize":
                 if ((x >= startBtn.getXLoc() && x <= startBtn.getXLoc() + startBtn.getWidth()) &&
@@ -149,19 +155,20 @@ public class MemoryGame {
                         break;
                     }
                 }
-                if (!grid[xTile][yTile].getDisplayed()){
+
+                if (!grid[xTile][yTile].getDisplayed()) {
                     revealTile(xTile, yTile);
                 }
-
-                System.out.println("received input");
 
                 break;
         }
     }
 
     /**
-     * @param x
-     * @param y
+     * Reveals the tile selected and updates score (add 1000 if correct, deduct 1000 if not)
+     *
+     * @param x x-coordinate of input
+     * @param y y-coordinate of input
      */
     private void revealTile(int x, int y) {
 
@@ -182,15 +189,14 @@ public class MemoryGame {
         }
     }
 
+    /**
+     * Grants bonus score if no incorrect tiles selected and resets the grid for next round
+     */
     private void endRound() {
-        if (cleared == targets){
+        if (cleared == targets) {
             score = score + 3000;
         }
 
-        reset();
-    }
-
-    private void reset() {
         state = "memorize";
         createGrid();
     }
