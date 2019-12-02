@@ -1,5 +1,6 @@
 package com.example.game.Games.RunnerGame;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -44,10 +45,6 @@ public class RunnerGame extends Game {
     private ArrayList<RunnerGameEntity> gameBoard;
     private Bitmap backgroundBMP;
 
-
-    // variables that deal with spawning
-    //entities is the total amount of entities programmed. whenever a new entity is added, this must
-    // change. I know is shit, but no other solution known.
     private int previousSecond;
 
 
@@ -56,6 +53,7 @@ public class RunnerGame extends Game {
     private Player player;
     private RunnerGameEntityFactory runnerGameEntityFactory;
 
+    //increases every five seconds, determines the speed of falling objects, as well as how many objects can exist on board at once.
     private int difficulty = 5;
 
     private boolean notSet;
@@ -81,13 +79,26 @@ public class RunnerGame extends Game {
 
     @Override
     protected void draw(Canvas canvas) {
-        if(notSet){
+        Context context = getContext();
+        String skin = getCurrentSkin().toLowerCase();
+        if(skin.equals("pepe")){
             Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsbadman);
             Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
             Player.setPlayerBMP(friendlyBMP);
             Enemies.setBmp(enemyBMP);
             this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
-            notSet = false;
+        } else if(skin.equals("kappa")){
+            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvkekw);
+            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvgoldenkappa);
+            Player.setPlayerBMP(friendlyBMP);
+            Enemies.setBmp(enemyBMP);
+            this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
+        } else{
+            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidred);
+            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidgreen);
+            Player.setPlayerBMP(friendlyBMP);
+            Enemies.setBmp(enemyBMP);
+            this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
         }
 
         updateGame();
@@ -184,6 +195,8 @@ public class RunnerGame extends Game {
             }
         }
     }
+
+
 
 
 
