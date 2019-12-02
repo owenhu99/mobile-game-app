@@ -49,13 +49,15 @@ public class RoomEscape extends Game {
     @Override
     public void draw(Canvas canvas) {
         if(notSet) {
-            if (getCurrentSkin().equals("pepe")) {
-                System.out.println(getContext().getResources());
-                skinBMP = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pepefeelsbadman);
+            String currentSkin = getCurrentSkin();
+            if (currentSkin != null) {
+                if (getCurrentSkin().equals("pepe")) {
+                    System.out.println(getContext().getResources());
+                    skinBMP = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pepefeelsbadman);
+                } else if (getCurrentSkin().equals("kappa"))
+                    skinBMP = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.bttvkappa);
+                notSet = false;
             }
-            else if (getCurrentSkin().equals("kappa"))
-                skinBMP = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.bttvkappa);
-            notSet = false;
         }
         for(Entity entity: remove)
             entities.remove(entity);
