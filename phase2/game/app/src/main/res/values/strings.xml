@@ -28,6 +28,8 @@
     <string name="buy">BUY</string>
     <string name="reset_default">Reset Default</string>
     <string name="textview">TextView</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
     <string name="delete_save_file">Delete save file</string>
     <string name="edit_name">Edit Name</string>
 </resources>

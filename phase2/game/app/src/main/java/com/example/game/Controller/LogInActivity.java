@@ -58,7 +58,7 @@ public class LogInActivity extends AppCompatActivity {
 
                 // Button to delete the corresponding user
                 Button buttonDelete = new Button(this);
-                buttonDelete.setText("DELETE");
+                buttonDelete.setText(getResources().getString(R.string.delete));
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent reload = new Intent(LogInActivity.this, LogInActivity.class);
@@ -70,7 +70,7 @@ public class LogInActivity extends AppCompatActivity {
 
                 // Button to start as the corresponding user
                 Button buttonStart = new Button(this);
-                buttonStart.setText("EDIT");
+                buttonStart.setText(getResources().getString(R.string.edit));
                 buttonStart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent intent = new Intent(LogInActivity.this, EditNameActivity.class);
@@ -82,7 +82,7 @@ public class LogInActivity extends AppCompatActivity {
 
                 // Button to shop as the corresponding user
                 Button buttonShop = new Button(this);
-                buttonShop.setText("SHOP");
+                buttonShop.setText(getResources().getString(R.string.shop));
                 buttonShop.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent intent = new Intent(LogInActivity.this, ShopActivity.class);
@@ -96,7 +96,7 @@ public class LogInActivity extends AppCompatActivity {
                 linearLayout.addView(userDisplayList[i]);
             }
             Button submit = new Button(this);
-            submit.setText("SUBMIT");
+            submit.setText(getResources().getString(R.string.submit));
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

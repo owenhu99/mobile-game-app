@@ -31,4 +31,6 @@
     <string name="textview">TeztView</string>
     <string name="buy">acheter</string>
     <string name="edit_name">modifier le nom</string>
+    <string name="delete">supprimer</string>
+    <string name="edit">éditer</string>
 </resources>
