@@ -12,7 +12,7 @@ public abstract class Game{
     protected int width;
     boolean gameEnded;
     int points;
-    int secondsPlayed;
+    protected int secondsPlayed;
 
     protected Context context;
 

@@ -1,15 +1,26 @@
 package com.example.game.Games.MemoryGame;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 
 import com.example.game.Games.Game;
 import com.example.game.Games.MemoryGame.Entities.Button;
-import com.example.game.Games.MemoryGame.Entities.MemoryTile;
 
-import java.util.Random;
 
 public class MemoryFacade extends Game {
+    /**
+     * In this memory game, the player needs to memorize the location of certain tiles in a grid
+     * and select them when they become hidden. The player decides when to hide the tiles and
+     * end the memorize phase by pressing a button. Once all the correct tiles have been selected,
+     * the game continues to the next round. The game ends after 20 seconds has passed for each
+     * player.
+     *
+     * The goal for each player is to get a higher score than his/her opponent. Each correct
+     * selection gives 1000 points while incorrect ones deducts 1000 points (with a minimum of 0).
+     * Clearing a round without any incorrect selections grants an extra 3000 points.
+     *
+     * This class is a facade for the game and delegates tasks to MemoryGame, MemoryDrawer,
+     * and MemoryTimer.
+     */
 
     private MemoryGame game;
     private MemoryDrawer drawer;
@@ -26,19 +37,21 @@ public class MemoryFacade extends Game {
         drawer = new MemoryDrawer(width, height, game.getBoxWidth(), game.getBoxHeight());
 
         startBtn = new Button("Start", height / 12, width / 5,
-                width/2 + 300, 100);
+                width / 2 + 300, 100);
     }
 
     /**
-     *
+     * Starts the game by creating the grid and starting the timer
      */
-    private void startGame(){
+    private void startGame() {
         game.createGrid();
         timer.start();
     }
 
     /**
-     * Displays the rectangles and text representing the choices, and results of the game
+     * Displays the game and stats
+     *
+     * @param canvas Draws on screen
      */
     @Override
     protected void draw(Canvas canvas) {
@@ -46,17 +59,18 @@ public class MemoryFacade extends Game {
                 game.getGrid());
     }
 
-
     /**
-     * Getting the user's choice by recording where the screen was tapped and running the game, end
-     * the game after.
+     * Gets the user's input by recording where the screen was tapped
      */
     @Override
     protected void receiveInput(int x, int y) {
         game.receiveInput(x, y, startBtn);
     }
 
-    public void endGame(){
+    /**
+     * Ends the game and records the score
+     */
+    public void endGame() {
         super.endGame(game.getScore());
     }
 

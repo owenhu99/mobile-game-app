@@ -8,18 +8,17 @@ import android.graphics.RectF;
 
 public class Player extends RunnerGameEntity {
     private static Bitmap playerBMP;
+    private int ySpeed = 0;
+    private int xSpeed = 0;
 
     public Player(int d){
-        // find out if int x and y are acceptable, pretty sure they are.
         super(d);
-        this.speed = (int)(Math.round(0.025 * xBoard));
+        this.speed = 40;
         this.x = (int)(Math.round(0.5 * xBoard));
         this.y = (int)(Math.round(0.8 * yBoard));
-        this.speed = (int)Math.round(0.1 * xBoard);
         // player occupies 5% of the board.
-        this.xDim = (int)Math.round(0.025 * xBoard);
-        this.yDim = (int)Math.round(0.025 * xBoard);
-        this.entityColor.setColor(Color.BLUE);
+        this.xDim = (int)Math.round(0.05 * xBoard);
+        this.yDim = (int)Math.round(0.05 * xBoard);
     }
 
     @Override
@@ -34,36 +33,51 @@ public class Player extends RunnerGameEntity {
     }
 
     @Override
-    public void move() { }
+    public void move() {
+        this.x += xSpeed;
+        this.y += ySpeed;
+
+        if(this.x + xDim > xBoard){
+            x=x-xDim;
+            xSpeed = 0;
+            ySpeed = 0;
+        }
+        if(this.x - xDim < 0){
+            x=xDim;
+            xSpeed = 0;
+            ySpeed = 0;
+        }
+        if(this.y + yDim > yBoard){
+            y = yBoard-yDim;
+            xSpeed = 0;
+            ySpeed = 0;
+        }
+        if(this.y - yDim < 0){
+            y=yDim;
+            xSpeed = 0;
+            ySpeed = 0;
+        }
+    }
 
     public void move(int direction){
         switch (direction){
-            case (1):
-                this.x -= speed;
-                if(x < 0){
-                    x = xDim;
-                }
+            case 1:
+                this.xSpeed = -speed;
+                this.ySpeed = 0;
                 break;
-            case (2):
-                this.x += speed;
-                if(x > xBoard){
-                    x = xBoard-xDim;
-                }
+            case 2:
+                this.xSpeed = speed;
+                this.ySpeed = 0;
                 break;
-            case(3):
-                this.y += speed;
-                if(y > yBoard){
-                    y = yBoard-yDim;
-                }
+            case 3:
+                this.xSpeed = 0;
+                this.ySpeed = speed;
                 break;
-            case(4):
-                this.y -= speed;
-                if(y < 0){
-                    y = yDim;
-                }
+            case 4:
+                this.xSpeed = 0;
+                this.ySpeed = -speed;
                 break;
         }
-        //detect if out of bounds, move to max if so.
     }
     public static void setPlayerBMP(Bitmap bmp){ Player.playerBMP = bmp; }
 }

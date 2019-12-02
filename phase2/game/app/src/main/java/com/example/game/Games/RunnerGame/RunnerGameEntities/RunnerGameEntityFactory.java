@@ -20,6 +20,6 @@ public class RunnerGameEntityFactory {
             case 4:
                 return new Bouncers(difficulty);
         }
-        return new Coin(difficulty);
+        return new Zoomers(difficulty);
     }
 }

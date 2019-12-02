@@ -39,7 +39,6 @@ public abstract class RunnerGameEntity {
     int speed;
     protected String onContact;
 
-    protected Paint entityColor = new Paint();
 
     Random d = new Random();
 
@@ -58,7 +57,7 @@ public abstract class RunnerGameEntity {
 
 
     public String getOnContact(){ return onContact; }
-    public boolean isBelowBottom(){ return (this.y-yDim <= yBoard); }
+    public boolean isBelowBottom(){ return (this.y-yDim > yBoard); }
 
     public static void setBoard_x(int width){ RunnerGameEntity.xBoard = width;
         System.out.println("RGAMEENT_XBOARD" + RunnerGameEntity.xBoard);}

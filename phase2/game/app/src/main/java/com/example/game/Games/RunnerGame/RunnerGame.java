@@ -3,10 +3,10 @@ package com.example.game.Games.RunnerGame;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 
 import com.example.game.Games.Game;
-import com.example.game.Games.RunnerGame.RunnerGameEntities.Coin;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.Enemies;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.Player;
 import com.example.game.Games.RunnerGame.RunnerGameEntities.RunnerGameEntity;
@@ -14,7 +14,7 @@ import com.example.game.Games.RunnerGame.RunnerGameEntities.RunnerGameEntityFact
 import com.example.game.R;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.ListIterator;
 
 /**
  * Description of Game:
@@ -42,31 +42,23 @@ import java.util.Random;
  */
 public class RunnerGame extends Game {
     private ArrayList<RunnerGameEntity> gameBoard;
-
-
-    private int entitiesUntilCoin = 10;
-    private int entittiesSpawned = 0;
+    private Bitmap backgroundBMP;
 
 
     // variables that deal with spawning
-    private Random spawner = new Random();
     //entities is the total amount of entities programmed. whenever a new entity is added, this must
     // change. I know is shit, but no other solution known.
+    private int previousSecond;
 
 
 
-
-    private int secondsPlayed;
-    private int entities = 2;
-
-
-
-    private int coins_collected = 0;
 
     private Player player;
     private RunnerGameEntityFactory runnerGameEntityFactory;
 
-    private int difficulty = 10;
+    private int difficulty = 5;
+
+    private boolean notSet;
 
 
 
@@ -81,19 +73,26 @@ public class RunnerGame extends Game {
         this.runnerGameEntityFactory = new RunnerGameEntityFactory();
         this.player = player;
         this.gameBoard = new ArrayList<>();
+        this.notSet = true;
+        this.previousSecond = 0;
 
-        Bitmap coinBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.goldenpepe);
-        Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.feelsbadman);
-        Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.feelsgoodman);
-        Player.setPlayerBMP(friendlyBMP);
-        Coin.setCoinBMP(coinBMP);
-        Enemies.setBmp(enemyBMP);
+
     }
 
     @Override
     protected void draw(Canvas canvas) {
-        updateGame(this.secondsPlayed);
+        if(notSet){
+            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsbadman);
+            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
+            Player.setPlayerBMP(friendlyBMP);
+            Enemies.setBmp(enemyBMP);
+            this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
+            notSet = false;
+        }
 
+        updateGame();
+        player.move();
+        canvas.drawBitmap(backgroundBMP, null, new RectF(0,0,width,height), null);
         for (RunnerGameEntity entity: gameBoard) {
             entity.draw(canvas);
         }
@@ -131,21 +130,29 @@ public class RunnerGame extends Game {
 
 
     // in charge of spawning entities in
-    private void updateGame(int secondsPlayed) {
-        if (secondsPlayed % 10 == 0){
-            this.difficulty += 10;
+    private void updateGame() {
+        System.out.println("PREVIOUS SECOND "+ previousSecond);
+        System.out.println("SECONS PLAYED " + secondsPlayed);
+        if(previousSecond != secondsPlayed){
+            if(secondsPlayed % 5 == 0){
+                difficulty++;
+            }
+            previousSecond = secondsPlayed;
         }
+
 
         //spawn entities according to rules.
         spawn();
+
         for (RunnerGameEntity entity: gameBoard) {
             entity.move();
         }
     }
 
     private void spawn(){
-        while(gameBoard.size() < difficulty/3){
-            gameBoard.add(runnerGameEntityFactory.createRunnerGameEntity(difficulty));
+        if(gameBoard.size() < difficulty){
+            gameBoard.add(runnerGameEntityFactory.createRunnerGameEntity(4*difficulty));
+
         }
     }
 
@@ -160,12 +167,7 @@ public class RunnerGame extends Game {
             inBounds[0] = ((playerBounds[0] < entityBounds[0] && entityBounds[0] < playerBounds[1])||(playerBounds[0] < entityBounds[1] && entityBounds[1] < playerBounds[1]));
             inBounds[1] = ((playerBounds[2] < entityBounds[2] && entityBounds[2] < playerBounds[3])||(playerBounds[2] < entityBounds[3] && entityBounds[3] < playerBounds[3]));
             if(inBounds[0] && inBounds[1]){
-                switch (entity.getOnContact()){
-                    case "Coin":
-                        coins_collected++;
-                    case "Enemy":
-                        endGame(this.secondsPlayed);
-                        break;
+                endGame(secondsPlayed*1000);
                 }
 
             }
@@ -173,15 +175,18 @@ public class RunnerGame extends Game {
             inBounds[1] = false;
 
         }
-    }
 
     private void removeEntities(){
-        for (RunnerGameEntity entity: gameBoard) {
-            if(entity.isBelowBottom()){
-                gameBoard.remove(entity);
+        ListIterator<RunnerGameEntity> iter = gameBoard.listIterator();
+        while(iter.hasNext()){
+            if(iter.next().isBelowBottom()){
+                iter.remove();
             }
         }
     }
+
+
+
 
 
 }

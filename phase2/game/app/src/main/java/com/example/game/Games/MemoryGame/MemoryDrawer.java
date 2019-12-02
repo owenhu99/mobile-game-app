@@ -8,6 +8,10 @@ import com.example.game.Games.MemoryGame.Entities.Button;
 import com.example.game.Games.MemoryGame.Entities.MemoryTile;
 
 public class MemoryDrawer {
+    /**
+     * Displays game to player. Grid is draw as lines, tiles are drawn as rectangles,
+     * stats are displayed as text, and the button is drawn as a rectangle with text inside.
+     */
 
     private int width;
     private int height;
@@ -20,7 +24,7 @@ public class MemoryDrawer {
     private Paint gridPaint = new Paint();
     private Paint textPaint = new Paint();
 
-    MemoryDrawer(int width, int height, int boxWidth, int boxHeight){
+    MemoryDrawer(int width, int height, int boxWidth, int boxHeight) {
         this.width = width;
         this.height = height;
         this.boxWidth = boxWidth;
@@ -31,19 +35,34 @@ public class MemoryDrawer {
         textPaint.setTextSize(60);
     }
 
+    /**
+     * Displays game to player.
+     *
+     * @param canvas    Draws on screen
+     * @param state     Current state of the game
+     * @param btn       Button that ends memorize phase
+     * @param timer     Timer that tracks time remaining
+     * @param remaining Remaining number of correct tiles
+     * @param score     Current score of the player
+     * @param grid      Array of MemoryTiles that make up the game
+     */
     protected void draw(Canvas canvas, String state, Button btn, MemoryTimer timer, int remaining,
                         int score, MemoryTile[][] grid) {
-
         drawGrid(canvas, grid);
-        drawTargets(canvas, grid, state);
+        drawTiles(canvas, grid, state);
         drawStats(canvas, timer, remaining, score);
 
-        if (state == "memorize") {
+        if (state.equals("memorize")) {
             drawButton(btn, canvas);
         }
     }
 
-
+    /**
+     * Draws the button when in memorize stage
+     *
+     * @param btn    Button that ends memorize phase
+     * @param canvas Draws objects on screen
+     */
     private void drawButton(Button btn, Canvas canvas) {
         canvas.drawRect(btn.getXLoc(), btn.getYLoc(),
                 btn.getXLoc() + btn.getWidth(), btn.getYLoc() + btn.getHeight(),
@@ -52,13 +71,26 @@ public class MemoryDrawer {
                 (btn.getHeight() / 2) + btn.getTextPaint().getTextSize() / 2, btn.getTextPaint());
     }
 
-    private void drawStats(Canvas canvas, MemoryTimer timer, int remaining, int score){
-        canvas.drawText("Time Left:" + timer.getCurrentTime() ,50, 50, textPaint);
-        canvas.drawText("Remaining: " + remaining,50, 150, textPaint);
-        canvas.drawText("Score: " + score,50, 250, textPaint);
-
+    /**
+     * Draws the stats
+     *
+     * @param canvas    Draws on screen
+     * @param timer     Timer that tracks time remaining
+     * @param remaining Remaining number of correct tiles
+     * @param score     Current score of the player
+     */
+    private void drawStats(Canvas canvas, MemoryTimer timer, int remaining, int score) {
+        canvas.drawText("Time Left:" + timer.getCurrentTime(), 50, 50, textPaint);
+        canvas.drawText("Remaining: " + remaining, 50, 150, textPaint);
+        canvas.drawText("Score: " + score, 50, 250, textPaint);
     }
 
+    /**
+     * Draws the grid
+     *
+     * @param canvas Draws on screen
+     * @param grid   Array of MemoryTiles that make up the game
+     */
     private void drawGrid(Canvas canvas, MemoryTile[][] grid) {
         canvas.drawLine(0, 300, width, 300, gridPaint);
         canvas.drawLine(0, height, width, height, gridPaint);
@@ -66,14 +98,12 @@ public class MemoryDrawer {
         canvas.drawLine(width, 300, width, height, gridPaint);
 
         for (int i = 0; i < grid.length; i++) {
-            //vertical grid line
             float left = boxWidth * (i + 1);
             float right = left + lineThickness;
             float top = uiOffset;
             float bottom = height;
             canvas.drawRect(left, top, right, bottom, gridPaint);
 
-            //horizontal grid line
             float left2 = 0;
             float right2 = width;
             float top2 = boxHeight * (i + 1) + uiOffset;
@@ -83,7 +113,14 @@ public class MemoryDrawer {
         }
     }
 
-    private void drawTargets(Canvas canvas, MemoryTile[][] grid, String state){
+    /**
+     * Draws the tiles
+     *
+     * @param canvas Draws on screen
+     * @param grid   Array of MemoryTiles that make up the game
+     * @param state  Current state of the game
+     */
+    private void drawTiles(Canvas canvas, MemoryTile[][] grid, String state) {
         float startX;
         float startY;
         float endX;
