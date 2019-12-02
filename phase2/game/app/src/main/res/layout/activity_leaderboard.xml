@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Controller.LeaderboardActivity">
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="413dp"
+        android:layout_height="736dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/background"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/textLeader"
         android:layout_width="132dp"
@@ -15,6 +29,7 @@
         android:layout_marginEnd="154dp"
         android:layout_marginBottom="84dp"
         android:text="@string/leaderboard"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textList"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +45,8 @@
         android:layout_marginStart="84dp"
         android:layout_marginEnd="84dp"
         android:layout_marginBottom="236dp"
-        android:text="TextView"
+        android:text="@string/textview"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
