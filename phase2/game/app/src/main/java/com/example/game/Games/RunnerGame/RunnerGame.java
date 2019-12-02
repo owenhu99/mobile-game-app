@@ -79,26 +79,29 @@ public class RunnerGame extends Game {
 
     @Override
     protected void draw(Canvas canvas) {
-        Context context = getContext();
-        String skin = getCurrentSkin().toLowerCase();
-        if(skin.equals("pepe")){
-            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsbadman);
-            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
-            Player.setPlayerBMP(friendlyBMP);
-            Enemies.setBmp(enemyBMP);
-            this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
-        } else if(skin.equals("kappa")){
-            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvkekw);
-            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvgoldenkappa);
-            Player.setPlayerBMP(friendlyBMP);
-            Enemies.setBmp(enemyBMP);
-            this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
-        } else{
-            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidred);
-            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidgreen);
-            Player.setPlayerBMP(friendlyBMP);
-            Enemies.setBmp(enemyBMP);
-            this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
+        if(notSet){
+            Context context = getContext();
+            String skin = getCurrentSkin().toLowerCase();
+            if(skin.equals("pepe")){
+                Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsbadman);
+                Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
+                Player.setPlayerBMP(friendlyBMP);
+                Enemies.setBmp(enemyBMP);
+                this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
+            } else if(skin.equals("kappa")){
+                Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvkekw);
+                Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvgoldenkappa);
+                Player.setPlayerBMP(friendlyBMP);
+                Enemies.setBmp(enemyBMP);
+                this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
+            } else{
+                Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidred);
+                Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidgreen);
+                Player.setPlayerBMP(friendlyBMP);
+                Enemies.setBmp(enemyBMP);
+                this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
+            }
+            notSet = false;
         }
 
         updateGame();
