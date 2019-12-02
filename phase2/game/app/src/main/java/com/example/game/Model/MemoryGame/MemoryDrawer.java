@@ -6,8 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import com.example.game.Model.MemoryGame.Entities.Button;
-import com.example.game.Model.MemoryGame.Entities.MemoryTile;
+import com.example.game.Model.MemoryGame.Entities.*;
 
 public class MemoryDrawer {
     /**
@@ -47,10 +46,10 @@ public class MemoryDrawer {
      * @param remaining Remaining number of correct tiles
      * @param score     Current score of the player
      * @param grid      Array of MemoryTiles that make up the game
-     * @param targetBMP      bitmap of player skin
+     * @param targetBMP bitmap of player skin
      */
-    protected void draw(Canvas canvas, String state, Button btn, MemoryTimer timer, int remaining,
-                        int score, MemoryTile[][] grid, Bitmap targetBMP) {
+    protected void draw(Canvas canvas, String state, MemoryButton btn, MemoryTimer timer,
+                        int remaining, int score, MemoryTile[][] grid, Bitmap targetBMP) {
         drawGrid(canvas, grid);
         drawTiles(canvas, grid, state, targetBMP);
         drawStats(canvas, timer, remaining, score);
@@ -66,7 +65,7 @@ public class MemoryDrawer {
      * @param btn    Button that ends memorize phase
      * @param canvas Draws objects on screen
      */
-    private void drawButton(Button btn, Canvas canvas) {
+    private void drawButton(MemoryButton btn, Canvas canvas) {
         canvas.drawRect(btn.getXLoc(), btn.getYLoc(),
                 btn.getXLoc() + btn.getWidth(), btn.getYLoc() + btn.getHeight(),
                 textPaint);
@@ -119,10 +118,10 @@ public class MemoryDrawer {
     /**
      * Draws the tiles
      *
-     * @param canvas Draws on screen
-     * @param grid   Array of MemoryTiles that make up the game
-     * @param state  Current state of the game
-     * @param targetBMP      bitmap of player skin
+     * @param canvas    Draws on screen
+     * @param grid      Array of MemoryTiles that make up the game
+     * @param state     Current state of the game
+     * @param targetBMP bitmap of player skin
      */
     private void drawTiles(Canvas canvas, MemoryTile[][] grid, String state, Bitmap targetBMP) {
         float startX;
@@ -138,10 +137,14 @@ public class MemoryDrawer {
                 endY = uiOffset + (boxHeight * (j + 1)) - boxLineGap;
                 canvas.drawRect(startX, startY, endX, endY, grid[i][j].getColor(state));
 
-                if (targetBMP != null){
-                    RectF rectF = new RectF(startX,startY,endX,endY);
-                    canvas.drawBitmap(targetBMP,null, rectF, null);
+                if (grid[i][j].checkTarget() && (state.equals("memorize")
+                        || grid[i][j].getDisplayed())) {
+                    RectF rectF = new RectF(startX, startY + 60, startX + boxWidth - 40,
+                            startY + 20 + boxWidth);
+                    canvas.drawBitmap(targetBMP, null, rectF, null);
                 }
+
+
             }
         }
     }

@@ -1,11 +1,12 @@
 package com.example.game.Model.MemoryGame;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.example.game.Model.Game;
-import com.example.game.Model.MemoryGame.Entities.Button;
+import com.example.game.Model.MemoryGame.Entities.*;
 import com.example.game.R;
 
 
@@ -29,7 +30,7 @@ public class MemoryFacade extends Game {
     private MemoryDrawer drawer;
     private MemoryTimer timer;
 
-    private Button startBtn;
+    private MemoryButton startBtn;
 
     private boolean notSet;
     private Bitmap targetBMP;
@@ -44,7 +45,7 @@ public class MemoryFacade extends Game {
 
         drawer = new MemoryDrawer(width, height, game.getBoxWidth(), game.getBoxHeight());
 
-        startBtn = new Button("Start", height / 12, width / 5,
+        startBtn = new MemoryButton("Start", height / 12, width / 5,
                 width / 2 + 300, 100);
 
         notSet = true;
@@ -67,23 +68,27 @@ public class MemoryFacade extends Game {
     public void draw(Canvas canvas) {
 
         if(notSet){
-            pepeBMP = BitmapFactory.decodeResource(getContext().getResources(),
-                    R.drawable.pepefeelsgoodman);
-            kappaBMP = BitmapFactory.decodeResource(getContext().getResources(),
-                    R.drawable.bttvgoldenkappa);
+            Context context = getContext();
+            if(getCurrentSkin() == null){
+                targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidgreen);
+            }else{
+                String skin = getCurrentSkin().toLowerCase();
+                if(skin.equals("pepe")){
+                    targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
+                } else if(skin.equals("kappa")){
+                    targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvgoldenkappa);
+                } else{
+                    targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.defaultandroidgreen);
+                }
+            }
             notSet = false;
         }
 
-        if (getCurrentSkin().toLowerCase().equals("pepe")){
-            targetBMP = pepeBMP;
-        } else if (getCurrentSkin().toLowerCase().equals("kappa")){
-            targetBMP = kappaBMP;
-        } else {
-            targetBMP = null;
-        }
 
         drawer.draw(canvas, game.getState(), startBtn, timer, game.getRemaining(), game.getScore(),
                 game.getGrid(), targetBMP);
+        //drawer.draw(canvas, game.getState(), startBtn, timer, game.getRemaining(), game.getScore(),
+                //game.getGrid());
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.example.game.Model.MemoryGame;
 
-import com.example.game.Model.MemoryGame.Entities.Button;
-import com.example.game.Model.MemoryGame.Entities.MemoryTile;
+import com.example.game.Model.MemoryGame.Entities.*;
 
 import java.util.Random;
 
@@ -129,7 +128,7 @@ public class MemoryGame {
      * @param y        y-coordinate of input
      * @param startBtn button to end memorize stage and hide tiles
      */
-    void receiveInput(int x, int y, Button startBtn) {
+    void receiveInput(int x, int y, MemoryButton startBtn) {
         switch (state) {
             case "memorize":
                 if ((x >= startBtn.getXLoc() && x <= startBtn.getXLoc() + startBtn.getWidth()) &&
