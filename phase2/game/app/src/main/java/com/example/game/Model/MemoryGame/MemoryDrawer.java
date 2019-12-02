@@ -70,7 +70,7 @@ public class MemoryDrawer {
                 btn.getXLoc() + btn.getWidth(), btn.getYLoc() + btn.getHeight(),
                 textPaint);
         canvas.drawText(btn.getText(), btn.getXLoc() + (btn.getWidth() / 2), btn.getYLoc() +
-                (btn.getHeight() / 2) + btn.getTextPaint().getTextSize() / 2, btn.getTextPaint());
+                (btn.getHeight() / 2) + (btn.getTextPaint().getTextSize() / 2), btn.getTextPaint());
     }
 
     /**
