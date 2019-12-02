@@ -1,7 +1,10 @@
 package com.example.game.Model.RoomEscapeGame.Entities;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
 import com.example.game.Model.RoomEscapeGame.RoomEscape;
 
@@ -10,6 +13,9 @@ public class Player extends Entity implements Moveable{
     private boolean hasKey;
     private boolean visibility;
     private RoomEscape room;
+    private Bitmap skinBMP;
+    private RectF rect;
+    private boolean notSet;
 
     public Player(int xGrid, int yGrid, RoomEscape room) {
         super(xGrid, yGrid);
@@ -19,6 +25,7 @@ public class Player extends Entity implements Moveable{
         setPaint(playerPaint);
         hasKey = false;
         visibility = true;
+        notSet = true;
     }
 
     public void move(int direction, int distance) {
@@ -63,6 +70,21 @@ public class Player extends Entity implements Moveable{
             return true;
 
         return false;
+    }
+
+    public void draw(Canvas canvas){
+        if(notSet) {
+            skinBMP = room.getSkinBMP();
+            notSet = false;
+        }
+        if(skinBMP != null){
+            rect = new RectF(xGrid * dimension + offset, yGrid * dimension,
+                    (xGrid + 1) * (dimension) + offset, (yGrid + 1) * (dimension));
+            canvas.drawBitmap(skinBMP,null, rect, null);
+        }
+        else {
+            super.draw(canvas);
+        }
     }
 
 }

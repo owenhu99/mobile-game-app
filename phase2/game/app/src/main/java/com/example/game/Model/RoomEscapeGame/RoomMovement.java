@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class RoomMovement {
-    final int UP = 1;
-    final int DOWN = 2;
-    final int RIGHT = 3;
-    final int LEFT = 4;
-    private Player player;
+    private final int UP = 1;
+    private final int DOWN = 2;
+    private final int RIGHT = 3;
+    private final int LEFT = 4;
     private ArrayList<Entity> entities;
-    private RoomEscape room;
 
-    RoomMovement(ArrayList<Entity> entities, Player player, RoomEscape room){
+    RoomMovement(ArrayList<Entity> entities){
         this.entities = entities;
-        this.player = player;
-        this.room = room;
     }
     public void entityMove(int direction, Moveable entity){
         if(direction == UP) {
@@ -38,9 +34,9 @@ public class RoomMovement {
         }
     }
 
-    public boolean collision(int direction, int distance, Moveable mover) {
+    private boolean collision(int direction, int distance, Moveable mover) {
         System.out.println("called");
-        Optional<Entity> entity = null;
+        Optional<Entity> entity;
         if(direction == UP){
             for(int i = 1; i <= distance; i++) {
                 entity = getEntity(mover.getXPos(), mover.getYPos() - i);
