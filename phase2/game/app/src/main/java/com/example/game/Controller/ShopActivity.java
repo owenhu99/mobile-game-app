@@ -103,7 +103,11 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   public void equipSkin(String skin) {
-    currentUser.setSkin(skin);
+    if (skin.equals("default")){
+      currentUser.setSkin(null);
+    }
+    else{currentUser.setSkin(skin);}
+
     String text = "Equiped " + skin + " Skin Pack!";
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     updateDisplay();

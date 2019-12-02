@@ -87,14 +87,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Observer {
 
     public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return data;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
     public Cursor getUserData(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE username = ?", new String[]{username});
-        return data;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE username = ?", new String[]{username});
     }
 
     public void dropTable() {
