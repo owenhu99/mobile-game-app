@@ -6,7 +6,7 @@ public class EscapeCountDownTimer extends Thread {
     private int lastTime;
     private RoomEscape room;
 
-    public EscapeCountDownTimer(RoomEscape room){
+    EscapeCountDownTimer(RoomEscape room){
         this.room = room;
         isPlaying = true;
         absoluteTime = 61;

@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public class RoomManager {
     private final int dimension = 100;
-    private int roomPixelWidth;
-    private int roomPixelHeight;
     private int gridWidth;
     private int gridHeight;
 
@@ -20,10 +18,8 @@ public class RoomManager {
 
     RoomManager(ArrayList<Entity>entities, int roomWidth, int roomHeight, RoomEscape room){
         this.entities = entities;
-        this.roomPixelHeight = roomHeight;
-        this.roomPixelWidth = roomWidth;
-        gridWidth = roomPixelWidth/dimension;
-        gridHeight = roomPixelHeight/dimension;
+        gridWidth = roomWidth/dimension;
+        gridHeight = roomHeight/dimension;
         this.room = room;
         this.points = 0;
     }
@@ -67,8 +63,8 @@ public class RoomManager {
         return null;
     }
     private void randomPlaceEntity(char entity){
-        int randomValue1 = 0;
-        int randomValue2 = 0;
+        int randomValue1;
+        int randomValue2;
         boolean isDone = false;
         while(!isDone) {
             randomValue1 = (int) (gridWidth * Math.random());
