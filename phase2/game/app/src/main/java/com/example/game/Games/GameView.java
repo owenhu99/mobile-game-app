@@ -48,6 +48,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         gameFactory = new GameFactory();
 
         this.context = context;
+
     }
 
     void checkGameEnded(){

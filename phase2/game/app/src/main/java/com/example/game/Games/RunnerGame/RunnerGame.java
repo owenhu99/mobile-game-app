@@ -82,8 +82,8 @@ public class RunnerGame extends Game {
     @Override
     protected void draw(Canvas canvas) {
         if(notSet){
-            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.feelsbadman);
-            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.feelsgoodman);
+            Bitmap enemyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsbadman);
+            Bitmap friendlyBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
             Player.setPlayerBMP(friendlyBMP);
             Enemies.setBmp(enemyBMP);
             this.backgroundBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.runnerbackground);
