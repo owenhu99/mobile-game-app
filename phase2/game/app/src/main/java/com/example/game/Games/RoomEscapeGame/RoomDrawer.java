@@ -91,7 +91,6 @@ public class RoomDrawer {
 
     void drawInfo(Canvas canvas){
         canvas.drawText(room.countDownTimer.getCurrentTime() + " time left.",0,12, 100, drawHeight + 200, textPaint);
-
         canvas.drawText(room.getManager().getPoints() + " points accumulated",0,20,drawWidth/2 + 200, drawHeight + 100, textPaint);
         canvas.drawText(room.getManager().getRoomsEscaped() + " rooms escaped.",0,15,drawWidth/2 + 200, drawHeight + 200, textPaint);
 
@@ -99,7 +98,7 @@ public class RoomDrawer {
 
     void drawRoom(Canvas canvas){
         if(notSet){
-            pepeBMP = BitmapFactory.decodeResource(room.context.getResources(), R.drawable.pepefeelsgoodman);
+            pepeBMP = BitmapFactory.decodeResource(room.getContext().getResources(), R.drawable.pepefeelsgoodman);
             pepe = new RectF((player.getXPos() - 1) * dimension + offsetX, (player.getYPos() - 1) * dimension,
                     (player.getXPos() + 2) * dimension + offsetX, (player.getYPos() + 2) * dimension);
             notSet = false;

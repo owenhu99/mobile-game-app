@@ -74,23 +74,13 @@ public class RoomEscape extends Game {
             }
         }
     }
-    //End the game, return and integer representing a win(1), loss(-1) or tie(0)
-    protected int endGame(){
-        return 0;
-    }
-    protected void reset(){
-    }
+
 
     public RoomMovement getMovement(){
         return movement;
     }
     public RoomManager getManager(){
         return manager;
-    }
-    public RoomDrawer getDrawer(){return drawer;}
-
-    public void spawner(Entity entity){
-        spawn.add(entity);
     }
     public void remover(Entity entity){
         remove.add(entity);
