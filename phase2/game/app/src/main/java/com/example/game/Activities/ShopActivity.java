@@ -19,12 +19,10 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
   DatabaseHelper dbHelper;
   User currentUser;
-  final int SKIN_1_COST = 10;
-  final int SKIN_2_COST = 25;
-  final int SKIN_3_COST = 50;
-  String skin1 = "1";
-  String skin2 = "2";
-  String skin3 = "3";
+  final int SKIN_1_COST = 20;
+  final int SKIN_2_COST = 200;
+  String skin1 = "kappa";
+  String skin2 = "pepe";
   String defaultSkin = "default";
 
   @Override
@@ -37,28 +35,18 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     currentUser = getUser(userName);
 
-    // used for testing only
-    //currentUser.setCurrency(100);
-    //currentUser.updateWins();
-    //currentUser.updateWins();
-    //currentUser.updateWins();
-    //currentUser.updateWins();
-    //currentUser.updateWins();
-
     updateDisplay();
 
     // creates buttons and sets listeners
     Button button1 = (Button) findViewById(R.id.shop1);
     Button button2 = (Button) findViewById(R.id.shop2);
-    Button button3 = (Button) findViewById(R.id.shop3);
     Button buttonReset = (Button) findViewById(R.id.buttonReset);
 
     button1.setOnClickListener(this);
     button2.setOnClickListener(this);
-    button3.setOnClickListener(this);
     buttonReset.setOnClickListener(this);
 
-    prepareButtons(button1, button2, button3);
+    prepareButtons(button1, button2);
   }
 
   @Override
@@ -84,15 +72,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         }
         break;
 
-      case R.id.shop3:
-        Button button3 = findViewById(R.id.shop3);
-        if (button3.getText().equals("Equip")) {
-          equipSkin(skin3);
-          break;
-        } else {
-          buyPack_3(v, button3);
-        }
-        break;
 
       case R.id.buttonReset:
         equipSkin(defaultSkin);
@@ -107,9 +86,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     buy(SKIN_2_COST, skin2, button);
   }
 
-  public void buyPack_3(View view, Button button) {
-    buy(SKIN_3_COST, skin3, button);
-  }
 
   public void buy(int cost, String skin, Button button) {
     int gold = this.currentUser.getCurrency();
@@ -133,7 +109,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     updateDisplay();
   }
 
-  private void prepareButtons(Button button1, Button button2, Button button3) {
+  private void prepareButtons(Button button1, Button button2) {
 
     ArrayList<String> userInv = currentUser.getInventory();
     if (userInv.contains(skin1)) {
@@ -150,12 +126,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
       button2.setText(textCost);
     }
 
-    if (userInv.contains(skin3)) {
-      button3.setText("Equip");
-    } else {
-      String textCost = "Buy: " + SKIN_3_COST;
-      button3.setText(textCost);
-    }
   }
 
   private void updateDisplay() {
@@ -164,6 +134,10 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     // gets and displays current users skin
     String textEquiped = "\nEquiped Skin: " + currentUser.getSkin();
+
+    if (currentUser.getSkin() == null){
+      textEquiped = "\nEquiped Skin: default ";
+    }
 
     String message = textCurrency + textEquiped;
 
