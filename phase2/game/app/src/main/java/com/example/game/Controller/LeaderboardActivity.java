@@ -30,8 +30,10 @@ public class LeaderboardActivity extends AppCompatActivity {
     dbHelper = new DatabaseHelper(this);
     Cursor data = dbHelper.getData();
 
+    // maps user to number of wins
     HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
 
+    // filling in map from data in  spl database
     while (data.moveToNext()) {
 
       String username = data.getString(data.getColumnIndex("username"));
@@ -40,10 +42,12 @@ public class LeaderboardActivity extends AppCompatActivity {
       dictionary.put(username, wins);
     }
 
+    // sorting map by number of wins
     HashMap<String, Integer> sorted = sortByValue(dictionary);
 
+    // preparing the text to display on leaderboard
     for (HashMap.Entry<String, Integer> line : sorted.entrySet()) {
-        String tempText = "\n \n \n User: " + line.getKey() + "     Wins: " + line.getValue();
+        String tempText = "\n \n User: " + line.getKey() + "     Wins: " + line.getValue();
         text = tempText + text;
     }
 
@@ -52,7 +56,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
         }
 
-
+  // sorts the hashmap based on value
   public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
     // Create list from elements of hashmap
     List<HashMap.Entry<String, Integer>> list =

@@ -38,9 +38,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     updateDisplay();
 
     // creates buttons and sets listeners
-    Button button1 = (Button) findViewById(R.id.shop1);
-    Button button2 = (Button) findViewById(R.id.shop2);
-    Button buttonReset = (Button) findViewById(R.id.buttonReset);
+    Button button1 = findViewById(R.id.shop1);
+    Button button2 = findViewById(R.id.shop2);
+    Button buttonReset = findViewById(R.id.buttonReset);
 
     button1.setOnClickListener(this);
     button2.setOnClickListener(this);
@@ -58,7 +58,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
           equipSkin(skin1);
           break;
         } else {
-          buyPack_1(v, button);
+          buyPack_1(button);
         }
         break;
 
@@ -68,7 +68,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
           equipSkin(skin2);
           break;
         } else {
-          buyPack_2(v, button2);
+          buyPack_2(button2);
         }
         break;
 
@@ -78,11 +78,11 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     }
   }
 
-  public void buyPack_1(View view, Button button) {
+  public void buyPack_1(Button button) {
     buy(SKIN_1_COST, skin1, button);
   }
 
-  public void buyPack_2(View view, Button button) {
+  public void buyPack_2(Button button) {
     buy(SKIN_2_COST, skin2, button);
   }
 
@@ -113,6 +113,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     updateDisplay();
   }
 
+  // prepares text of buttons based on the inventory of the user
   private void prepareButtons(Button button1, Button button2) {
 
     ArrayList<String> userInv = currentUser.getInventory();
@@ -132,6 +133,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
   }
 
+  // updates the currency and equiped skin in shop display
   private void updateDisplay() {
     // gets and displays current users currency
     String textCurrency = "Gold: " + currentUser.getCurrency();
