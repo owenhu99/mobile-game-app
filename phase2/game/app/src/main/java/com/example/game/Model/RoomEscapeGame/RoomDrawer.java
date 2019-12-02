@@ -1,42 +1,34 @@
 package com.example.game.Model.RoomEscapeGame;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 
 import com.example.game.Model.RoomEscapeGame.Entities.Entity;
 import com.example.game.Model.RoomEscapeGame.Entities.Player;
-import com.example.game.R;
 
 import java.util.ArrayList;
 
-public class RoomDrawer {
+class RoomDrawer {
     private ArrayList<Entity> entities;
     private Player player;
     private int drawWidth;
     private int drawHeight;
-    private final int dimension = 100;
-    private final int offsetX = 50;
+    private final int DIMENSION = 100;
+    private final int OFF_SETX = 50;
     private RoomEscape room;
-    private Boolean notSet;
-    Paint visibleArea;
-    Paint darkArea;
-    Paint controlButton;
-    Paint textPaint;
-    Bitmap pepeBMP;
-    RectF pepe;
+    private Paint visibleArea;
+    private Paint darkArea;
+    private Paint controlButton;
+    private Paint textPaint;
 
 
-    public RoomDrawer(int drawWidth, int drawHeight, RoomEscape room){
+    RoomDrawer(int drawWidth, int drawHeight, RoomEscape room){
         this.entities = room.manager.getEntities();
         this.player = room.manager.getPlayer();
         this.room = room;
         this.drawWidth = drawWidth;
         this.drawHeight = drawHeight;
-        notSet = true;
         visibleArea = new Paint();
         darkArea = new Paint();
         controlButton = new Paint();
@@ -47,7 +39,7 @@ public class RoomDrawer {
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(30);
     }
-    void controlsDrawer(Canvas canvas){
+    private void controlsDrawer(Canvas canvas){
         controlButton.setColor(Color.WHITE);
         canvas.drawRect(drawWidth/2 - 50, drawHeight+25,
                 drawWidth/2 + 50, drawHeight+125, controlButton);
@@ -89,7 +81,7 @@ public class RoomDrawer {
                 drawWidth/2-140, drawHeight+175, controlButton);
     }
 
-    void drawInfo(Canvas canvas){
+    private void drawInfo(Canvas canvas){
         canvas.drawText(room.countDownTimer.getCurrentTime() + " time left.",0,12, 100, drawHeight + 200, textPaint);
         canvas.drawText(room.getManager().getPoints() + " points accumulated",0,20,drawWidth/2 + 200, drawHeight + 100, textPaint);
         canvas.drawText(room.getManager().getRoomsEscaped() + " rooms escaped.",0,15,drawWidth/2 + 200, drawHeight + 200, textPaint);
@@ -97,25 +89,15 @@ public class RoomDrawer {
     }
 
     void drawRoom(Canvas canvas){
-        if(notSet){
-            pepeBMP = BitmapFactory.decodeResource(room.getContext().getResources(), R.drawable.pepefeelsgoodman);
-            pepe = new RectF((player.getXPos() - 1) * dimension + offsetX, (player.getYPos() - 1) * dimension,
-                    (player.getXPos() + 2) * dimension + offsetX, (player.getYPos() + 2) * dimension);
-            notSet = false;
-        }
+
         controlsDrawer(canvas);
         drawInfo(canvas);
         if(!player.getVisibility()) {
-            canvas.drawRect(offsetX, 0, drawWidth+offsetX, drawHeight, darkArea);
+            canvas.drawRect(OFF_SETX, 0, drawWidth+OFF_SETX, drawHeight, darkArea);
+            canvas.drawRect((player.getXPos() - 1) * DIMENSION + OFF_SETX, (player.getYPos() - 1) * DIMENSION,
+                    (player.getXPos() + 2) * DIMENSION + OFF_SETX, (player.getYPos() + 2) * DIMENSION,
+                    visibleArea);
 
-            if(room.getCurrentSkin() == "pepe"){
-                canvas.drawBitmap(pepeBMP,null, pepe, null);
-            }
-            else {
-                canvas.drawRect((player.getXPos() - 1) * dimension + offsetX, (player.getYPos() - 1) * dimension,
-                        (player.getXPos() + 2) * dimension + offsetX, (player.getYPos() + 2) * dimension,
-                        visibleArea);
-            }
             for(Entity entity: entities) {
                 if(entity.getXPos() >= player.getXPos()-1 &&
                         entity.getXPos() <= player.getXPos()+1) {

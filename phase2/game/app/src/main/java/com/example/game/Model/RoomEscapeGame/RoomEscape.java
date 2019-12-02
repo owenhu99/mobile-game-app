@@ -1,8 +1,11 @@
 package com.example.game.Model.RoomEscapeGame;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.example.game.Model.Game;
 import com.example.game.Model.RoomEscapeGame.Entities.*;
+import com.example.game.R;
 
 import java.util.ArrayList;
 
@@ -14,11 +17,13 @@ public class RoomEscape extends Game {
 
     private int width;
     private int height;
+    private Bitmap skinBMP;
+    private boolean notSet;
 
     RoomManager manager;
     RoomDrawer drawer;
     RoomVisibility visibility;
-    RoomMovement movement;
+    private RoomMovement movement;
     EscapeCountDownTimer countDownTimer;
     StandingTimer standingTimer;
 
@@ -34,7 +39,8 @@ public class RoomEscape extends Game {
         this.standingTimer = new StandingTimer();
         this.visibility = new RoomVisibility(manager.getPlayer(), standingTimer);
         this.countDownTimer = new EscapeCountDownTimer(this);
-        this.movement = new RoomMovement(entities, manager.getPlayer(), this);
+        this.movement = new RoomMovement(entities);
+        notSet = true;
 
         standingTimer.start();
         countDownTimer.start();
@@ -42,10 +48,18 @@ public class RoomEscape extends Game {
 
     @Override
     public void draw(Canvas canvas) {
+        if(notSet) {
+            if (getCurrentSkin().equals("pepe")) {
+                System.out.println(getContext().getResources());
+                skinBMP = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pepefeelsbadman);
+            }
+            else if (getCurrentSkin().equals("kappa"))
+                skinBMP = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.bttvkappa);
+            notSet = false;
+        }
         for(Entity entity: remove)
             entities.remove(entity);
-        for(Entity entity: spawn)
-            entities.add(entity);
+        entities.addAll(spawn);
         visibility.checkVisibility();
         drawer.drawRoom(canvas);
         remove.clear();
@@ -84,6 +98,9 @@ public class RoomEscape extends Game {
     }
     public void remover(Entity entity){
         remove.add(entity);
+    }
+    public Bitmap getSkinBMP(){
+        return skinBMP;
     }
 
 

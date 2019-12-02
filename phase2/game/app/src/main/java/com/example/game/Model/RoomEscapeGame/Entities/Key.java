@@ -12,8 +12,4 @@ public class Key extends Entity {
         keyPaint.setColor(Color.YELLOW);
         setPaint(keyPaint);
     }
-
-    public void collected(){
-
-    }
 }

@@ -33,8 +33,4 @@ public abstract class Entity {
         canvas.drawRect(xGrid * dimension+offset,yGrid * dimension,
                 (xGrid+1) * (dimension)+offset, (yGrid +1)* (dimension), paint);
     }
-
-    public void removeEntity(){
-
-    }
 }
