@@ -74,7 +74,7 @@ public class MemoryFacade extends Game {
             }else{
                 String skin = getCurrentSkin().toLowerCase();
                 if(skin.equals("pepe")){
-                    targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsgoodman);
+                    targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.pepefeelsbadman);
                 } else if(skin.equals("kappa")){
                     targetBMP = BitmapFactory.decodeResource(context.getResources(), R.drawable.bttvgoldenkappa);
                 } else{

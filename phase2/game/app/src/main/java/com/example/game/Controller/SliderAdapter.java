@@ -37,8 +37,12 @@ public class SliderAdapter extends PagerAdapter {
             "Objective: Bring the key to the door.\nBlocks:\n      Blue: the player" +
                     "\n      Yellow: the key\n      Green: the door\n      Purple: pushable boxes" +
                     "\n      Red: teleports you to origin\n      Grey: walls",
-            "A number of tiles will flash blue.\nMemorize them and pick them again when all the\n" +
-                    "tiles turn red.",
+            "A number of tiles will be blue.\nMemorize these and press the start button to begin.\n " +
+                    "Then select all the correct tiles.\n" +
+                    "Selecting all correct tiles will start a new round.\n." +
+                    "Correct tiles +1000 points, incorrect -1000 points, clearing round without any " +
+                    "incorrect +3000 points.\n" +
+                    "The game ends after 20 seconds for each player.\n",
             "Avoid incoming enemies by tapping the controls at the bottom of the screen"
     };
 
