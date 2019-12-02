@@ -7,13 +7,13 @@ import com.example.game.Games.RunnerGame.RunnerGame;
 
 public class GameFactory {
 
-    public Game createGame(String name, int width, int height){
+    public Game createGame(String name, String currentSkin, int width, int height){
         if(name == "Room"){
-            return new RoomEscape(width, height);
+            return new RoomEscape(width, height, currentSkin);
         } else if (name == "Runner"){
-            return new RunnerGame(width, height);
+            return new RunnerGame(width, height, currentSkin);
         } else if (name == "Memory"){
-            return new MemoryFacade(width, height);
+            return new MemoryFacade(width, height, currentSkin);
         }
         return null;
     }

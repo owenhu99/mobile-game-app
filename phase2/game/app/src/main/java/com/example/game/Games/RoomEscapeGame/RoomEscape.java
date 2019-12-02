@@ -24,8 +24,8 @@ public class RoomEscape extends Game {
 
     private int controlSpaceOffset = 300;
 
-    public RoomEscape(int width, int height) {
-        super(width, height);
+    public RoomEscape(int width, int height, String currentSkin) {
+        super(width, height, currentSkin);
         this.width = width;
         this.height = height - controlSpaceOffset;
         this.manager = new RoomManager(entities, width, this.height, this);

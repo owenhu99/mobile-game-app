@@ -1,11 +1,15 @@
 package com.example.game.Games.RoomEscapeGame;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
 import com.example.game.Games.RoomEscapeGame.Entities.Entity;
 import com.example.game.Games.RoomEscapeGame.Entities.Player;
+import com.example.game.R;
 
 import java.util.ArrayList;
 
@@ -17,10 +21,13 @@ public class RoomDrawer {
     private final int dimension = 100;
     private final int offsetX = 50;
     private RoomEscape room;
+    private Boolean notSet;
     Paint visibleArea;
     Paint darkArea;
     Paint controlButton;
     Paint textPaint;
+    Bitmap pepeBMP;
+    RectF pepe;
 
 
     public RoomDrawer(int drawWidth, int drawHeight, RoomEscape room){
@@ -29,6 +36,7 @@ public class RoomDrawer {
         this.room = room;
         this.drawWidth = drawWidth;
         this.drawHeight = drawHeight;
+        notSet = true;
         visibleArea = new Paint();
         darkArea = new Paint();
         controlButton = new Paint();
@@ -90,13 +98,25 @@ public class RoomDrawer {
     }
 
     void drawRoom(Canvas canvas){
+        if(notSet){
+            pepeBMP = BitmapFactory.decodeResource(room.context.getResources(), R.drawable.pepefeelsgoodman);
+            pepe = new RectF((player.getXPos() - 1) * dimension + offsetX, (player.getYPos() - 1) * dimension,
+                    (player.getXPos() + 2) * dimension + offsetX, (player.getYPos() + 2) * dimension);
+            notSet = false;
+        }
         controlsDrawer(canvas);
         drawInfo(canvas);
         if(!player.getVisibility()) {
             canvas.drawRect(offsetX, 0, drawWidth+offsetX, drawHeight, darkArea);
-            canvas.drawRect((player.getXPos()-1)*dimension+offsetX,(player.getYPos()-1)*dimension,
-                    (player.getXPos()+2)*dimension+offsetX,(player.getYPos()+2)*dimension,
-                    visibleArea);
+
+            if(room.getCurrentSkin() == "pepe"){
+                canvas.drawBitmap(pepeBMP,null, pepe, null);
+            }
+            else {
+                canvas.drawRect((player.getXPos() - 1) * dimension + offsetX, (player.getYPos() - 1) * dimension,
+                        (player.getXPos() + 2) * dimension + offsetX, (player.getYPos() + 2) * dimension,
+                        visibleArea);
+            }
             for(Entity entity: entities) {
                 if(entity.getXPos() >= player.getXPos()-1 &&
                         entity.getXPos() <= player.getXPos()+1) {

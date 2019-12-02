@@ -56,7 +56,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             if(firstTurn) {
                 playerOne.updateLastPoints(game.getPoints());
                 playerOne.updatePlayTime(game.secondsPlayed);
-                this.game = gameFactory.createGame(gameType, width, height);
+                this.game = gameFactory.createGame(gameType, playerTwo.getSkin(),  width, height);
                 this.game.setContext(context);
                 firstTurn = false;
             }
@@ -128,7 +128,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         setMeasuredDimension(width, height);
 
 
-        this.game = gameFactory.createGame(gameType, width, height);
+        this.game = gameFactory.createGame(gameType, playerOne.getSkin(), width, height);
         this.game.setContext(context);
 
     }
