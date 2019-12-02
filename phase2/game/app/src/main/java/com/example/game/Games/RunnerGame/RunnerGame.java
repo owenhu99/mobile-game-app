@@ -62,8 +62,8 @@ public class RunnerGame extends Game {
 
 
 
-    public RunnerGame(int width, int height){
-        super(width, height);
+    public RunnerGame(int width, int height, String currentSkin){
+        super(width, height, currentSkin);
 
         RunnerGameEntity.setBoard_y(height);
         RunnerGameEntity.setBoard_x(width);
