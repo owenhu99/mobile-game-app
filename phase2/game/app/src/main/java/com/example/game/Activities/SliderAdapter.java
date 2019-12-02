@@ -15,31 +15,31 @@ import com.example.game.R;
 
 public class SliderAdapter extends PagerAdapter {
 
-    Context context;
-    LayoutInflater layoutInflater;
+    private Context context;
+    private LayoutInflater layoutInflater;
 
-    public SliderAdapter(Context context){
+    SliderAdapter(Context context){
         this.context = context;
     }
 
-    public int[] slide_pictures = {
+    private int[] slide_pictures = {
             R.drawable.room_escape,
             R.drawable.memory_game,
-            R.drawable.pikachu
+            R.drawable.runner
     };
-    public String[] slide_headings = {
+    private String[] slide_headings = {
             "ROOM ESCAPE",
             "MEMORY GAME",
-            "TITLE"
+            "RUNNER"
     };
 
-    public String[] slide_desc = {
+    private String[] slide_desc = {
             "Objective: Bring the key to the door.\nBlocks:\n      Blue: the player" +
                     "\n      Yellow: the key\n      Green: the door\n      Purple: pushable boxes" +
                     "\n      Red: teleports you to origin\n      Grey: walls",
             "A number of tiles will flash blue.\nMemorize them and pick them again when all the\n" +
                     "tiles turn red.",
-            "Description"
+            "Avoid incoming enemies by tapping the controls at the bottom of the screen"
     };
 
     @Override
@@ -49,7 +49,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == (RelativeLayout) object;
+        return view == object;
     }
 
     @NonNull
@@ -58,9 +58,9 @@ public class SliderAdapter extends PagerAdapter {
         assert layoutInflater != null;
         View view = layoutInflater.inflate(R.layout.activity_slide_layout, container, false);
 
-        ImageView slideImageView = (ImageView) view.findViewById(R.id.image);
-        TextView slideTitle = (TextView) view.findViewById(R.id.title);
-        TextView slideDescription = (TextView) view.findViewById(R.id.desc);
+        ImageView slideImageView =view.findViewById(R.id.image);
+        TextView slideTitle =  view.findViewById(R.id.title);
+        TextView slideDescription = view.findViewById(R.id.desc);
 
         slideImageView.setImageResource(slide_pictures[position]);
         slideTitle.setText(slide_headings[position]);
