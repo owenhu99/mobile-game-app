@@ -1,0 +1,48 @@
+Dear group_0616
+
+This semester, we talked about MVP, the Model-View-Presenter architecture. It has many advantages, particularly when working with Android. As you can see from your project, your activity classes have methods that are specific to Android. If you encapsulate the rest of your code sufficiently, it is possible to port it to another platform simply by creating a new UI (for example, a website).
+
+Encapsulation can take on many forms. You can package your View classes together. You can ensure that your dependencies go one-way, towards the inner more abstract layers. You can incorporate SOLID principles as much as possible and design patterns where they make sense.
+Here is feedback that is specific to your project:
+
+You made good use of…
++ Design Patterns: You used Facade, Factory (to make new games), and Observer (SQLite database) design patterns. Good job! 
++ SOLID Principle: You did a great job covering all the SOLID design principles!
++ Inheritance, Interfaces, and Abstract Classes: Abstraction was nicely applied to pull common game functionality to abstract classes from which games extended from.
++ SQLite Database: Your choice to go with a different database rather than storing your data in text files was amazing!
++ Nice and meaningful packaging: You had a good rationale behind your packaging! Packaged by component (MVP). Your view classes act as a thin layer with little logic and they can be easily tested!
++ Visibility of variables and methods: Your variables and methods were usually private or protected with proper getters and setters.
++ Following naming conventions: Your variables, classes, and methods perfectly followed Java naming conventions!
++ Size of classes and methods: The size of classes and methods in your code were generally within a reasonable range.
++ Great extendable code design: You had nice abstract classes that make the job of adding a new game or feature to your code quite easy.
+
+The user sees…
++ A Nice UI.
++ A nice game instructions page for every game.
++ 3 fun games (room escape, memory game, runner start).
++ Nice features in your runner game (focused view, different squares, random generation, infinite possibilities).
++ Multiplayer feature!
++ Feature to change the language of your application.
++ Leaderboard showing the total number of wins.
++ Shopping feature to buy different skins.
++ Features added for phase 2:
+  - Multiplayer feature
+  - Shopping feature
+
+A good next step would be to…
++ Make all variables private and include getters/setters for the ones that need it.
++ Get rid of as many static variables as possible (such as xBoard, yBoard) and replace them with non-static alternatives.
++ Write more Javadocs and comments in your code. Right now, there is almost none. In most classes, there are not enough javadocs and comments whereas, in some other classes, there are too many unnecessary comments.
++ Improve the language feature of your code. There were some lags after you changed your language in your demo.
++ Improve your leaderboard to cover more scoring criteria and not just the total number of wins (e.g. time, points, etc.).
++ Though the visibility of your variables, methods, and classes was relatively good, there is some room for improvement! You can improve the visibility of some of your variables. For example, there were too many public methods in RoomEscape which could have been protected or private.
++ Rethink the way you designed your classes. For example, while choosing to have “Game” as an abstract class is correct, you could also have it as an interface for the same purpose. Just some alternative options to think about!
++ Eliminate hardcoded values such as in RoomManger. These can be replaced by class variables so that, if you want to change their values, it is easy to do.
++ Format code
++ Make use of MVP to better encapsulate your code. Right now, you have entities which draw on the screen. If you ever wanted to use your back end with a different UI, this would be impossible, unless the UI was also Android.
+
+We hope that you enjoyed working on this project and found it a useful learning experience.
+
+Cheers,
+The CSC207 Instructional Team
+
